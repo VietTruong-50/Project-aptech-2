@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="StatisticRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #ffff;" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.StatisticChart.ChartController">
+   <children>
+      <PieChart fx:id="pieChart" labelLineLength="8.0" layoutX="684.0" layoutY="129.0" prefHeight="285.0" prefWidth="353.0" title="Tiến độ của nhân viên" />
+      <LineChart fx:id="lineChart" horizontalZeroLineVisible="false" layoutX="35.0" layoutY="115.0" legendSide="TOP" legendVisible="false" prefHeight="369.0" prefWidth="656.0" titleSide="BOTTOM">
+        <xAxis>
+          <CategoryAxis fx:id="cateAxis" side="BOTTOM" tickLabelFill="RED" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis animated="false" side="LEFT" tickLabelFill="#f50000" />
+        </yAxis>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </LineChart>
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@../Css/viewStyle.css">
+         <children>
+            <JFXButton fx:id="goBackBtn" layoutX="27.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="52.0" prefWidth="88.0" stylesheets="@../Css/viewStyle.css" text=" " textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Img/Back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </Pane>
+      <JFXButton layoutX="346.0" layoutY="522.0" onAction="#getStatistic" prefHeight="25.0" prefWidth="80.0" text="Thống kê" />
+      <ComboBox fx:id="ddMMYYCost" layoutX="77.0" layoutY="522.0" prefHeight="25.0" prefWidth="228.0" />
+   </children>
+</AnchorPane>

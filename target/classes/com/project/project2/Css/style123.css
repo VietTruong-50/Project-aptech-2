@@ -1,0 +1,15 @@
+
+.sidebarItem{
+-fx-background-color: #00a2e8;
+
+}
+
+.sidebarItem:hover{
+-fx-text-color: #fff;
+-fx-background-color: #283783;
+    -fx-border-width: 0px 0px 0px 3px;
+}
+
+.sidebarItem:focused{
+-fx-background-color: #283783;
+} 

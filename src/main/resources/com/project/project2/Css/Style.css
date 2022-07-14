@@ -1,0 +1,15 @@
+.menuItem{
+    -fx-border-color: BLACK;
+    -fx-border-width: 3px 3px 3px 3px;
+}
+
+.sidebarItem:hover{
+    -fx-background-color: #146886;
+    -fx-border-color: WHITE;
+    -fx-border-width: 0px 0px 0px 3px;
+}
+
+.vbox{
+    -fx-border-color: BLACK;
+    -fx-border-width: 2px 0px 0px 0px;
+}

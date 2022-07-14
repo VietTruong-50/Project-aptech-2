@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Login.ChangePwController">
+   <children>
+      <Label layoutX="37.0" layoutY="87.0" prefHeight="17.0" prefWidth="129.0" text="Mật khẩu cũ" />
+      <Label layoutX="37.0" layoutY="129.0" prefHeight="17.0" prefWidth="129.0" text="Mật khẩu mới" />
+      <Label layoutX="37.0" layoutY="173.0" prefHeight="17.0" prefWidth="129.0" text="Nhập lại mật khẩu mới" />
+      <Button fx:id="confirmButton" layoutX="307.0" layoutY="212.0" mnemonicParsing="false" onAction="#confirmButton" prefHeight="25.0" prefWidth="76.0" text="Xác nhận" />
+      <Label layoutX="37.0" layoutY="45.0" prefHeight="17.0" prefWidth="129.0" text="User name" />
+      <TextField fx:id="user_nameTf" layoutX="203.0" layoutY="41.0" prefHeight="25.0" prefWidth="180.0" />
+      <PasswordField fx:id="oldPwTf" layoutX="203.0" layoutY="83.0" prefHeight="25.0" prefWidth="180.0" />
+      <PasswordField fx:id="newPwTf" layoutX="203.0" layoutY="125.0" prefHeight="25.0" prefWidth="180.0" />
+      <PasswordField fx:id="retypeNewPwTf" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="180.0" />
+   </children>
+</AnchorPane>

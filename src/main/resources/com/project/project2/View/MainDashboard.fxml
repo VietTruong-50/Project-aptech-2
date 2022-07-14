@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #5f6368;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Dashboard.MainDashboardController">
+
+    <children>
+      <AnchorPane fx:id="mainPane" layoutX="201.0" layoutY="74.0" prefHeight="605.0" prefWidth="836.0" />
+        <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" styleClass="menuItem">
+         <stylesheets>
+            <URL value="@../Css/viewStyle.css" />
+            <URL value="@../Css/Style.css" />
+         </stylesheets>
+        </Pane>
+      <AnchorPane layoutY="74.0" prefHeight="605.0" prefWidth="201.0" style="-fx-background-color: #1976D2;" styleClass="menuItem" stylesheets="@../Css/Style.css">
+         <children>
+            <VBox layoutX="3.0" layoutY="174.0" prefHeight="192.0" prefWidth="196.0" styleClass="vbox">
+               <children>
+                  <JFXButton fx:id="homePageBtn" alignment="BASELINE_LEFT" onAction="#showHomePage" prefHeight="50.0" prefWidth="200.0" styleClass="sidebarItem" text="Trang chủ" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Img/home-page.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="showMngmtBtn" alignment="BASELINE_LEFT" onAction="#showMngmt" prefHeight="44.0" prefWidth="200.0" styleClass="sidebarItem" text="Management">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Img/management.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="logoutBtn" alignment="BASELINE_LEFT" onAction="#logOut" prefHeight="46.0" prefWidth="200.0" styleClass="sidebarItem" text="Logout">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="37.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Img/logout2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <Label alignment="CENTER" layoutX="23.0" layoutY="142.0" prefHeight="24.0" prefWidth="156.0" text="Xin chào" />
+            <ImageView fitHeight="111.0" fitWidth="127.0" layoutX="45.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Img/user.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fx:id="staffImg" fitHeight="141.0" fitWidth="147.0" layoutX="444.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/employee.png" />
+         </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7254902124404907" green="0.10980392247438431" blue="0.10980392247438431" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <ImageView fx:id="customerImg" fitHeight="150.0" fitWidth="150.0" layoutX="658.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/customer.png" />
+         </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7254902124404907" green="0.10980392247438431" blue="0.10980392247438431" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <ImageView fx:id="carImg" fitHeight="141.0" fitWidth="147.0" layoutX="234.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/car.png" />
+         </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7254902124404907" green="0.10980392247438431" blue="0.10980392247438431" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <JFXButton fx:id="carManagementBtn" buttonType="RAISED" layoutX="229.0" layoutY="289.0" onAction="#showCarManagement" prefHeight="38.0" prefWidth="150.0" stylesheets="@../Css/viewStyle.css" text="Car Management" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="staffManagementBtn" buttonType="RAISED" layoutX="438.0" layoutY="289.0" onAction="#showStaffManagement" prefHeight="38.0" prefWidth="150.0" stylesheets="@../Css/viewStyle.css" text="Staff Management" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="customerManagementBtn" buttonType="RAISED" layoutX="655.0" layoutY="289.0" onAction="#showCustomerManagement" prefHeight="38.0" prefWidth="156.0" stylesheets="@../Css/viewStyle.css" text="Customer Management" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <ImageView fx:id="statisticImg" fitHeight="150.0" fitWidth="200.0" layoutX="229.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/analytics.png" />
+         </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7254902124404907" green="0.10980392247438431" blue="0.10980392247438431" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <JFXButton fx:id="chartStageBtn" buttonType="RAISED" layoutX="229.0" layoutY="582.0" onAction="#showChart" prefHeight="38.0" prefWidth="150.0" stylesheets="@../Css/viewStyle.css" text="Statistic " textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <ImageView fx:id="contractImg" fitHeight="150.0" fitWidth="200.0" layoutX="866.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/contract.png" />
+         </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7254902124404907" green="0.10980392247438431" blue="0.10980392247438431" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <JFXButton fx:id="contractManagementBtn" buttonType="RAISED" layoutX="866.0" layoutY="290.0" onAction="#showContractManagement" prefHeight="38.0" prefWidth="150.0" stylesheets="@../Css/viewStyle.css" text="Contract Management" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+    </children>
+
+</AnchorPane>

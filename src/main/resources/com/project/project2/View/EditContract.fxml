@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.EditContractController">
+   <children>
+      <TextField fx:id="idXeTf" layoutX="276.0" layoutY="64.0" prefHeight="26.0" prefWidth="265.0" />
+      <Label layoutX="43.0" layoutY="67.0" prefHeight="17.0" prefWidth="178.0" text="Mã xe">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="saveContractBtn" layoutX="276.0" layoutY="341.0" mnemonicParsing="false" onAction="#saveContract" prefHeight="32.0" prefWidth="130.0" text="Save" />
+      <Button fx:id="cancelBtn" onAction="#cancel" layoutX="418.0" layoutY="341.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" text="Cancel" />
+      <Label layoutX="43.0" layoutY="139.0" prefHeight="26.0" prefWidth="178.0" text="Ngày thuê xe ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="181.0" prefHeight="26.0" prefWidth="178.0" text="Ngày kết thúc">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="225.0" prefHeight="26.0" prefWidth="178.0" text="Tiền đặt cọc">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="300.0" prefHeight="26.0" prefWidth="178.0" text="Mã nhân viên cho thuê">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="rentalDayDp" layoutX="276.0" layoutY="139.0" prefHeight="26.0" prefWidth="207.0" />
+      <DatePicker fx:id="endDayDp" layoutX="276.0" layoutY="182.0" prefHeight="25.0" prefWidth="207.0" />
+      <TextField fx:id="depositTf" layoutX="276.0" layoutY="225.0" prefHeight="26.0" prefWidth="265.0" />
+      <TextField fx:id="idStaffTf" layoutX="276.0" layoutY="300.0" prefHeight="26.0" prefWidth="265.0" />
+      <TextField fx:id="idHdTf" layoutX="276.0" layoutY="26.0" prefHeight="26.0" prefWidth="149.0" />
+      <Label layoutX="43.0" layoutY="29.0" prefHeight="20.0" prefWidth="117.0" text="MHD" />
+      <Label layoutX="43.0" layoutY="103.0" prefHeight="20.0" prefWidth="178.0" text="Mã khách hàng">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="idCusTf" layoutX="276.0" layoutY="100.0" prefHeight="26.0" prefWidth="265.0" />
+      <Label layoutX="43.0" layoutY="268.0" prefHeight="17.0" prefWidth="168.0" text="Thuế">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="vatTf" layoutX="276.0" layoutY="266.0" />
+   </children>
+</AnchorPane>
