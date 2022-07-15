@@ -1,5 +1,10 @@
 package com.project.project2.service;
 
-public interface ICar {
-    
+import com.project.project2.model.Car;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ICar  {
+    List<Car> findAll();
 }

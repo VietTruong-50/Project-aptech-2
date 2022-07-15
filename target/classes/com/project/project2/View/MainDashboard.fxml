@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #5f6368;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Dashboard.MainDashboardController">
+<AnchorPane fx:id="root" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #5f6368;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.MainDashboard">
 
     <children>
       <AnchorPane fx:id="mainPane" layoutX="201.0" layoutY="74.0" prefHeight="605.0" prefWidth="836.0" />
@@ -38,7 +38,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="showMngmtBtn" alignment="BASELINE_LEFT" onAction="#showMngmt" prefHeight="44.0" prefWidth="200.0" styleClass="sidebarItem" text="Management">
+                  <JFXButton fx:id="showManagementBtn" alignment="BASELINE_LEFT" onAction="#showManagement" prefHeight="44.0" prefWidth="200.0" styleClass="sidebarItem" text="Management">
                      <font>
                         <Font size="18.0" />
                      </font>
