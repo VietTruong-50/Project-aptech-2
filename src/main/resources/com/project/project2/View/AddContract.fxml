@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.AddContractController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="611.0"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.AddContractController">
    <children>
       <TextField fx:id="idXeTf" layoutX="276.0" layoutY="64.0" prefHeight="26.0" prefWidth="265.0" />
       <TextField fx:id="cusNameTf" editable="false" layoutX="276.0" layoutY="141.0" prefHeight="26.0" prefWidth="265.0" />

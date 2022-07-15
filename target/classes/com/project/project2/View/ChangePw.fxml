@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Login.ChangePwController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="420.0"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.ChangePwController">
    <children>
       <Label layoutX="37.0" layoutY="87.0" prefHeight="17.0" prefWidth="129.0" text="Mật khẩu cũ" />
       <Label layoutX="37.0" layoutY="129.0" prefHeight="17.0" prefWidth="129.0" text="Mật khẩu mới" />
