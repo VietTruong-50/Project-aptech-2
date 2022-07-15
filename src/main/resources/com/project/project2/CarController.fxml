@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CarRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Car.CarController">
+<AnchorPane fx:id="CarRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns:fx="http://javafx.com/fxml/" fx:controller="com.project.project2.controller.CarController">
    <children>
       <TableView fx:id="carTable" layoutX="362.0" layoutY="143.0" onMouseClicked="#handleClickTableView" prefHeight="531.0" prefWidth="665.0">
         <columns>
@@ -91,16 +91,16 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@../Css/viewStyle.css">
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="27.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="52.0" prefWidth="88.0" stylesheets="@../Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" layoutX="27.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="52.0" prefWidth="88.0" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/Back.png" />
+                        <Image url="@Img/Back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -112,7 +112,7 @@
                <graphic>
                   <ImageView fitHeight="67.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/MainLogo.png" />
+                        <Image url="@Img/MainLogo.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -128,7 +128,7 @@
       <RadioButton fx:id="rBtn2" layoutX="260.0" layoutY="521.0" mnemonicParsing="false" onAction="#getStatus" text="OFF" toggleGroup="$status" />
       <ImageView fx:id="carImage" fitHeight="137.0" fitWidth="185.0" layoutX="136.0" layoutY="75.0" onMouseClicked="#getCarImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../Img/add.png" />
+            <Image url="@Img/add.png" />
          </image>
       </ImageView>
       <JFXButton fx:id="importBtn" layoutX="199.0" layoutY="623.0" mnemonicParsing="false" onAction="#importFile" prefHeight="33.0" prefWidth="149.0" text="Import EXEL">
@@ -138,6 +138,6 @@
       </JFXButton>
    </children>
    <stylesheets>
-      <URL value="@../Css/viewStyle.css" />
+      <URL value="@Css/viewStyle.css" />
    </stylesheets>
 </AnchorPane>

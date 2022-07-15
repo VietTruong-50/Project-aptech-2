@@ -1,4 +1,4 @@
-module com.project.project2.controller {
+module com.project.project2 {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -15,7 +15,10 @@ module com.project.project2.controller {
     requires java.sql;
     requires com.microsoft.sqlserver.jdbc;
     requires java.naming;
+    requires static lombok;
+    requires com.jfoenix;
 
     opens com.project.project2.controller to javafx.graphics, javafx.fxml;
+    opens com.project.project2.model to javafx.base;
     exports com.project.project2;
 }
