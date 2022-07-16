@@ -14,4 +14,5 @@ public interface ICar  {
     List<Car> findAllCar() throws SQLException;
     void insertCar(Car car, File file);
     void deleteCar(Car car);
+    void updateCar(Car car, File file);
 }

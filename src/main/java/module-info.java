@@ -17,6 +17,7 @@ module com.project.project2 {
     requires java.naming;
     requires static lombok;
     requires com.jfoenix;
+    requires java.desktop;
 
     opens com.project.project2.controller to javafx.graphics, javafx.fxml;
     opens com.project.project2.model to javafx.base;
