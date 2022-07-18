@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="836.0" style="-fx-background-color: #5f6368;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.SlideShow.SlideShowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="836.0" style="-fx-background-color: #5f6368;" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.SlideShowController">
    <children>
       <ImageView fx:id="imgView" fitHeight="467.0" fitWidth="809.0" layoutX="14.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Img/11.jpg" />
+            <Image url="@Img/11.jpg" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="54.0" layoutY="14.0" prefHeight="95.0" prefWidth="730.0" text="HỆ THỐNG QUẢN LÝ CHO THUÊ XE TỰ LÁI" textAlignment="CENTER" textFill="#b8a23b">
+      <Label alignment="CENTER" layoutX="54.0" layoutY="14.0" prefHeight="95.0" prefWidth="730.0" text="CAR RENTAL MANAGEMENT SYSTEM" textAlignment="CENTER" textFill="#b8a23b">
          <font>
             <Font size="37.0" />
          </font>

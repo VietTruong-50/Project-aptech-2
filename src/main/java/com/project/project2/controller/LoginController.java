@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginController {
@@ -30,32 +31,30 @@ public class LoginController {
     public Label lblError;
 
     @FXML
-    public void loginButton(ActionEvent actionEvent) {
+    public void loginButton(ActionEvent actionEvent) throws SQLException, IOException {
         String user_name = txtUsername.getText();
         String password = txtPassword.getText();
 
-        //query
-        try {
-            String query = "select * from Users where user_name = '"+ user_name +"' and password = '"+ password +"'";
+        String query = "select * from Users where user_name = '" + user_name + "' and password = '" + password + "'";
 
-            if(!DBHandle.executeQuery(query).next()){
-                lblError.setTextFill(Color.RED);
-                lblError.setText("Thông tin tên đăng nhập hoặc mật khẩu không đúng");
-            }
-            else{
-                lblError.setTextFill(Color.GREEN);
-                System.out.println("Login successfull! Redirecting....");
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/CarController.fxml")));
-                Stage TrangChuStage = new Stage();
-                TrangChuStage.setScene(new Scene(root));
-                TrangChuStage.setTitle("Trương Quốc Việt & viet ");
-                TrangChuStage.show();
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
+        if (!DBHandle.executeQuery(query).next()) {
+            lblError.setTextFill(Color.RED);
+            lblError.setText("Thông tin tên đăng nhập hoặc mật khẩu không đúng");
+        } else {
+            lblError.setTextFill(Color.GREEN);
+            System.out.println("Login successfull! Redirecting....");
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/MainDashboard.fxml")));
+            loader.load();
+            MainDashboardController mainDashboardController = loader.getController();
+            mainDashboardController.setUserName(user_name);
+            Parent root = loader.getRoot();
+            Stage DashboardStage = new Stage();
+            DashboardStage.setScene(new Scene(root));
+            DashboardStage.setTitle("Trương Quốc Việt & viet ");
+            DashboardStage.show();
         }
     }
 

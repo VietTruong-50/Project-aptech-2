@@ -22,22 +22,22 @@ public class ImplCar implements ICar {
 
     @Override
     public List<Car> findAllCar() throws SQLException {
-            sql = "SELECT * FROM Car";
-            conn.setAutoCommit(false);
-            pr = conn.prepareStatement(sql);
-            rs = pr.executeQuery();
-            conn.commit();
-            while (rs.next()) {
-                Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                        rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"));
-                CARLIST.add(car);
-            }
-            return CARLIST;
+        sql = "SELECT * FROM Car";
+        conn.setAutoCommit(false);
+        pr = conn.prepareStatement(sql);
+        rs = pr.executeQuery();
+        conn.commit();
+        while (rs.next()) {
+            Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"));
+            CARLIST.add(car);
+        }
+        return CARLIST;
     }
 
     @Override
     public void insertCar(Car car, File file) {
-        try{
+        try {
             System.out.println(car);
             sql = "INSERT INTO Car(id_car, car_name, manufacture, seats, rental_cost, model, car_status, cimage) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -56,7 +56,7 @@ public class ImplCar implements ICar {
                 pr.setBinaryStream(8, null);
             }
             pr.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             try {
                 conn.rollback();
             } catch (SQLException ex) {
@@ -67,21 +67,21 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public void deleteCar(Car car) {
+    public void deleteCar(Car car) throws SQLException {
+
+        sql = "DELETE FROM Car WHERE id_car = ?";
+        conn.setAutoCommit(false);
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, car.getId_car());
+        pr.executeUpdate();
+        conn.commit();
+
         try {
-            sql = "DELETE FROM Car WHERE id_car = ?";
-            conn.setAutoCommit(false);
-            pr = conn.prepareStatement(sql);
-            pr.setInt(1, car.getId_car());
-            pr.executeUpdate();
-            conn.commit();
-        } catch (SQLException e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            conn.rollback();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.project.project2.controller;
 
 import com.project.project2.connection.DBHandle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;

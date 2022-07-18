@@ -1,22 +1,26 @@
 package com.project.project2.controller;
 
+import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Car;
 import com.project.project2.service.impl.ImplCar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -25,7 +29,7 @@ import static com.project.project2.service.ICar.CARLIST;
 
 public class CarController implements Initializable {
     private final ImplCar implCar = new ImplCar();
-    private final ObservableList<String> SEATLIST = FXCollections.observableArrayList("4", "7", "11", "16");
+    private final ObservableList<Integer> SEATLIST = FXCollections.observableArrayList(4, 7, 11, 16);
     private File file;
     private RadioButton radioButton;
 
@@ -36,25 +40,25 @@ public class CarController implements Initializable {
     public ToggleGroup status;
 
     @FXML
-    public TableColumn idColumn;
+    public TableColumn<Object, Object> idColumn;
 
     @FXML
-    public TableColumn nameColumn;
+    public TableColumn<Object, Object> nameColumn;
 
     @FXML
-    public TableColumn manufacturerColumn;
+    public TableColumn<Object, Object> manufacturerColumn;
 
     @FXML
-    public TableColumn seatNbColumn;
+    public TableColumn<Object, Object> seatNbColumn;
 
     @FXML
-    public TableColumn priceColumn;
+    public TableColumn<Object, Object> priceColumn;
 
     @FXML
-    public TableColumn modelColumn;
+    public TableColumn<Object, Object> modelColumn;
 
     @FXML
-    public TableColumn statusColumn;
+    public TableColumn<Object, Object> statusColumn;
 
     @FXML
     public TextField searchCarTf;
@@ -72,7 +76,7 @@ public class CarController implements Initializable {
     public TextField carPriceTf;
 
     @FXML
-    public ComboBox seatNbCbb;
+    public ComboBox<Integer> seatNbCbb;
 
     @FXML
     public TextArea carModelTa;
@@ -87,8 +91,12 @@ public class CarController implements Initializable {
     public ImageView carImage;
 
     @FXML
-    public void handleClickTableView(MouseEvent mouseEvent) {
+    public AnchorPane carPane;
+
+    @FXML
+    public void handleClickTableView(MouseEvent mouseEvent) throws SQLException, IOException {
         Car car = carTable.getSelectionModel().getSelectedItem();
+
         if (car != null) {
             carIDTf.setEditable(false);
             carIDTf.setText("" + car.getId_car());
@@ -103,30 +111,25 @@ public class CarController implements Initializable {
             } else {
                 rBtn2.setSelected(true);
             }
-//            setCarImg(car.getId_car());
+            setCarImg(car.getId_car());
         }
     }
 
     @FXML
-    public void addCar(ActionEvent actionEvent) {
-        try {
-            radioButton = (RadioButton) status.getSelectedToggle();
-            Car car = new Car();
-            car.setId_car(Integer.parseInt(carIDTf.getText()));
-            car.setCar_name(carNameTf.getText());
-            car.setManufacture(carManufactureTf.getText());
-            car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
-            car.setModel(carModelTa.getText());
-            car.setCar_status(radioButton.getText());
-            car.setSeats(Integer.parseInt(seatNbCbb.getValue().toString()));
+    public void addCar(ActionEvent actionEvent) throws SQLException {
+        radioButton = (RadioButton) status.getSelectedToggle();
+        Car car = new Car();
+        car.setId_car(Integer.parseInt(carIDTf.getText()));
+        car.setCar_name(carNameTf.getText());
+        car.setManufacture(carManufactureTf.getText());
+        car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
+        car.setModel(carModelTa.getText());
+        car.setCar_status(radioButton.getText());
+        car.setSeats(seatNbCbb.getValue());
 
-            implCar.insertCar(car, file);
+        implCar.insertCar(car, file);
 
-            refresh();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        refresh();
     }
 
     @FXML
@@ -138,9 +141,9 @@ public class CarController implements Initializable {
             car.setCar_name(carNameTf.getText());
             car.setManufacture(carManufactureTf.getText());
             car.setModel(carModelTa.getText());
-            car.setSeats((Integer) seatNbCbb.getValue());
+            car.setSeats(seatNbCbb.getValue());
             car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
-            car.setCar_status(car.getCar_status());
+            car.setCar_status(radioButton.getText());
 
             implCar.updateCar(car, file);
             refresh();
@@ -148,17 +151,16 @@ public class CarController implements Initializable {
     }
 
     @FXML
-    public void delCar(ActionEvent actionEvent) {
+    public void delCar(ActionEvent actionEvent) throws SQLException {
+        Car car = carTable.getSelectionModel().getSelectedItem();
+        implCar.deleteCar(car);
+        refresh();
     }
 
     @FXML
     public void resetBtn(ActionEvent actionEvent) throws SQLException {
         carIDTf.setEditable(true);
         refresh();
-    }
-
-    @FXML
-    public void getStatus(ActionEvent actionEvent) {
     }
 
     @FXML
@@ -180,8 +182,11 @@ public class CarController implements Initializable {
             carImage.setImage(img);
         }
     }
+
     @FXML
-    public void setGoBackBtn(ActionEvent actionEvent) {
+    public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
+        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/MainDashboard.fxml")));
+        carPane.getChildren().setAll(dashboard);
     }
 
     public void showCar() throws SQLException {
@@ -206,6 +211,7 @@ public class CarController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     public void refresh() throws SQLException {
@@ -213,7 +219,7 @@ public class CarController implements Initializable {
         carNameTf.setText("");
         carManufactureTf.setText("");
         carPriceTf.setText("");
-        seatNbCbb.setValue(4);
+        seatNbCbb.setValue(SEATLIST.get(0));
         carModelTa.setText("");
         rBtn1.setSelected(false);
         rBtn2.setSelected(false);
@@ -222,5 +228,29 @@ public class CarController implements Initializable {
         carImage.setImage(img);
         CARLIST.clear();
         showCar();
+    }
+
+    public void setCarImg(int id_Car) throws SQLException, IOException {
+        Image img;
+
+        String query = "SELECT cimage FROM Car WHERE id_car = " + id_Car;
+        ResultSet rs = DBHandle.executeQuery(query);
+        while (rs.next()) {
+            InputStream is = rs.getBinaryStream("cimage");
+            OutputStream os = new FileOutputStream("photo.jpg");
+            byte[] contents = new byte[1024];
+            int size;
+            if (is != null) {
+                while ((size = is.read(contents)) != -1) {
+                    os.write(contents, 0, size);
+                }
+                img = new Image("file:photo.jpg", carImage.getFitWidth(), carImage.getFitHeight(), true, true);
+                carImage.setY(30);
+            } else {
+                img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));
+            }
+            carImage.setImage(img);
+        }
+
     }
 }

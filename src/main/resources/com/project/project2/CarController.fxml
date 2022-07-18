@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -11,13 +11,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CarRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns:fx="http://javafx.com/fxml/" fx:controller="com.project.project2.controller.CarController">
+<AnchorPane fx:id="carPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.CarController">
    <children>
       <TableView fx:id="carTable" layoutX="362.0" layoutY="143.0" onMouseClicked="#handleClickTableView" prefHeight="531.0" prefWidth="665.0">
         <columns>
@@ -30,70 +32,70 @@
             <TableColumn fx:id="statusColumn" editable="false" prefWidth="93.0" text="Trạng thái xe" />
         </columns>
       </TableView>
-      <JFXButton fx:id="addBtn" layoutX="26.0" layoutY="574.0" mnemonicParsing="false" onAction="#addCar" prefHeight="33.0" prefWidth="149.0" text="Thêm xe">
+      <JFXButton fx:id="addBtn" buttonType="RAISED" layoutX="26.0" layoutY="574.0" mnemonicParsing="false" onAction="#addCar" prefHeight="33.0" prefWidth="149.0" text="Thêm xe">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <JFXButton fx:id="updateBtn" layoutX="199.0" layoutY="574.0" mnemonicParsing="false" onAction="#updateCar" prefHeight="33.0" prefWidth="149.0" text="Sửa">
+      <JFXButton fx:id="updateBtn" buttonType="RAISED" layoutX="199.0" layoutY="574.0" mnemonicParsing="false" onAction="#updateCar" prefHeight="33.0" prefWidth="149.0" text="Sửa">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <JFXButton fx:id="delBtn" layoutX="900.0" layoutY="97.0" mnemonicParsing="false" onAction="#delCar" prefHeight="33.0" prefWidth="123.0" text="Xóa xe">
+      <JFXButton fx:id="delBtn" buttonType="RAISED" layoutX="900.0" layoutY="97.0" mnemonicParsing="false" onAction="#delCar" prefHeight="33.0" prefWidth="123.0" text="Xóa xe">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <TextField fx:id="searchCarTf" layoutX="423.0" layoutY="96.0" prefHeight="35.0" prefWidth="254.0" />
+      <TextField fx:id="searchCarTf" layoutX="423.0" layoutY="96.0" prefHeight="35.0" prefWidth="254.0" style="-fx-background-radius: 15px;" />
       <TextField fx:id="carIDTf" layoutX="138.0" layoutY="235.0" prefHeight="35.0" prefWidth="204.0" />
       <TextField fx:id="carNameTf" layoutX="138.0" layoutY="280.0" prefHeight="35.0" prefWidth="204.0" />
       <TextField fx:id="carManufactureTf" layoutX="138.0" layoutY="320.0" prefHeight="35.0" prefWidth="204.0" />
       <TextField fx:id="carPriceTf" layoutX="138.0" layoutY="408.0" prefHeight="35.0" prefWidth="204.0" />
-      <ComboBox fx:id="seatNbCbb" layoutX="138.0" layoutY="367.0" prefHeight="29.0" prefWidth="178.0" />
+      <ComboBox fx:id="seatNbCbb" layoutX="138.0" layoutY="367.0" prefHeight="29.0" prefWidth="204.0" />
       <TextArea fx:id="carModelTa" layoutX="139.0" layoutY="456.0" prefHeight="52.0" prefWidth="204.0" />
-      <Label layoutX="25.0" layoutY="240.0" prefHeight="17.0" prefWidth="178.0" text="Mã xe" textFill="#ddd3d3">
+      <Label layoutX="25.0" layoutY="240.0" prefHeight="17.0" prefWidth="178.0" text="Mã xe" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="26.0" layoutY="285.0" prefHeight="17.0" prefWidth="168.0" text="Tên xe" textFill="#ddd3d3">
+      <Label layoutX="26.0" layoutY="285.0" prefHeight="17.0" prefWidth="168.0" text="Tên xe" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="325.0" prefHeight="17.0" prefWidth="168.0" text="Hãng xe" textFill="#ddd3d3">
+      <Label layoutX="25.0" layoutY="325.0" prefHeight="17.0" prefWidth="168.0" text="Hãng xe" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="369.0" prefHeight="17.0" prefWidth="168.0" text="Số ghế" textFill="#ddd3d3">
+      <Label layoutX="25.0" layoutY="369.0" prefHeight="17.0" prefWidth="168.0" text="Số ghế" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="413.0" prefHeight="17.0" prefWidth="168.0" text="Giá thuê" textFill="#ddd3d3">
+      <Label layoutX="25.0" layoutY="413.0" prefHeight="17.0" prefWidth="168.0" text="Giá thuê" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="517.0" prefHeight="17.0" prefWidth="168.0" text="Trạng thái xe" textFill="#ddd3d3">
+      <Label layoutX="25.0" layoutY="517.0" prefHeight="17.0" prefWidth="168.0" text="Trạng thái xe" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="26.0" layoutY="456.0" prefHeight="21.0" prefWidth="149.0" text="Model" textFill="#ddd3d3">
+      <Label layoutX="26.0" layoutY="456.0" prefHeight="21.0" prefWidth="149.0" text="Model" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <JFXButton fx:id="resetBtn" layoutX="26.0" layoutY="623.0" mnemonicParsing="false" onAction="#resetBtn" prefHeight="33.0" prefWidth="149.0" text="Reset">
+      <JFXButton fx:id="resetBtn" buttonType="RAISED" layoutX="26.0" layoutY="623.0" mnemonicParsing="false" onAction="#resetBtn" prefHeight="33.0" prefWidth="149.0" text="Reset">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <Label layoutX="362.0" layoutY="100.0" text="Search" textFill="#ddd3d3">
+      <Label layoutX="362.0" layoutY="100.0" text="Search" textFill="#393838">
          <font>
             <Font size="18.0" />
          </font></Label>
       <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="27.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="52.0" prefWidth="88.0" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" layoutX="27.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="52.0" prefWidth="79.0" style="-fx-background-radius: 50px;" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
@@ -105,39 +107,54 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <Label fx:id="nbCarLb" layoutX="754.0" layoutY="4.0" prefHeight="67.0" prefWidth="269.0" style="-fx-background-color: #60a4e4;">
+            <Label fx:id="nbCarLb" layoutX="754.0" layoutY="4.0" prefHeight="67.0" prefWidth="269.0" style="-fx-background-color: #6dd5ed; -fx-background-radius: 10px;" text="a">
                <font>
                   <Font size="18.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="67.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Img/MainLogo.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <effect>
-                  <DropShadow />
+                  <Glow />
                </effect></Label>
+            <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="754.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Img/MainLogo.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
-      <RadioButton fx:id="rBtn1" layoutX="164.0" layoutY="521.0" mnemonicParsing="false" onAction="#getStatus" text="ON">
+      <RadioButton fx:id="rBtn1" layoutX="154.0" layoutY="516.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="42.0" text="ON">
          <toggleGroup>
             <ToggleGroup fx:id="status" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="rBtn2" layoutX="260.0" layoutY="521.0" mnemonicParsing="false" onAction="#getStatus" text="OFF" toggleGroup="$status" />
-      <ImageView fx:id="carImage" fitHeight="137.0" fitWidth="185.0" layoutX="136.0" layoutY="75.0" onMouseClicked="#getCarImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         </toggleGroup>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.7709923386573792" />
+               </color>
+            </DropShadow>
+         </effect></RadioButton>
+      <RadioButton fx:id="rBtn2" layoutX="282.0" layoutY="517.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="42.0" text="OFF" toggleGroup="$status">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.7709923386573792" />
+               </color>
+            </DropShadow>
+         </effect></RadioButton>
+      <ImageView fx:id="carImage" fitHeight="137.0" fitWidth="185.0" layoutX="136.0" layoutY="75.0" onMouseClicked="#getCarImage" opacity="0.9" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Img/add.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow />
+         </effect>
       </ImageView>
-      <JFXButton fx:id="importBtn" layoutX="199.0" layoutY="623.0" mnemonicParsing="false" onAction="#importFile" prefHeight="33.0" prefWidth="149.0" text="Import EXEL">
+      <JFXButton fx:id="importBtn" buttonType="RAISED" layoutX="199.0" layoutY="623.0" mnemonicParsing="false" onAction="#importFile" prefHeight="33.0" prefWidth="149.0" text="Import EXEL">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
    </children>
-   <stylesheets>
-      <URL value="@Css/viewStyle.css" />
-   </stylesheets>
 </AnchorPane>

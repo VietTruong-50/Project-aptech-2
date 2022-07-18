@@ -41,16 +41,16 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@../Css/viewStyle.css">
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" stylesheets="@../Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/Back.png" />
+                        <Image url="@Img/Back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -59,7 +59,7 @@
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/refresh.png" />
+                        <Image url="@Img/refresh.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -73,6 +73,6 @@
       </JFXButton>
    </children>
    <stylesheets>
-      <URL value="@../Css/viewStyle.css" />
+      <URL value="@Css/viewStyle.css" />
    </stylesheets>
 </AnchorPane>
