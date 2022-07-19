@@ -29,7 +29,7 @@ public class ImplCar implements ICar {
         conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"));
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("license_plates"));
             CARLIST.add(car);
         }
         return CARLIST;

@@ -62,8 +62,8 @@ public class LoginController {
     public void changePwButton(ActionEvent actionEvent) throws IOException {
         Parent root;
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ChangePw.fxml")));
-        Stage ChangePwStage = new Stage();
-        ChangePwStage.setScene(new Scene(root));
-        ChangePwStage.show();
+        Stage changePwStage = new Stage();
+        changePwStage.setScene(new Scene(root));
+        changePwStage.show();
     }
 }

@@ -18,4 +18,5 @@ public class Car {
     private int rental_cost;
     private String model;
     private String car_status;
+    private String license_plates;
 }

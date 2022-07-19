@@ -67,7 +67,7 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showCarManagement(ActionEvent actionEvent) {
-        changeStage("/com/project/project2/CarController.fxml");
+        changeStage("CarController.fxml");
     }
 
     @FXML
@@ -76,6 +76,7 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showChart(ActionEvent actionEvent) {
+        changeStage("CreateContract.fxml");
     }
 
     @FXML
@@ -97,7 +98,7 @@ public class MainDashboardController implements Initializable {
 
     public void changeStage(String path){
         try {
-            AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
+            AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/" + path)));
             root.getChildren().setAll(dashboard);
         } catch (IOException e) {
             e.printStackTrace();

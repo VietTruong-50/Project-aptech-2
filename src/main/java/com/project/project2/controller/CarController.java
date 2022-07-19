@@ -29,7 +29,8 @@ import static com.project.project2.service.ICar.CARLIST;
 
 public class CarController implements Initializable {
     private final ImplCar implCar = new ImplCar();
-    private final ObservableList<Integer> SEATLIST = FXCollections.observableArrayList(4, 7, 11, 16);
+    private final ObservableList<Integer> SEAT_LIST = FXCollections.observableArrayList(4, 7, 11, 16);
+
     private File file;
     private RadioButton radioButton;
 
@@ -63,8 +64,6 @@ public class CarController implements Initializable {
     @FXML
     public TextField searchCarTf;
 
-    @FXML
-    public TextField carIDTf;
 
     @FXML
     public TextField carNameTf;
@@ -74,6 +73,9 @@ public class CarController implements Initializable {
 
     @FXML
     public TextField carPriceTf;
+
+    @FXML
+    public TextField license_platesTf;
 
     @FXML
     public ComboBox<Integer> seatNbCbb;
@@ -98,8 +100,7 @@ public class CarController implements Initializable {
         Car car = carTable.getSelectionModel().getSelectedItem();
 
         if (car != null) {
-            carIDTf.setEditable(false);
-            carIDTf.setText("" + car.getId_car());
+            license_platesTf.setText("" + car.getLicense_plates());
             carNameTf.setText(car.getCar_name());
             carManufactureTf.setText(car.getManufacture());
             carPriceTf.setText("" + car.getRental_cost());
@@ -119,7 +120,7 @@ public class CarController implements Initializable {
     public void addCar(ActionEvent actionEvent) throws SQLException {
         radioButton = (RadioButton) status.getSelectedToggle();
         Car car = new Car();
-        car.setId_car(Integer.parseInt(carIDTf.getText()));
+        car.setLicense_plates(license_platesTf.getText());
         car.setCar_name(carNameTf.getText());
         car.setManufacture(carManufactureTf.getText());
         car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
@@ -159,7 +160,6 @@ public class CarController implements Initializable {
 
     @FXML
     public void resetBtn(ActionEvent actionEvent) throws SQLException {
-        carIDTf.setEditable(true);
         refresh();
     }
 
@@ -207,7 +207,7 @@ public class CarController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             showCar();
-            seatNbCbb.setItems(SEATLIST);
+            seatNbCbb.setItems(SEAT_LIST);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -215,11 +215,11 @@ public class CarController implements Initializable {
     }
 
     public void refresh() throws SQLException {
-        carIDTf.setText("");
+        license_platesTf.setText("");
         carNameTf.setText("");
         carManufactureTf.setText("");
         carPriceTf.setText("");
-        seatNbCbb.setValue(SEATLIST.get(0));
+        seatNbCbb.setValue(SEAT_LIST.get(0));
         carModelTa.setText("");
         rBtn1.setSelected(false);
         rBtn2.setSelected(false);
