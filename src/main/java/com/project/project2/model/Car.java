@@ -6,6 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,5 +23,6 @@ public class Car {
     private int rental_cost;
     private String model;
     private String car_status;
+    private String cimageSrc;
     private String license_plates;
 }

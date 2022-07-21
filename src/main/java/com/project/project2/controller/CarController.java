@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.project.project2.service.ICar.CARLIST;
+import static com.project.project2.service.ICar.CAR_LIST;
 
 public class CarController implements Initializable {
     private final ImplCar implCar = new ImplCar();
@@ -112,12 +112,12 @@ public class CarController implements Initializable {
             } else {
                 rBtn2.setSelected(true);
             }
-            setCarImg(car.getId_car());
+            setCarImg(car);
         }
     }
 
     @FXML
-    public void addCar(ActionEvent actionEvent) throws SQLException {
+    public void addCar(ActionEvent actionEvent) throws SQLException, FileNotFoundException {
         radioButton = (RadioButton) status.getSelectedToggle();
         Car car = new Car();
         car.setLicense_plates(license_platesTf.getText());
@@ -127,6 +127,7 @@ public class CarController implements Initializable {
         car.setModel(carModelTa.getText());
         car.setCar_status(radioButton.getText());
         car.setSeats(seatNbCbb.getValue());
+        car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
         implCar.insertCar(car, file);
 
@@ -134,17 +135,20 @@ public class CarController implements Initializable {
     }
 
     @FXML
-    public void updateCar(ActionEvent actionEvent) throws SQLException {
+    public void updateCar(ActionEvent actionEvent) throws SQLException, FileNotFoundException {
         Car car = carTable.getSelectionModel().getSelectedItem();
         if (car == null) {
 //            showError("Lỗi nhận dạng", "Chưa chọn xe cần sua trong bảng");
         } else {
+            radioButton = (RadioButton) status.getSelectedToggle();
             car.setCar_name(carNameTf.getText());
             car.setManufacture(carManufactureTf.getText());
             car.setModel(carModelTa.getText());
             car.setSeats(seatNbCbb.getValue());
             car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
             car.setCar_status(radioButton.getText());
+            car.setLicense_plates(license_platesTf.getText());
+            car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('/') + 1));
 
             implCar.updateCar(car, file);
             refresh();
@@ -200,13 +204,13 @@ public class CarController implements Initializable {
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("car_status"));
 
-        carTable.setItems(CARLIST);
+        carTable.setItems(CAR_LIST);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            showCar();
+            refresh();
             seatNbCbb.setItems(SEAT_LIST);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -226,31 +230,31 @@ public class CarController implements Initializable {
         Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));
         carImage.setY(0);
         carImage.setImage(img);
-        CARLIST.clear();
+        CAR_LIST.clear();
         showCar();
     }
 
-    public void setCarImg(int id_Car) throws SQLException, IOException {
+    public void setCarImg(Car car) throws SQLException, IOException {
         Image img;
 
-        String query = "SELECT cimage FROM Car WHERE id_car = " + id_Car;
+        String query = "SELECT cimage FROM Car WHERE id_car = " + car.getId_car();
         ResultSet rs = DBHandle.executeQuery(query);
         while (rs.next()) {
-            InputStream is = rs.getBinaryStream("cimage");
-            OutputStream os = new FileOutputStream("photo.jpg");
-            byte[] contents = new byte[1024];
-            int size;
-            if (is != null) {
-                while ((size = is.read(contents)) != -1) {
-                    os.write(contents, 0, size);
-                }
-                img = new Image("file:photo.jpg", carImage.getFitWidth(), carImage.getFitHeight(), true, true);
+//            InputStream is = rs.getBinaryStream("cimage");
+//            OutputStream os = new FileOutputStream("photo.jpg");
+//            byte[] contents = new byte[1024];
+//            int size;
+            if (car.getCimageSrc() != null) {
+//                while ((size = is.read(contents)) != -1) {
+//                    os.write(contents, 0, size);
+//                }
+                img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/Car/" + car.getCimageSrc())),
+                        carImage.getFitWidth(), carImage.getFitHeight(), true, true);
                 carImage.setY(30);
             } else {
                 img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));
             }
             carImage.setImage(img);
         }
-
     }
 }

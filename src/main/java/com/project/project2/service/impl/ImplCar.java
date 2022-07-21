@@ -29,32 +29,33 @@ public class ImplCar implements ICar {
         conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("license_plates"));
-            CARLIST.add(car);
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"));
+            CAR_LIST.add(car);
         }
-        return CARLIST;
+        return CAR_LIST;
     }
 
     @Override
     public void insertCar(Car car, File file) {
         try {
             System.out.println(car);
-            sql = "INSERT INTO Car(id_car, car_name, manufacture, seats, rental_cost, model, car_status, cimage) " +
+            sql = "INSERT INTO Car(car_name, manufacture, seats, rental_cost, model, car_status, cimage, license_plates) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             pr = conn.prepareStatement(sql);
-            pr.setInt(1, car.getId_car());
-            pr.setString(2, car.getCar_name());
-            pr.setString(3, car.getManufacture());
-            pr.setInt(4, car.getSeats());
-            pr.setInt(5, car.getRental_cost());
-            pr.setString(6, car.getModel());
-            pr.setString(7, car.getCar_status());
-            if (file != null) {
-                FileInputStream fis = new FileInputStream(file);
-                pr.setBinaryStream(8, fis, (int) file.length());
-            } else {
-                pr.setBinaryStream(8, null);
-            }
+            pr.setString(1, car.getCar_name());
+            pr.setString(2, car.getManufacture());
+            pr.setInt(3, car.getSeats());
+            pr.setInt(4, car.getRental_cost());
+            pr.setString(5, car.getModel());
+            pr.setString(6, car.getCar_status());
+            pr.setString(7, car.getCimageSrc());
+//            if (file != null) {
+//                FileInputStream fis = new FileInputStream(file);
+//                pr.setBinaryStream(7, fis, (int) file.length());
+//            } else {
+//                pr.setBinaryStream(7, null);
+//            }
+            pr.setString(8, car.getLicense_plates());
             pr.executeUpdate();
         } catch (Exception e) {
             try {
@@ -75,19 +76,17 @@ public class ImplCar implements ICar {
         pr.setInt(1, car.getId_car());
         pr.executeUpdate();
         conn.commit();
-
         try {
             conn.rollback();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
 
     @Override
     public void updateCar(Car car, File file) {
         try {
-            sql = "UPDATE Car SET car_name = ?, manufacture = ?, seats = ?, rental_cost = ?, model = ?, car_status = ?, cimage = ? WHERE id_xe = ?";
+            sql = "UPDATE Car SET car_name = ?, manufacture = ?, seats = ?, rental_cost = ?, model = ?, car_status = ?, cimage = ?, license_plates = ? WHERE id_car = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, car.getCar_name());
             pr.setString(2, car.getManufacture());
@@ -95,11 +94,15 @@ public class ImplCar implements ICar {
             pr.setInt(4, car.getRental_cost());
             pr.setString(5, car.getModel());
             pr.setString(6, car.getCar_status());
-            pr.setInt(7, car.getId_car());
-            FileInputStream fis = new FileInputStream(file);
-            pr.setBinaryStream(8, fis, (int) file.length());
-            pr.executeUpdate();
-            conn.commit();
+            if(file != null){
+                FileInputStream fis = new FileInputStream(file);
+                pr.setBinaryStream(7, fis, (int) file.length());
+            }else {
+                pr.setBinaryStream(7, null);
+            }
+            pr.setString(8, car.getLicense_plates());
+            pr.setInt(9, car.getId_car());
+            pr.execute();
         } catch (SQLException | FileNotFoundException e) {
             try {
                 conn.rollback();

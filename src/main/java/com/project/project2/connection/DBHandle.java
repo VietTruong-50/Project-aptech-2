@@ -12,7 +12,6 @@ public class DBHandle {
 
     public static boolean executeUpdate(String query) {
         try {
-
             pr = conn.prepareStatement(query);
             pr.executeUpdate();
             return true;
