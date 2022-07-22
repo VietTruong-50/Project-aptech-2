@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.ContractController">
+   <children>
+      <TableView fx:id="contractTable" layoutX="12.0" layoutY="216.0" prefHeight="457.0" prefWidth="1013.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="43.0" text="ID" />
+          <TableColumn fx:id="carNameColumn" prefWidth="102.0" text=" Tên xe" />
+            <TableColumn fx:id="cusNameColumn" prefWidth="119.0" text="Tên khách hàng" />
+            <TableColumn fx:id="staffNameColumn" prefWidth="126.0" text="Nhân viên cho thuê" />
+            <TableColumn fx:id="ttCostColumn" prefWidth="99.0" text="Tổng chi phí" />
+            <TableColumn fx:id="vatColumn" minWidth="0.0" prefWidth="70.0" text="Thuế VAT" />
+            <TableColumn fx:id="rentalDayColumn" prefWidth="108.0" text="Ngày cho thuê" />
+            <TableColumn fx:id="endDayColumn" prefWidth="112.0" text="Ngày kết thúc " />
+            <TableColumn fx:id="depositColumn" prefWidth="106.0" text="Tiền đặt cọc" />
+            <TableColumn fx:id="returnDayColumn" prefWidth="125.0" text="Ngày trả xe" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="addContractBtn" layoutX="566.0" layoutY="136.0" mnemonicParsing="false" onAction="#showAddForm" prefHeight="55.0" prefWidth="129.0" text="Tạo hợp đồng">
+         <font>
+            <Font size="14.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="editContractBtn" layoutX="713.0" layoutY="137.0" mnemonicParsing="false" onAction="#showEditForm" prefHeight="55.0" prefWidth="63.0" text="Sửa">
+         <font>
+            <Font size="14.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="delContractBtn" layoutX="790.0" layoutY="137.0" mnemonicParsing="false" onAction="#delContract" prefHeight="55.0" prefWidth="77.0" text="Thanh lý">
+         <font>
+            <Font size="14.0" />
+         </font></JFXButton>
+      <TextField fx:id="searchTf" layoutX="83.0" layoutY="149.0" prefHeight="35.0" prefWidth="245.0" style="-fx-background-radius: 20px;" />
+      <JFXButton fx:id="expPDFBtn" alignment="BASELINE_CENTER" layoutX="443.0" layoutY="137.0" mnemonicParsing="false" onAction="#expPDF" prefHeight="55.0" prefWidth="111.0" text="Print">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Img/printer.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;">
+         <children>
+            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" text=" " textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Img/Back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton ellipsisString="" layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0" text="Button">
+               <graphic>
+                  <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Img/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Label layoutX="22.0" layoutY="150.0" text="Search" textFill="#ddd3d3">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <DatePicker fx:id="returnDayDp" layoutX="879.0" layoutY="165.0" prefHeight="27.0" prefWidth="144.0" />
+      <JFXButton fx:id="updateNtxBtn" layoutX="879.0" layoutY="136.0" mnemonicParsing="false" onAction="#updateNtx" prefHeight="27.0" prefWidth="144.0" text="Trả xe">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
