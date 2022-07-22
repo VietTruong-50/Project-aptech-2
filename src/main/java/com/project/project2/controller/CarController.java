@@ -3,8 +3,11 @@ package com.project.project2.controller;
 import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Car;
 import com.project.project2.service.impl.ImplCar;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -117,14 +120,14 @@ public class CarController implements Initializable {
     }
 
     @FXML
-    public void addCar(ActionEvent actionEvent) throws SQLException, FileNotFoundException {
+    public void addCar(ActionEvent actionEvent) throws SQLException {
         radioButton = (RadioButton) status.getSelectedToggle();
         Car car = new Car();
-        car.setLicense_plates(license_platesTf.getText());
-        car.setCar_name(carNameTf.getText());
-        car.setManufacture(carManufactureTf.getText());
+        car.setLicense_plates(license_platesTf.getText().trim());
+        car.setCar_name(carNameTf.getText().trim());
+        car.setManufacture(carManufactureTf.getText().trim());
         car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
-        car.setModel(carModelTa.getText());
+        car.setModel(carModelTa.getText().trim());
         car.setCar_status(radioButton.getText());
         car.setSeats(seatNbCbb.getValue());
         car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
@@ -141,14 +144,14 @@ public class CarController implements Initializable {
 //            showError("Lỗi nhận dạng", "Chưa chọn xe cần sua trong bảng");
         } else {
             radioButton = (RadioButton) status.getSelectedToggle();
-            car.setCar_name(carNameTf.getText());
-            car.setManufacture(carManufactureTf.getText());
-            car.setModel(carModelTa.getText());
+            car.setCar_name(carNameTf.getText().trim());
+            car.setManufacture(carManufactureTf.getText().trim());
+            car.setModel(carModelTa.getText().trim());
             car.setSeats(seatNbCbb.getValue());
             car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
             car.setCar_status(radioButton.getText());
-            car.setLicense_plates(license_platesTf.getText());
-            car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('/') + 1));
+            car.setLicense_plates(license_platesTf.getText().trim());
+            car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
             implCar.updateCar(car, file);
             refresh();
@@ -169,6 +172,10 @@ public class CarController implements Initializable {
 
     @FXML
     public void importFile(ActionEvent actionEvent) {
+        FileChooser fc = new FileChooser();
+        Stage stage = new Stage();
+        file = fc.showOpenDialog(stage);
+        implCar.importFileExcel(file);
     }
 
     @FXML
@@ -205,6 +212,7 @@ public class CarController implements Initializable {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("car_status"));
 
         carTable.setItems(CAR_LIST);
+        searchCar(searchCarTf.textProperty(), carTable);
     }
 
     @Override
@@ -250,11 +258,34 @@ public class CarController implements Initializable {
 //                }
                 img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/Car/" + car.getCimageSrc())),
                         carImage.getFitWidth(), carImage.getFitHeight(), true, true);
+                file = new File("/com/project/project2/Img/Car/" + car.getCimageSrc());
                 carImage.setY(30);
             } else {
                 img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));
             }
             carImage.setImage(img);
         }
+    }
+
+    private void searchCar(StringProperty txtFind, TableView<Car> carTable) {
+        FilteredList<Car> filteredData = new FilteredList<>(CAR_LIST, p -> true);
+        txtFind.addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(car -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (car.getCar_name().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (car.getManufacture().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return car.getModel().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Car> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(carTable.comparatorProperty());
+        carTable.setItems(sortedData);
     }
 }

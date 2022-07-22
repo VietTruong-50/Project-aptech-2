@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ContractRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.ContractController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.ContractController">
    <children>
       <TableView fx:id="contractTable" layoutX="12.0" layoutY="216.0" prefHeight="457.0" prefWidth="1013.0">
         <columns>
@@ -66,7 +66,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0">
+            <JFXButton ellipsisString="" layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0" text="Button">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>

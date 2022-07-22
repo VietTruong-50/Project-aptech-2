@@ -76,16 +76,17 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showChart(ActionEvent actionEvent) {
-        changeStage("CreateContract.fxml");
+
     }
 
     @FXML
     public void showCustomerManagement(ActionEvent actionEvent) {
+        changeStage("CustomerController.fxml");
     }
 
     @FXML
     public void showContractManagement(ActionEvent actionEvent) {
-
+        changeStage("ContractController.fxml");
     }
 
     @FXML

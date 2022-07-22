@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class CarDetailController {
+import java.util.Objects;
+
+public class CarDetailController{
     @FXML
     public JFXButton addBtn;
 
@@ -17,10 +19,10 @@ public class CarDetailController {
     @FXML
     public Label label;
 
-    public void setData(Car car){
+    public void setData(Car car) {
         label.setText("License plate: " + car.getLicense_plates());
         addBtn.setVisible(true);
-        Image image = new Image(getClass().getResourceAsStream(car.getCimageSrc()));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/Car/" + car.getCimageSrc())));
         img.setImage(image);
     }
 }

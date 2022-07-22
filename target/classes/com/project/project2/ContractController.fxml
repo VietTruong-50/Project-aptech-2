@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.ContractController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.ContractController">
    <children>
       <TableView fx:id="contractTable" layoutX="12.0" layoutY="216.0" prefHeight="457.0" prefWidth="1013.0">
         <columns>
@@ -25,7 +25,7 @@
             <TableColumn fx:id="rentalDayColumn" prefWidth="108.0" text="Ngày cho thuê" />
             <TableColumn fx:id="endDayColumn" prefWidth="112.0" text="Ngày kết thúc " />
             <TableColumn fx:id="depositColumn" prefWidth="106.0" text="Tiền đặt cọc" />
-            <TableColumn fx:id="retrnDayColumn" prefWidth="125.0" text="Ngày trả xe" />
+            <TableColumn fx:id="returnDayColumn" prefWidth="125.0" text="Ngày trả xe" />
         </columns>
       </TableView>
       <JFXButton fx:id="addContractBtn" layoutX="566.0" layoutY="136.0" mnemonicParsing="false" onAction="#showAddForm" prefHeight="55.0" prefWidth="129.0" text="Tạo hợp đồng">
@@ -48,7 +48,7 @@
          <graphic>
             <ImageView fitHeight="38.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Img/printer.png" />
+                  <Image url="@Img/printer.png" />
                </image>
             </ImageView>
          </graphic></JFXButton>
@@ -61,7 +61,7 @@
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/Back.png" />
+                        <Image url="@Img/Back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -70,7 +70,7 @@
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/refresh.png" />
+                        <Image url="@Img/refresh.png" />
                      </image>
                   </ImageView>
                </graphic>
