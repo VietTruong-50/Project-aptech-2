@@ -53,6 +53,7 @@ public class LoginController {
             Parent root = loader.getRoot();
             Stage DashboardStage = new Stage();
             DashboardStage.setScene(new Scene(root));
+            DashboardStage.setResizable(false);
             DashboardStage.setTitle("Trương Quốc Việt & viet ");
             DashboardStage.show();
         }
@@ -63,6 +64,7 @@ public class LoginController {
         Parent root;
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ChangePw.fxml")));
         Stage changePwStage = new Stage();
+        changePwStage.setResizable(false);
         changePwStage.setScene(new Scene(root));
         changePwStage.show();
     }

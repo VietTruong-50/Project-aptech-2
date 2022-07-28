@@ -22,4 +22,5 @@ module com.project.project2 {
     opens com.project.project2.controller to javafx.graphics, javafx.fxml;
     opens com.project.project2.model to javafx.base;
     exports com.project.project2;
+    opens com.project.project2.service to javafx.fxml, javafx.graphics;
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ICar  {
     ObservableList<Car> CAR_LIST = FXCollections.observableArrayList();
-    List<Car> findAllCar() throws SQLException;
+    List<Car> findAll() throws SQLException;
     void insertCar(Car car, File file);
     void deleteCar(Car car) throws SQLException;
     void updateCar(Car car, File file);

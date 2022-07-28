@@ -54,11 +54,13 @@ public class MainDashboardController implements Initializable {
     public void logOut(ActionEvent actionEvent) {
         Parent root;
         Stage stage = (Stage) logoutBtn.getScene().getWindow();
+        stage.setResizable(false);
         stage.close();
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/Login.fxml")));
             Stage newStage = new Stage();
             newStage.setScene(new Scene(root));
+            newStage.setResizable(false);
             newStage.show();
         } catch (IOException e) {
             e.printStackTrace();

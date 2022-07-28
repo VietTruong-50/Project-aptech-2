@@ -1,16 +1,16 @@
 package com.project.project2.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.project.project2.model.Car;
+import com.project.project2.service.MyListener;
 import com.project.project2.service.impl.ImplCar;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -26,6 +26,7 @@ public class CreateContractController implements Initializable {
 
     private static List<Car> carList = new ArrayList<>();
     private final ImplCar implCar = new ImplCar();
+    private final List<String> strings = new ArrayList<>();
 
     public TabPane seatTabPane;
     public Tab sevenPane;
@@ -37,6 +38,8 @@ public class CreateContractController implements Initializable {
     public GridPane grid7;
     public AnchorPane pane;
 
+    private MyListener myListener;
+
     public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
         AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
@@ -44,12 +47,25 @@ public class CreateContractController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        carList.clear();
     }
 
     public void generateCar(int seats, GridPane grid) throws SQLException, IOException {
         carList.clear();
         carList = implCar.findCarBySeats(seats);
+        if(carList.size() > 0){
+            myListener = new MyListener() {
+                @Override
+                public void onClickListener(Car car) {
+                    strings.add(car.getLicense_plates());
+                }
+
+                @Override
+                public void onRemoveListener(Car car) {
+                    strings.remove(car.getLicense_plates());
+                }
+            };
+        }
         int column = 0;
         int row = 1;
         for(Car c: carList){
@@ -58,7 +74,7 @@ public class CreateContractController implements Initializable {
             AnchorPane anchorPane = fxmlLoader.load();
 
             CarDetailController carDetailController = fxmlLoader.getController();
-            carDetailController.setData(c);
+            carDetailController.setData(c, myListener);
 
             if(column == 3){
                 column = 0;
@@ -80,5 +96,15 @@ public class CreateContractController implements Initializable {
 
     public void getCarByFourSeats(Event event) throws SQLException, IOException {
         generateCar(4, grid4);
+
+    }
+
+    public void createContract(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/project/project2/ContractDetail.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        pane.getChildren().setAll(anchorPane);
+        ContractDetailController contractDetailController = fxmlLoader.getController();
+        contractDetailController.setLabel(strings);
     }
 }

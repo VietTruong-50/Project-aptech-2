@@ -14,16 +14,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1037.0" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.CreateContractController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1037.0" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.CreateContractController">
    <children>
       <Pane prefHeight="73.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;">
          <children>
-            <JFXButton layoutX="873.0" layoutY="17.0" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #ff4136;" text="Make contract">
+            <JFXButton layoutX="873.0" layoutY="17.0" onAction="#createContract" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #ff4136;" text="Make contract">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="goBackBtn" layoutX="42.0" layoutY="13.0" onAction="#setGoBackBtn" prefHeight="41.0" prefWidth="79.0" style="-fx-background-radius: 50px;" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" contentDisplay="CENTER" layoutX="42.0" layoutY="13.0" onAction="#setGoBackBtn" prefHeight="48.0" prefWidth="47.0" style="-fx-background-radius: 50px;" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>

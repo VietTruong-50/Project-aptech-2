@@ -5,10 +5,9 @@ import com.project.project2.model.Car;
 import com.project.project2.service.ICar;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ImplCar implements ICar {
@@ -19,7 +18,7 @@ public class ImplCar implements ICar {
     private String sql;
 
     @Override
-    public List<Car> findAllCar() throws SQLException {
+    public List<Car> findAll() throws SQLException {
         sql = "SELECT * FROM Car";
         conn.setAutoCommit(false);
         pr = conn.prepareStatement(sql);
@@ -27,7 +26,8 @@ public class ImplCar implements ICar {
         conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"));
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"),
+                    rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
         }
         return CAR_LIST;
@@ -37,8 +37,8 @@ public class ImplCar implements ICar {
     public void insertCar(Car car, File file) {
         try {
             System.out.println(car);
-            sql = "INSERT INTO Car(car_name, manufacture, seats, rental_cost, model, car_status, cimage, license_plates) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO Car(car_name, manufacture, seats, rental_cost, model, car_status, cimage, license_plates, createdAt, updatedAt) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pr = conn.prepareStatement(sql);
             pr.setString(1, car.getCar_name());
             pr.setString(2, car.getManufacture());
@@ -54,6 +54,9 @@ public class ImplCar implements ICar {
 //                pr.setBinaryStream(7, null);
 //            }
             pr.setString(8, car.getLicense_plates());
+            pr.setDate(9, Date.valueOf(LocalDate.now()));
+            pr.setDate(10, Date.valueOf(LocalDate.now()));
+
             pr.executeUpdate();
         } catch (Exception e) {
             try {
@@ -84,7 +87,7 @@ public class ImplCar implements ICar {
     @Override
     public void updateCar(Car car, File file) {
         try {
-            sql = "UPDATE Car SET car_name = ?, manufacture = ?, seats = ?, rental_cost = ?, model = ?, car_status = ?, cimage = ?, license_plates = ? WHERE id_car = ?";
+            sql = "UPDATE Car SET car_name = ?, manufacture = ?, seats = ?, rental_cost = ?, model = ?, car_status = ?, cimage = ?, license_plates = ?, updatedAt = ? WHERE id_car = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, car.getCar_name());
             pr.setString(2, car.getManufacture());
@@ -101,6 +104,7 @@ public class ImplCar implements ICar {
 //            }
             pr.setString(8, car.getLicense_plates());
             pr.setInt(9, car.getId_car());
+            pr.setDate(10, Date.valueOf(LocalDate.now()));
             pr.execute();
         } catch (SQLException e) {
             try {
@@ -121,7 +125,8 @@ public class ImplCar implements ICar {
         conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"));
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
+                    rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
         }
         return CAR_LIST;

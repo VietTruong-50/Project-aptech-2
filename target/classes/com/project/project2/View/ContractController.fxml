@@ -54,7 +54,7 @@
          </graphic></JFXButton>
       <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="48.0" prefWidth="44.0" style="-fx-background-radius: 50px;" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
@@ -66,7 +66,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton ellipsisString="" layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0" text="Button">
+            <JFXButton alignment="CENTER" contentDisplay="GRAPHIC_ONLY" ellipsisString="" layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0" style="-fx-background-radius: 50%;" text="Button">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>

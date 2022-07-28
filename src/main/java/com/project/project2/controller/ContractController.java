@@ -30,6 +30,8 @@ public class ContractController {
     public void updateNtx(ActionEvent actionEvent) {
     }
 
-    public void setGoBackBtn(ActionEvent actionEvent) {
+    public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
+        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/MainDashboard.fxml")));
+        root.getChildren().setAll(dashboard);
     }
 }

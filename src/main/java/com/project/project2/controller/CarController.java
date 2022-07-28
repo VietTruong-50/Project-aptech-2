@@ -103,7 +103,7 @@ public class CarController implements Initializable {
         Car car = carTable.getSelectionModel().getSelectedItem();
 
         if (car != null) {
-            license_platesTf.setText("" + car.getLicense_plates());
+            license_platesTf.setText(car.getLicense_plates());
             carNameTf.setText(car.getCar_name());
             carManufactureTf.setText(car.getManufacture());
             carPriceTf.setText("" + car.getRental_cost());
@@ -201,7 +201,7 @@ public class CarController implements Initializable {
     }
 
     public void showCar() throws SQLException {
-        implCar.findAllCar();
+        implCar.findAll();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_car"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
