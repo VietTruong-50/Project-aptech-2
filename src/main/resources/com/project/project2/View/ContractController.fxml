@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ContractRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.ContractController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" stylesheets="@../Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Contract.ContractController">
    <children>
       <TableView fx:id="contractTable" layoutX="12.0" layoutY="216.0" prefHeight="457.0" prefWidth="1013.0">
         <columns>
@@ -28,7 +28,7 @@
             <TableColumn fx:id="retrnDayColumn" prefWidth="125.0" text="Ngày trả xe" />
         </columns>
       </TableView>
-      <JFXButton fx:id="addContractBtn" layoutX="566.0" layoutY="136.0" mnemonicParsing="false" onAction="#showAddForm" prefHeight="55.0" prefWidth="129.0" text="Thêm hợp đồng">
+      <JFXButton fx:id="addContractBtn" layoutX="566.0" layoutY="136.0" mnemonicParsing="false" onAction="#showAddForm" prefHeight="55.0" prefWidth="129.0" text="Tạo hợp đồng">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
@@ -40,7 +40,7 @@
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <TextField fx:id="searchTf" layoutX="83.0" layoutY="149.0" prefHeight="35.0" prefWidth="245.0" />
+      <TextField fx:id="searchTf" layoutX="83.0" layoutY="149.0" prefHeight="35.0" prefWidth="245.0" style="-fx-background-radius: 20px;" />
       <JFXButton fx:id="expPDFBtn" alignment="BASELINE_CENTER" layoutX="443.0" layoutY="137.0" mnemonicParsing="false" onAction="#expPDF" prefHeight="55.0" prefWidth="111.0" text="Print">
          <font>
             <Font size="14.0" />
@@ -54,7 +54,7 @@
          </graphic></JFXButton>
       <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="48.0" prefWidth="44.0" style="-fx-background-radius: 50px;" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
@@ -66,7 +66,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0">
+            <JFXButton alignment="CENTER" contentDisplay="GRAPHIC_ONLY" ellipsisString="" layoutX="954.0" layoutY="16.0" onAction="#refreshTable" prefHeight="49.0" prefWidth="53.0" style="-fx-background-radius: 50%;" text="Button">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>

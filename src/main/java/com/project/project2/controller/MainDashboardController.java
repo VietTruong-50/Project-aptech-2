@@ -54,11 +54,13 @@ public class MainDashboardController implements Initializable {
     public void logOut(ActionEvent actionEvent) {
         Parent root;
         Stage stage = (Stage) logoutBtn.getScene().getWindow();
+        stage.setResizable(false);
         stage.close();
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/Login.fxml")));
             Stage newStage = new Stage();
             newStage.setScene(new Scene(root));
+            newStage.setResizable(false);
             newStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,7 +69,7 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showCarManagement(ActionEvent actionEvent) {
-        changeStage("/com/project/project2/CarController.fxml");
+        changeStage("CarController.fxml");
     }
 
     @FXML
@@ -76,15 +78,17 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showChart(ActionEvent actionEvent) {
+
     }
 
     @FXML
     public void showCustomerManagement(ActionEvent actionEvent) {
+        changeStage("CustomerController.fxml");
     }
 
     @FXML
     public void showContractManagement(ActionEvent actionEvent) {
-
+        changeStage("ContractController.fxml");
     }
 
     @FXML
@@ -97,7 +101,7 @@ public class MainDashboardController implements Initializable {
 
     public void changeStage(String path){
         try {
-            AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
+            AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/" + path)));
             root.getChildren().setAll(dashboard);
         } catch (IOException e) {
             e.printStackTrace();

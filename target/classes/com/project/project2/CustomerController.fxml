@@ -16,36 +16,36 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CustomerRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller.Customer.CustomerController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.CustomerController">
    <children>
       <TableView fx:id="customerTable" layoutX="348.0" layoutY="159.0" onMouseClicked="#handleClickTableView" prefHeight="511.0" prefWidth="683.0">
          <columns>
             <TableColumn fx:id="idColumn" editable="false" prefWidth="92.0" text="Mã khách" />
             <TableColumn fx:id="nameColumn" editable="false" prefWidth="167.0" text="Họ và tên" />
-            <TableColumn fx:id="sdtColumn" editable="false" minWidth="9.0" prefWidth="82.0" text="SĐT" />
-            <TableColumn fx:id="cmtColumn" editable="false" prefWidth="166.0" text="Chứng minh thư" />
-            <TableColumn fx:id="adressColumn" editable="false" minWidth="4.0" prefWidth="466.0" text="Địa chỉ" />
+            <TableColumn fx:id="phoneColumn" editable="false" minWidth="9.0" prefWidth="82.0" text="SĐT" />
+            <TableColumn fx:id="idCardColumn" editable="false" prefWidth="166.0" text="Chứng minh thư" />
+            <TableColumn fx:id="addressColumn" editable="false" minWidth="4.0" prefWidth="466.0" text="Địa chỉ" />
          </columns>
       </TableView>
       <JFXButton fx:id="delBtn" layoutX="836.0" layoutY="100.0" mnemonicParsing="false" onAction="#delCustomer" prefHeight="33.0" prefWidth="164.0" text="Xóa thông tin">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <TextField fx:id="searchTf" layoutX="350.0" layoutY="99.0" prefHeight="33.0" prefWidth="264.0" />
+      <TextField fx:id="searchTf" layoutX="350.0" layoutY="99.0" prefHeight="33.0" prefWidth="264.0" style="-fx-background-radius: 20px;" />
       <Label layoutX="292.0" layoutY="104.0" text="Search" textFill="#ddd3d3">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@../Css/viewStyle.css">
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" stylesheets="@../Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Img/Back.png" />
+                        <Image url="@Img/Back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -54,8 +54,8 @@
       </Pane>
       <TextField fx:id="idTf" editable="false" layoutX="122.0" layoutY="225.0" prefHeight="25.0" prefWidth="170.0" />
       <TextField fx:id="nameTf" layoutX="122.0" layoutY="269.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="sdtTf" layoutX="122.0" layoutY="320.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="cmtTf" layoutX="122.0" layoutY="373.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="phoneTf" layoutX="122.0" layoutY="320.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="idCardTf" layoutX="122.0" layoutY="373.0" prefHeight="25.0" prefWidth="170.0" />
       <TextField fx:id="addressTf" layoutX="122.0" layoutY="431.0" prefHeight="25.0" prefWidth="170.0" />
       <Label layoutX="20.0" layoutY="229.0" prefHeight="17.0" prefWidth="115.0" text="Mã khách" textFill="#ddd3d3">
          <font>
@@ -171,6 +171,6 @@
       </Circle>
    </children>
    <stylesheets>
-      <URL value="@../Css/viewStyle.css" />
+      <URL value="@Css/viewStyle.css" />
    </stylesheets>
 </AnchorPane>
