@@ -103,8 +103,8 @@ public class ImplCar implements ICar {
 //                pr.setBinaryStream(7, null);
 //            }
             pr.setString(8, car.getLicense_plates());
-            pr.setInt(9, car.getId_car());
-            pr.setDate(10, Date.valueOf(LocalDate.now()));
+            pr.setDate(9, Date.valueOf(LocalDate.now()));
+            pr.setInt(10, car.getId_car());
             pr.execute();
         } catch (SQLException e) {
             try {
@@ -117,10 +117,11 @@ public class ImplCar implements ICar {
 
     @Override
     public List<Car> findCarBySeats(int seat) throws SQLException {
-        sql = "SELECT * FROM Car WHERE seats = ?";
+        sql = "SELECT * FROM Car WHERE seats = ? AND car_status = ?";
         conn.setAutoCommit(false);
         pr = conn.prepareStatement(sql);
         pr.setInt(1, seat);
+        pr.setString(2, "ON");
         rs = pr.executeQuery();
         conn.commit();
         while (rs.next()) {
