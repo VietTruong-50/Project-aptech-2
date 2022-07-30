@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.project.project2.controller.CustomerController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="com.project.project2.controller.CustomerController">
    <children>
       <TableView fx:id="customerTable" layoutX="348.0" layoutY="159.0" onMouseClicked="#handleClickTableView" prefHeight="511.0" prefWidth="683.0">
          <columns>
@@ -27,12 +27,8 @@
             <TableColumn fx:id="addressColumn" editable="false" minWidth="4.0" prefWidth="466.0" text="Địa chỉ" />
          </columns>
       </TableView>
-      <JFXButton fx:id="delBtn" layoutX="836.0" layoutY="100.0" mnemonicParsing="false" onAction="#delCustomer" prefHeight="33.0" prefWidth="164.0" text="Xóa thông tin">
-         <font>
-            <Font size="14.0" />
-         </font></JFXButton>
-      <TextField fx:id="searchTf" layoutX="350.0" layoutY="99.0" prefHeight="33.0" prefWidth="264.0" style="-fx-background-radius: 20px;" />
-      <Label layoutX="292.0" layoutY="104.0" text="Search" textFill="#ddd3d3">
+      <TextField fx:id="searchTf" layoutX="406.0" layoutY="100.0" prefHeight="33.0" prefWidth="264.0" style="-fx-background-radius: 20px;" />
+      <Label layoutX="348.0" layoutY="105.0" text="Search" textFill="#393838">
          <font>
             <Font size="18.0" />
          </font></Label>
@@ -52,34 +48,34 @@
             </JFXButton>
          </children>
       </Pane>
-      <TextField fx:id="idTf" editable="false" layoutX="122.0" layoutY="225.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="nameTf" layoutX="122.0" layoutY="269.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="phoneTf" layoutX="122.0" layoutY="320.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="idCardTf" layoutX="122.0" layoutY="373.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="addressTf" layoutX="122.0" layoutY="431.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="20.0" layoutY="229.0" prefHeight="17.0" prefWidth="115.0" text="Mã khách" textFill="#ddd3d3">
+      <TextField fx:id="idTf" editable="false" layoutX="131.0" layoutY="243.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="nameTf" layoutX="131.0" layoutY="297.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="phoneTf" layoutX="131.0" layoutY="348.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="idCardTf" layoutX="131.0" layoutY="401.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="addressTf" layoutX="131.0" layoutY="459.0" prefHeight="25.0" prefWidth="170.0" />
+      <Label layoutX="29.0" layoutY="243.0" prefHeight="25.0" prefWidth="90.0" text="Mã khách" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="20.0" layoutY="273.0" prefHeight="17.0" prefWidth="115.0" text="Họ và tên" textFill="#ddd3d3">
+      <Label layoutX="29.0" layoutY="297.0" prefHeight="25.0" prefWidth="90.0" text="Họ và tên" textAlignment="RIGHT" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="20.0" layoutY="324.0" prefHeight="17.0" prefWidth="115.0" text="SĐT" textFill="#ddd3d3">
+      <Label layoutX="29.0" layoutY="348.0" prefHeight="25.0" prefWidth="90.0" text="SĐT" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="20.0" layoutY="373.0" prefHeight="17.0" prefWidth="115.0" text="Cmt" textFill="#ddd3d3">
+      <Label layoutX="29.0" layoutY="381.0" prefHeight="67.0" prefWidth="76.0" text="Chứng minh thư" textFill="#393838" wrapText="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="20.0" layoutY="431.0" prefHeight="17.0" prefWidth="115.0" text="Địa chỉ" textFill="#ddd3d3">
+      <Label layoutX="29.0" layoutY="459.0" prefHeight="25.0" prefWidth="90.0" text="Địa chỉ" textFill="#393838">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <JFXButton layoutX="41.0" layoutY="509.0" onAction="#saveBtn" prefHeight="40.0" prefWidth="115.0" text="Save" />
-      <JFXButton layoutX="199.0" layoutY="509.0" onAction="#refreshBtn" prefHeight="40.0" prefWidth="115.0" text="Reset" />
-      <Circle fx:id="pointLight" disable="true" layoutX="314.0" layoutY="238.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+      <JFXButton layoutX="59.0" layoutY="537.0" onAction="#saveBtn" prefHeight="40.0" prefWidth="115.0" text="Save" />
+      <JFXButton layoutX="203.0" layoutY="537.0" onAction="#refreshBtn" prefHeight="40.0" prefWidth="115.0" text="Reset" />
+      <Circle fx:id="pointLight" disable="true" layoutX="323.0" layoutY="256.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -97,7 +93,7 @@
             </RadialGradient>
          </fill>
       </Circle>
-      <Circle fx:id="pointLight1" disable="true" layoutX="314.0" layoutY="282.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+      <Circle fx:id="pointLight1" disable="true" layoutX="323.0" layoutY="310.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -115,7 +111,7 @@
             </RadialGradient>
          </fill>
       </Circle>
-      <Circle fx:id="pointLight2" disable="true" layoutX="314.0" layoutY="333.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+      <Circle fx:id="pointLight2" disable="true" layoutX="323.0" layoutY="361.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -133,7 +129,7 @@
             </RadialGradient>
          </fill>
       </Circle>
-      <Circle fx:id="pointLight3" disable="true" layoutX="314.0" layoutY="386.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+      <Circle fx:id="pointLight3" disable="true" layoutX="323.0" layoutY="414.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -151,7 +147,7 @@
             </RadialGradient>
          </fill>
       </Circle>
-      <Circle fx:id="pointLight4" disable="true" layoutX="314.0" layoutY="444.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+      <Circle fx:id="pointLight4" disable="true" layoutX="323.0" layoutY="472.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -169,6 +165,11 @@
             </RadialGradient>
          </fill>
       </Circle>
+      <JFXButton fx:id="delBtn" layoutX="852.0" layoutY="102.0" mnemonicParsing="false" onAction="#delCustomer" prefHeight="33.0" prefWidth="164.0" text="Xóa thông tin">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
    </children>
    <stylesheets>
       <URL value="@Css/viewStyle.css" />
