@@ -8,7 +8,7 @@ public class Car {
     private String car_name;
     private String manufacture;
     private int seats;
-    private int rental_cost;
+    private double rental_cost;
     private String model;
     private String car_status;
     private String cimageSrc;
@@ -20,7 +20,7 @@ public class Car {
 
     }
 
-    public Car(int id_car, String car_name, String manufacture, int seats, int rental_cost, String model, String car_status, String cimageSrc, String license_plates, LocalDate createdAt, LocalDate updatedAt) {
+    public Car(int id_car, String car_name, String manufacture, int seats, double rental_cost, String model, String car_status, String cimageSrc, String license_plates, LocalDate createdAt, LocalDate updatedAt) {
         this.id_car = id_car;
         this.car_name = car_name;
         this.manufacture = manufacture;
@@ -66,11 +66,11 @@ public class Car {
         this.seats = seats;
     }
 
-    public int getRental_cost() {
+    public double getRental_cost() {
         return rental_cost;
     }
 
-    public void setRental_cost(int rental_cost) {
+    public void setRental_cost(double rental_cost) {
         this.rental_cost = rental_cost;
     }
 
@@ -120,5 +120,22 @@ public class Car {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id_car=" + id_car +
+                ", car_name='" + car_name + '\'' +
+                ", manufacture='" + manufacture + '\'' +
+                ", seats=" + seats +
+                ", rental_cost=" + rental_cost +
+                ", model='" + model + '\'' +
+                ", car_status='" + car_status + '\'' +
+                ", cimageSrc='" + cimageSrc + '\'' +
+                ", license_plates='" + license_plates + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

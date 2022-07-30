@@ -3,20 +3,32 @@ package com.project.project2.model;
 import java.time.LocalDate;
 
 public class ContractDetail {
+    private int id_contract_detail;
     private int id_contract;
     private int id_car;
     private LocalDate returnDate;
-    private int unit_price;
     private int VAT;
     private float deposit;
 
-    public ContractDetail(int id_contract, int id_car, LocalDate returnDate, int unit_price, int VAT, float deposit) {
+    public ContractDetail(){
+
+    }
+
+    public ContractDetail(int id_contract_detail, int id_contract, int id_car, LocalDate returnDate, int VAT, float deposit) {
+        this.id_contract_detail = id_contract_detail;
         this.id_contract = id_contract;
         this.id_car = id_car;
         this.returnDate = returnDate;
-        this.unit_price = unit_price;
         this.VAT = VAT;
         this.deposit = deposit;
+    }
+
+    public int getId_contract_detail() {
+        return id_contract_detail;
+    }
+
+    public void setId_contract_detail(int id_contract_detail) {
+        this.id_contract_detail = id_contract_detail;
     }
 
     public int getId_contract() {
@@ -43,14 +55,6 @@ public class ContractDetail {
         this.returnDate = returnDate;
     }
 
-    public double getUnit_price() {
-        return unit_price;
-    }
-
-    public void setUnit_price(int unit_price) {
-        this.unit_price = unit_price;
-    }
-
     public int getVAT() {
         return VAT;
     }
@@ -65,5 +69,17 @@ public class ContractDetail {
 
     public void setDeposit(float deposit) {
         this.deposit = deposit;
+    }
+
+    @Override
+    public String toString() {
+        return "ContractDetail{" +
+                "id_contract_detail=" + id_contract_detail +
+                ", id_contract=" + id_contract +
+                ", id_car=" + id_car +
+                ", returnDate=" + returnDate +
+                ", VAT=" + VAT +
+                ", deposit=" + deposit +
+                '}';
     }
 }

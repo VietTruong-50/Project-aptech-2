@@ -26,7 +26,7 @@ public class CreateContractController implements Initializable {
 
     private static List<Car> carList = new ArrayList<>();
     private final ImplCar implCar = new ImplCar();
-    private final List<String> strings = new ArrayList<>();
+    private final List<Car> list = new ArrayList<>();
 
     public TabPane seatTabPane;
     public Tab sevenPane;
@@ -57,12 +57,12 @@ public class CreateContractController implements Initializable {
             myListener = new MyListener() {
                 @Override
                 public void onClickListener(Car car) {
-                    strings.add(car.getLicense_plates());
+                    list.add(car);
                 }
 
                 @Override
                 public void onRemoveListener(Car car) {
-                    strings.remove(car.getLicense_plates());
+                    list.remove(car);
                 }
             };
         }
@@ -105,6 +105,6 @@ public class CreateContractController implements Initializable {
         AnchorPane anchorPane = fxmlLoader.load();
         pane.getChildren().setAll(anchorPane);
         ContractDetailController contractDetailController = fxmlLoader.getController();
-        contractDetailController.setLabel(strings);
+        contractDetailController.setLabel(list);
     }
 }

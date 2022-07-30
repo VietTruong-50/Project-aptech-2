@@ -148,7 +148,7 @@ public class CarController implements Initializable {
             car.setManufacture(carManufactureTf.getText().trim());
             car.setModel(carModelTa.getText().trim());
             car.setSeats(seatNbCbb.getValue());
-            car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
+            car.setRental_cost(Double.parseDouble(carPriceTf.getText()));
             car.setCar_status(radioButton.getText());
             car.setLicense_plates(license_platesTf.getText().trim());
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));

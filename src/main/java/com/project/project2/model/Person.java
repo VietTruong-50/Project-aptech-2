@@ -5,6 +5,10 @@ public class Person {
     private String full_name;
     private String phone;
 
+    public Person() {
+
+    }
+
     public Person(String full_name, String phone) {
         this.full_name = full_name;
         this.phone = phone;
@@ -24,5 +28,13 @@ public class Person {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "full_name='" + full_name + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }
