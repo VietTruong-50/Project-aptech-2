@@ -85,7 +85,7 @@ public class CustomerController implements Initializable {
         implCustomer.findAll();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_customer"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("full_name"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         idCardColumn.setCellValueFactory(new PropertyValueFactory<>("idCard"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));

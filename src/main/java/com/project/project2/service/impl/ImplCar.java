@@ -26,7 +26,7 @@ public class ImplCar implements ICar {
         conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"),
+                    rs.getDouble("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"),
                     rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
         }
@@ -43,7 +43,7 @@ public class ImplCar implements ICar {
             pr.setString(1, car.getCar_name());
             pr.setString(2, car.getManufacture());
             pr.setInt(3, car.getSeats());
-            pr.setInt(4, car.getRental_cost());
+            pr.setDouble(4, car.getRental_cost());
             pr.setString(5, car.getModel());
             pr.setString(6, car.getCar_status());
             pr.setString(7, car.getCimageSrc());
@@ -92,7 +92,7 @@ public class ImplCar implements ICar {
             pr.setString(1, car.getCar_name());
             pr.setString(2, car.getManufacture());
             pr.setInt(3, car.getSeats());
-            pr.setInt(4, car.getRental_cost());
+            pr.setDouble(4, car.getRental_cost());
             pr.setString(5, car.getModel());
             pr.setString(6, car.getCar_status());
             pr.setString(7, car.getCimageSrc());

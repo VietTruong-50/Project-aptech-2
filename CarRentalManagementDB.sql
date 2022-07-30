@@ -1,4 +1,4 @@
-CREATE DATABASE CarRentalManagement
+﻿CREATE DATABASE CarRentalManagement
 
 USE CarRentalManagement
 
@@ -9,13 +9,15 @@ CREATE TABLE Users(
 	primary key (id_user)
 );
 
+INSERT INTO Users(user_name, password) VALUES ('viet', '123')
+
 --CREATE Car
 CREATE TABLE Car(
 	id_car int identity(1,1) not null,
 	car_name varchar (40) not null,
 	manufacture nvarchar(40) not null,
 	seats tinyint not null,
-	rental_cost int not null,
+	rental_cost float not null,
 	model varchar(50),
 	car_status varchar(10) not null,
 	cimage nvarchar(500),
@@ -36,6 +38,11 @@ CREATE TABLE Customers(
 	updatedAt datetime,
 	primary key (id_customer)
 );
+
+INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) VALUES
+(N'Trương Quốc Việt', 102180153149, 0906143219, N'341 Phố Vọng, Hà Nội', '30/07/2022','30/07/2022'),
+(N'Nguyễn Thị Hạnh', 103201723415, 0901233166, N'30 Trần Duy Hưng,  Hà Nội','30/07/2022','30/07/2022'),
+(N'Nguyễn Vũ Long', 100298515054, 0903555333, N'11 Giải Phóng,  Hà Nội', '30/07/2022','30/07/2022')
 
 --CREATE Staffs
 CREATE TABLE Staffs(
@@ -59,7 +66,7 @@ CREATE TABLE Contract(
 	id_staff int not null,
 	startDate datetime not null,
 	endDate datetime not null,
-	total_cost int null,
+	total_cost float null,
 	createdAt datetime,
 	updatedAt datetime,
 	primary key (id_contract)
@@ -67,14 +74,15 @@ CREATE TABLE Contract(
 
 --CREATE ContractDetail
 CREATE TABLE ContractDetail(
+	id_contract_detail int  identity(1,1) not null,
 	id_contract int not null,
 	id_car int not null,
-	unit_price int null,
 	VAT int not null,
 	deposit float(20),
 	returnDate datetime default null,
-	primary key (id_contract)
+	primary key (id_contract_detail)
 );
+
 
 ALTER TABLE Contract 
 ADD CONSTRAINT FK_Customers_Contract FOREIGN KEY (id_customer) REFERENCES Customers(id_customer);
@@ -85,5 +93,5 @@ ADD CONSTRAINT FK_Car_ContractDetail FOREIGN KEY (id_car) REFERENCES Car(id_car)
 ALTER TABLE Contract 
 ADD CONSTRAINT FK_Staffs_Contract FOREIGN KEY (id_staff) REFERENCES Staffs(id_staff);
 
-ALTER TABLE Contract
-ADD CONSTRAINT FK_Contract_ContractDetail FOREIGN KEY (id_contract) REFERENCES ContractDetail(id_contract);
+ALTER TABLE ContractDetail
+ADD CONSTRAINT FK_ContractDetail_Contract FOREIGN KEY (id_contract) REFERENCES Contract(id_contract);

@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: white;" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="com.project.project2.controller.ContractDetailController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: white;" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.ContractDetailController">
    <children>
-      <Label fx:id="license_plates" layoutX="391.0" layoutY="404.0" prefHeight="17.0" prefWidth="174.0" text="License plates" textFill="#e81f1f">
+      <Label fx:id="license_plates" layoutX="391.0" layoutY="356.0" prefHeight="17.0" prefWidth="174.0" text="License plates" textFill="#e81f1f">
          <font>
             <Font size="14.0" />
          </font></Label>
       <Pane prefHeight="73.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" />
-      <Label layoutX="256.0" layoutY="404.0" text="License plates:">
+      <Label layoutX="256.0" layoutY="356.0" text="License plates:">
          <font>
             <Font size="14.0" />
          </font>
@@ -26,68 +26,74 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="107.0" prefHeight="25.0" prefWidth="190.0" />
+      <TextField fx:id="cus_name" layoutX="390.0" layoutY="107.0" prefHeight="25.0" prefWidth="190.0" />
       <Label layoutX="257.0" layoutY="160.0" prefHeight="17.0" prefWidth="84.0" text="Staff id: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="156.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="257.0" layoutY="207.0" text="VAT:">
+      <TextField fx:id="staff_id" layoutX="390.0" layoutY="156.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label layoutX="258.0" layoutY="207.0" text="ID card:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="391.0" layoutY="203.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="258.0" layoutY="255.0" text="ID card:">
+      <TextField fx:id="id_card" layoutX="390.0" layoutY="203.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label layoutX="256.0" layoutY="255.0" prefHeight="20.0" prefWidth="48.0" text="Phone:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="251.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="260.0" layoutY="304.0" text="Phone:">
+      <TextField fx:id="phoneTf" layoutX="390.0" layoutY="252.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label layoutX="257.0" layoutY="308.0" text="Address:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="300.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="256.0" layoutY="360.0" text="Address:">
+      <TextField fx:id="addressTf" layoutX="391.0" layoutY="304.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label layoutX="257.0" layoutY="400.0" text="Start date:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="356.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="257.0" layoutY="448.0" text="Start date:">
+      <DatePicker fx:id="startDate" layoutX="391.0" layoutY="396.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label layoutX="257.0" layoutY="452.0" text="End date:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker layoutX="391.0" layoutY="444.0" prefHeight="25.0" prefWidth="190.0" />
-      <Label layoutX="257.0" layoutY="500.0" text="End date:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <DatePicker layoutX="391.0" layoutY="496.0" prefHeight="25.0" prefWidth="190.0" />
-      <JFXButton layoutX="682.0" layoutY="107.0" prefHeight="40.0" prefWidth="117.0" text="Save">
+      <DatePicker fx:id="endDate" layoutX="391.0" layoutY="448.0" prefHeight="25.0" prefWidth="190.0" />
+      <JFXButton layoutX="750.0" layoutY="101.0" onAction="#saveContract" prefHeight="40.0" prefWidth="117.0" text="Save">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton cancelButton="true" layoutX="682.0" layoutY="177.0" prefHeight="40.0" prefWidth="117.0" text="Cancle">
+      <JFXButton cancelButton="true" layoutX="750.0" layoutY="171.0" prefHeight="40.0" prefWidth="117.0" text="Cancle">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="256.0" layoutY="548.0" prefHeight="17.0" prefWidth="74.0" text="Total cost:">
+      <Label layoutX="252.0" layoutY="578.0" prefHeight="17.0" prefWidth="74.0" text="Total cost:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="392.0" layoutY="548.0" prefHeight="17.0" prefWidth="174.0" text="Label">
+      <Label fx:id="total_cost" layoutX="391.0" layoutY="578.0" prefHeight="17.0" prefWidth="174.0" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <Label layoutX="256.0" layoutY="501.0" text="VAT:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="391.0" layoutY="503.0" prefHeight="17.0" prefWidth="190.0" text="15%" />
+      <Label layoutX="254.0" layoutY="539.0" prefHeight="20.0" prefWidth="127.0" text="Deposit:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="depositTf" layoutX="391.0" layoutY="537.0" prefHeight="25.0" prefWidth="190.0" />
    </children>
 </AnchorPane>
