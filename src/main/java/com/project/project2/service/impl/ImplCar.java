@@ -6,8 +6,6 @@ import com.project.project2.service.ICar;
 
 import java.io.File;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ImplCar implements ICar {
@@ -54,8 +52,8 @@ public class ImplCar implements ICar {
 //                pr.setBinaryStream(7, null);
 //            }
             pr.setString(8, car.getLicense_plates());
-            pr.setDate(9, Date.valueOf(LocalDate.now()));
-            pr.setDate(10, Date.valueOf(LocalDate.now()));
+            pr.setDate(9, Date.valueOf(car.getCreatedAt()));
+            pr.setDate(10, Date.valueOf(car.getUpdatedAt()));
 
             pr.executeUpdate();
         } catch (Exception e) {
@@ -70,7 +68,6 @@ public class ImplCar implements ICar {
 
     @Override
     public void deleteCar(Car car) throws SQLException {
-
         sql = "DELETE FROM Car WHERE id_car = ?";
         conn.setAutoCommit(false);
         pr = conn.prepareStatement(sql);
@@ -103,7 +100,7 @@ public class ImplCar implements ICar {
 //                pr.setBinaryStream(7, null);
 //            }
             pr.setString(8, car.getLicense_plates());
-            pr.setDate(9, Date.valueOf(LocalDate.now()));
+            pr.setDate(9, Date.valueOf(car.getCreatedAt()));
             pr.setInt(10, car.getId_car());
             pr.execute();
         } catch (SQLException e) {
@@ -167,5 +164,24 @@ public class ImplCar implements ICar {
 //        } catch (SQLException | IOException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    @Override
+    public void setCarStatus(int id) {
+        try{
+            sql = "UPDATE Car SET car_status = ? WHERE id_car = ?";
+            pr = conn.prepareStatement(sql);
+            pr.setString(1, "OFF");
+            pr.setInt(2, id);
+
+            pr.execute();
+        }catch (Exception e){
+            try{
+                conn.rollback();
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 }

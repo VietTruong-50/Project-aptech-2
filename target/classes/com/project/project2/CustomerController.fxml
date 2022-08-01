@@ -73,7 +73,7 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <JFXButton layoutX="59.0" layoutY="537.0" onAction="#saveBtn" prefHeight="40.0" prefWidth="115.0" text="Save" />
+      <JFXButton layoutX="59.0" layoutY="537.0" onAction="#saveCustomer" prefHeight="40.0" prefWidth="115.0" text="Save" />
       <JFXButton layoutX="203.0" layoutY="537.0" onAction="#refreshBtn" prefHeight="40.0" prefWidth="115.0" text="Reset" />
       <Circle fx:id="pointLight" disable="true" layoutX="323.0" layoutY="256.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>

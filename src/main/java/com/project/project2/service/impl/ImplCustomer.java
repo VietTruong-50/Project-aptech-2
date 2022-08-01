@@ -1,7 +1,6 @@
 package com.project.project2.service.impl;
 
 import com.project.project2.connection.DBConnection;
-import com.project.project2.model.Car;
 import com.project.project2.model.Customer;
 import com.project.project2.service.ICustomer;
 
@@ -40,7 +39,7 @@ public class ImplCustomer implements ICustomer {
         pr.setString(1, idCard);
         rs = pr.executeQuery();
         conn.commit();
-        while (rs.next()) {
+        if(rs.next()) {
             customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
                     rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
                     , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
@@ -54,10 +53,11 @@ public class ImplCustomer implements ICustomer {
         try {
             sql = "INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) " +
                     "VALUES (?, ?, ?, ?, ? ,?)";
+            conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
             pr.setString(1, customer.getFull_name());
             pr.setString(2, customer.getIdCard());
-            pr.setString(3, customer.getIdCard());
+            pr.setString(3, customer.getPhone());
             pr.setString(4, customer.getAddress());
             pr.setDate(5, Date.valueOf(LocalDate.now()));
             pr.setDate(6, Date.valueOf(LocalDate.now()));
@@ -74,9 +74,34 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
+    public void updateCustomer(Customer customer) {
+        try{
+            System.out.println(customer);
+            sql = "UPDATE Customers SET customer_name = ?, idCard = ?, phone = ?, address = ?, createdAt = ?, updatedAt = ? WHERE id_customer = ?";
+            conn.setAutoCommit(false);
+            pr = conn.prepareStatement(sql);
+            pr.setString(1, customer.getFull_name());
+            pr.setString(2, customer.getIdCard());
+            pr.setString(3, customer.getPhone());
+            pr.setString(4, customer.getAddress());
+            pr.setDate(5, Date.valueOf(customer.getCreatedAt()));
+            pr.setDate(6, Date.valueOf(customer.getUpdatedAt()));
+            pr.setInt(7, customer.getId_customer());
+
+            pr.execute();
+        }catch (Exception e){
+//            try{
+//                conn.rollback();
+//            }catch (SQLException ex){
+//                ex.printStackTrace();
+//            }
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void deleteCustomer(Customer customer) {
         try {
-
             sql = "DELETE FROM Customers WHERE id_customer = ?";
             conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);

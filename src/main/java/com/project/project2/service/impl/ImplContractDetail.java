@@ -1,12 +1,12 @@
 package com.project.project2.service.impl;
 
 import com.project.project2.connection.DBConnection;
-import com.project.project2.model.Contract;
 import com.project.project2.model.ContractDetail;
 import com.project.project2.service.IContractDetail;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ImplContractDetail implements IContractDetail {
     private final Connection conn = DBConnection.getConnection();
@@ -17,17 +17,21 @@ public class ImplContractDetail implements IContractDetail {
     @Override
     public void insertContractDetail(ContractDetail contractDetail) {
         try{
-            sql = "INSERT INTO ContractDetail(id_contract, id_car, VAT, deposit, returnDate)" +
-                    " VALUES (?, ?, ?, ?, ?)";
-            conn.prepareStatement(sql);
+            sql = "INSERT INTO ContractDetail(id_contract, id_car, VAT, deposit)" +
+                    " VALUES (?, ?, ?, ?)";
+            pr = conn.prepareStatement(sql);
+            pr.setInt(1, contractDetail.getId_contract());
+            pr.setInt(2, contractDetail.getId_car());
+            pr.setInt(3, contractDetail.getVAT());
+            pr.setDouble(4, contractDetail.getDeposit());
 
             pr.executeUpdate();
         }catch (Exception e){
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
             e.printStackTrace();
         }
 

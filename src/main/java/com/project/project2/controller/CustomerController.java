@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -69,7 +70,19 @@ public class CustomerController implements Initializable {
         root.getChildren().setAll(dashboard);
     }
 
-    public void saveBtn(ActionEvent actionEvent) {
+    public void saveCustomer(ActionEvent actionEvent) throws SQLException {
+        Customer customer = new Customer();
+        customer.setId_customer(Integer.parseInt(idTf.getText()));
+        customer.setFull_name(nameTf.getText());
+        customer.setIdCard(idCardTf.getText());
+        customer.setAddress(addressTf.getText());
+        customer.setPhone(phoneTf.getText());
+        customer.setCreatedAt(LocalDate.now());
+        customer.setUpdatedAt(LocalDate.now());
+
+        implCustomer.updateCustomer(customer);
+
+        refresh();
     }
 
     public void refreshBtn(ActionEvent actionEvent) throws SQLException {
@@ -78,6 +91,11 @@ public class CustomerController implements Initializable {
 
     public void refresh() throws SQLException {
         CUSTOMER_LIST.clear();
+        idTf.clear();
+        idCardTf.clear();
+        nameTf.clear();
+        phoneTf.clear();
+        addressTf.clear();
         showCustomer();
     }
 

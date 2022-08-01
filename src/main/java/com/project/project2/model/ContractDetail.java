@@ -8,13 +8,13 @@ public class ContractDetail {
     private int id_car;
     private LocalDate returnDate;
     private int VAT;
-    private float deposit;
+    private double deposit;
 
     public ContractDetail(){
 
     }
 
-    public ContractDetail(int id_contract_detail, int id_contract, int id_car, LocalDate returnDate, int VAT, float deposit) {
+    public ContractDetail(int id_contract_detail, int id_contract, int id_car, LocalDate returnDate, int VAT, double deposit) {
         this.id_contract_detail = id_contract_detail;
         this.id_contract = id_contract;
         this.id_car = id_car;
@@ -67,7 +67,7 @@ public class ContractDetail {
         return deposit;
     }
 
-    public void setDeposit(float deposit) {
+    public void setDeposit(double deposit) {
         this.deposit = deposit;
     }
 
