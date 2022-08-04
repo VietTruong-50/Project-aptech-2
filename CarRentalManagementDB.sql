@@ -101,3 +101,18 @@ ADD CONSTRAINT FK_Staffs_Contract FOREIGN KEY (id_staff) REFERENCES Staffs(id_st
 
 ALTER TABLE ContractDetail
 ADD CONSTRAINT FK_ContractDetail_Contract FOREIGN KEY (id_contract) REFERENCES Contract(id_contract);
+
+CREATE VIEW CONTRACT_V AS
+SELECT Contract.id_contract, Customers.id_customer, Staffs.id_staff , Customers.customer_name, 
+Staffs.staff_name, Contract.total_cost, Contract.startDate,
+Contract.endDate, Contract.createdAt, Contract.updatedAt
+FROM Contract 
+JOIN Customers ON Customers.id_customer = Contract.id_customer
+JOIN Staffs ON Staffs.id_staff = Contract.id_staff
+
+SELECT * FROM CONTRACT_V
+DROP VIEW CONTRACT_V
+
+SELECT (SELECT COUNT(*) FROM Contract WHERE id_staff = '1')*100/(SELECT COUNT(*) FROM Contract) AS percent_of_work
+
+SELECT SUM(total_cost) AS cost_by FROM Contract WHERE DAY(startDate) = 15 GROUP BY DAY(startDate)
