@@ -7,6 +7,7 @@ import com.project.project2.service.impl.ImplContractDetail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.project.project2.alert.AlertMaker.showConfirmation;
 import static com.project.project2.service.IContract.CONTRACTS;
 
 public class ContractController implements Initializable {
@@ -50,17 +52,22 @@ public class ContractController implements Initializable {
     }
 
     public void showEditForm(ActionEvent actionEvent) {
+        Contract contract = contractTable.getSelectionModel().getSelectedItem();
+
     }
 
     public void delContract(ActionEvent actionEvent) throws SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
-        implContractDetail.deleteContractDetail(contract.getId_contract());
-        implContract.deleteContract(contract.getId_contract());
-
-        List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
-        for (int i : list) {
-            implCar.setCarStatus(i, "ON");
+        if (contract != null) {
+            if (showConfirmation("contract").get() == ButtonType.OK) {
+                implContractDetail.deleteContractDetail(contract.getId_contract());
+                implContract.deleteContract(contract.getId_contract());
+                List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
+                for (int i : list) {
+                    implCar.setCarStatus(i, "ON");
+                }
+            }
         }
     }
 
