@@ -19,7 +19,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="carPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" stylesheets="@Css/viewStyle.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="com.project.project2.controller.CarController">
+<AnchorPane fx:id="carPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.CarController">
    <children>
       <TableView fx:id="carTable" layoutX="362.0" layoutY="143.0" onMouseClicked="#handleClickTableView" prefHeight="531.0" prefWidth="665.0">
         <columns>
@@ -44,7 +44,7 @@
          <font>
             <Font size="14.0" />
          </font></JFXButton>
-      <TextField fx:id="searchCarTf" layoutX="423.0" layoutY="96.0" prefHeight="35.0" prefWidth="254.0" style="-fx-background-radius: 15px;" />
+      <TextField fx:id="searchCarTf" layoutX="423.0" layoutY="96.0" prefHeight="35.0" prefWidth="254.0" promptText="Search by name, manufacture, model " style="-fx-background-radius: 15px;" />
       <TextField fx:id="license_platesTf" layoutX="138.0" layoutY="235.0" prefHeight="35.0" prefWidth="204.0" />
       <TextField fx:id="carNameTf" layoutX="138.0" layoutY="280.0" prefHeight="35.0" prefWidth="204.0" />
       <TextField fx:id="carManufactureTf" layoutX="138.0" layoutY="320.0" prefHeight="35.0" prefWidth="204.0" />

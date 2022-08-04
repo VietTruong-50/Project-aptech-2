@@ -167,11 +167,11 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public void setCarStatus(int id) {
+    public void setCarStatus(int id, String status) {
         try{
             sql = "UPDATE Car SET car_status = ? WHERE id_car = ?";
             pr = conn.prepareStatement(sql);
-            pr.setString(1, "OFF");
+            pr.setString(1, status);
             pr.setInt(2, id);
 
             pr.execute();

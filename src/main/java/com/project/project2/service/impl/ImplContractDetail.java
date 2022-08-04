@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImplContractDetail implements IContractDetail {
     private final Connection conn = DBConnection.getConnection();
@@ -55,5 +57,20 @@ public class ImplContractDetail implements IContractDetail {
             }
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Integer> findIdCarByIdContract(int idContract) throws SQLException {
+        List<Integer> list = new ArrayList<>();
+        sql = "SELECT id_car FROM ContractDetail WHERE id_contract = ?";
+        conn.setAutoCommit(false);
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, idContract);
+        rs = pr.executeQuery();
+        conn.commit();
+        while (rs.next()){
+            list.add(rs.getInt("id_car"));
+        }
+        return list;
     }
 }

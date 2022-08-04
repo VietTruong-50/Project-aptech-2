@@ -101,7 +101,7 @@ public class ContractDetailController implements Initializable {
                     contractDetail.setVAT(15);
                     contractDetail.setDeposit(Double.parseDouble(depositTf.getText().trim()));
 
-                    implCar.setCarStatus(c.getId_car());
+                    implCar.setCarStatus(c.getId_car(), "OFF");
                     implContractDetail.insertContractDetail(contractDetail);
                 }
             }
