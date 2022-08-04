@@ -100,12 +100,12 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(int id) {
         try {
             sql = "DELETE FROM Customers WHERE id_customer = ?";
             conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
-            pr.setInt(1, customer.getId_customer());
+            pr.setInt(1, id);
             pr.executeUpdate();
             conn.commit();
         } catch (Exception e) {

@@ -7,6 +7,7 @@ import com.project.project2.service.IContractDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ImplContractDetail implements IContractDetail {
     private final Connection conn = DBConnection.getConnection();
@@ -35,5 +36,24 @@ public class ImplContractDetail implements IContractDetail {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void deleteContractDetail(int id_contract) {
+        try {
+            sql = "DELETE FROM ContractDetail WHERE id_contract = ?";
+            conn.setAutoCommit(false);
+            pr = conn.prepareStatement(sql);
+            pr.setInt(1, id_contract);
+            conn.commit();
+            pr.execute();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 }

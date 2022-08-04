@@ -4,6 +4,7 @@ import com.project.project2.model.Car;
 import com.project.project2.model.Contract;
 import com.project.project2.model.ContractDetail;
 import com.project.project2.model.Customer;
+import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
 import com.project.project2.service.impl.ImplCustomer;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 public class ContractDetailController implements Initializable {
 
     private List<Car> carList = new ArrayList<>();
-    private static int total = 0;
+    private static double total = 0;
 
     public Label license_plates;
     public AnchorPane pane;
@@ -45,6 +46,7 @@ public class ContractDetailController implements Initializable {
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
     private final ImplContract implContract = new ImplContract();
     private final ImplCustomer implCustomer = new ImplCustomer();
+    private final ImplCar implCar = new ImplCar();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,7 +65,7 @@ public class ContractDetailController implements Initializable {
     }
 
     public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
-        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/CreateContract.fxml")));
+        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
     }
 
@@ -98,6 +100,8 @@ public class ContractDetailController implements Initializable {
                     contractDetail.setId_car(c.getId_car());
                     contractDetail.setVAT(15);
                     contractDetail.setDeposit(Double.parseDouble(depositTf.getText().trim()));
+
+                    implCar.setCarStatus(c.getId_car());
                     implContractDetail.insertContractDetail(contractDetail);
                 }
             }

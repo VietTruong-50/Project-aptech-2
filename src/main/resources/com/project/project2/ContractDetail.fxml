@@ -68,7 +68,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton cancelButton="true" layoutX="750.0" layoutY="171.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="117.0" text="Cancle">
+      <JFXButton cancelButton="true" layoutX="750.0" layoutY="171.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="117.0" text="Cancel">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

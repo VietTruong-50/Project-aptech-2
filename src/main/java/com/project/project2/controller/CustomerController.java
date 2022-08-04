@@ -63,6 +63,8 @@ public class CustomerController implements Initializable {
     }
 
     public void delCustomer(ActionEvent actionEvent) {
+        Customer customer = customerTable.getSelectionModel().getSelectedItem();
+        implCustomer.deleteCustomer(customer.getId_customer());
     }
 
     public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
