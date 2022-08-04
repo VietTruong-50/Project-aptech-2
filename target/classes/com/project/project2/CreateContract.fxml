@@ -18,7 +18,7 @@
    <children>
       <Pane prefHeight="73.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;">
          <children>
-            <JFXButton layoutX="873.0" layoutY="17.0" onAction="#createContract" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #ff4136;" text="Make contract">
+            <JFXButton fx:id="createContractBtn" layoutX="873.0" layoutY="17.0" onAction="#createContract" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #ff4136;" text="Make contract">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

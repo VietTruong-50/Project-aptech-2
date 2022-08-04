@@ -29,6 +29,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.project.project2.alert.AlertMaker.showError;
+import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICar.CAR_LIST;
 
 public class CarController implements Initializable {
@@ -104,11 +106,11 @@ public class CarController implements Initializable {
         Car car = carTable.getSelectionModel().getSelectedItem();
 
         if (car != null) {
-            license_platesTf.setText(car.getLicense_plates());
             carNameTf.setText(car.getCar_name());
             carManufactureTf.setText(car.getManufacture());
             carPriceTf.setText("" + car.getRental_cost());
             seatNbCbb.setValue(car.getSeats());
+            license_platesTf.setText(car.getLicense_plates());
             carModelTa.setText(car.getModel());
             carModelTa.setWrapText(true);
             if (car.getCar_status().equals("ON")) {
@@ -123,19 +125,26 @@ public class CarController implements Initializable {
     @FXML
     public void addCar(ActionEvent actionEvent) throws SQLException {
         radioButton = (RadioButton) status.getSelectedToggle();
-        Car car = new Car();
-        car.setLicense_plates(license_platesTf.getText().trim());
-        car.setCar_name(carNameTf.getText().trim());
-        car.setManufacture(carManufactureTf.getText().trim());
-        car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
-        car.setModel(carModelTa.getText().trim());
-        car.setCar_status(radioButton.getText());
-        car.setSeats(seatNbCbb.getValue());
-        car.setCreatedAt(LocalDate.now());
-        car.setUpdatedAt(LocalDate.now());
-        car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
-        implCar.insertCar(car, file);
+        if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
+                carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
+                radioButton.getText().isBlank() || file.exists()) {
+            showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+        } else {
+            Car car = new Car();
+            car.setLicense_plates(license_platesTf.getText().trim());
+            car.setCar_name(carNameTf.getText().trim());
+            car.setManufacture(carManufactureTf.getText().trim());
+            car.setRental_cost(Integer.parseInt(carPriceTf.getText()));
+            car.setModel(carModelTa.getText().trim());
+            car.setCar_status(radioButton.getText());
+            car.setSeats(seatNbCbb.getValue());
+            car.setCreatedAt(LocalDate.now());
+            car.setUpdatedAt(LocalDate.now());
+            car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
+
+            implCar.insertCar(car, file);
+        }
 
         refresh();
     }
@@ -144,7 +153,11 @@ public class CarController implements Initializable {
     public void updateCar(ActionEvent actionEvent) throws SQLException, FileNotFoundException {
         Car car = carTable.getSelectionModel().getSelectedItem();
         if (car == null) {
-//            showError("Lỗi nhận dạng", "Chưa chọn xe cần sua trong bảng");
+            showError("Lỗi", "Chưa chọn xe cần sửa");
+        } else if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
+                carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
+                radioButton.getText().isBlank() || file.exists()) {
+            showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
             radioButton = (RadioButton) status.getSelectedToggle();
             car.setCar_name(carNameTf.getText().trim());

@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="com.project.project2.controller.CustomerController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.CustomerController">
    <children>
       <TableView fx:id="customerTable" layoutX="348.0" layoutY="159.0" onMouseClicked="#handleClickTableView" prefHeight="511.0" prefWidth="683.0">
          <columns>
@@ -27,14 +27,14 @@
             <TableColumn fx:id="addressColumn" editable="false" minWidth="4.0" prefWidth="466.0" text="Địa chỉ" />
          </columns>
       </TableView>
-      <TextField fx:id="searchTf" layoutX="406.0" layoutY="100.0" prefHeight="33.0" prefWidth="264.0" style="-fx-background-radius: 20px;" />
+      <TextField fx:id="searchTf" layoutX="406.0" layoutY="100.0" prefHeight="33.0" prefWidth="264.0" promptText="Search by name, phone, id card" style="-fx-background-radius: 20px;" />
       <Label layoutX="348.0" layoutY="105.0" text="Search" textFill="#393838">
          <font>
             <Font size="18.0" />
          </font></Label>
       <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
          <children>
-            <JFXButton fx:id="goBackBtn" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
+            <JFXButton fx:id="goBackBtn" contentDisplay="CENTER" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 50px;" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>

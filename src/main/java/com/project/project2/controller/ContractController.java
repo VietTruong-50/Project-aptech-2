@@ -1,6 +1,7 @@
 package com.project.project2.controller;
 
 import com.project.project2.model.Contract;
+import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -31,6 +33,7 @@ public class ContractController implements Initializable {
 
     private final ImplContract implContract = new ImplContract();
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
+    private final ImplCar implCar = new ImplCar();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,11 +52,16 @@ public class ContractController implements Initializable {
     public void showEditForm(ActionEvent actionEvent) {
     }
 
-    public void delContract(ActionEvent actionEvent) {
+    public void delContract(ActionEvent actionEvent) throws SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
         implContractDetail.deleteContractDetail(contract.getId_contract());
         implContract.deleteContract(contract.getId_contract());
+
+        List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
+        for (int i : list) {
+            implCar.setCarStatus(i, "ON");
+        }
     }
 
     public void exportPDF(ActionEvent actionEvent) {

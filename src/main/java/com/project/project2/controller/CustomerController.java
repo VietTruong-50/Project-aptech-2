@@ -2,6 +2,9 @@ package com.project.project2.controller;
 
 import com.project.project2.model.Customer;
 import com.project.project2.service.impl.ImplCustomer;
+import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,10 +24,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICustomer.CUSTOMER_LIST;
 
 public class CustomerController implements Initializable {
+
     private final ImplCustomer implCustomer = new ImplCustomer();
+
     public TableColumn<Object, Object> idColumn;
     public TableColumn<Object, Object> nameColumn;
     public TableColumn<Object, Object> phoneColumn;
@@ -40,10 +46,20 @@ public class CustomerController implements Initializable {
     public TextField nameTf;
     public Circle pointLight, pointLight1, pointLight2, pointLight3, pointLight4;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            refresh();
+            searchCustomer(searchTf.textProperty(), customerTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleClickTableView(MouseEvent mouseEvent) {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
 
-        if(customer != null){
+        if (customer != null) {
             nameTf.setEditable(true);
             phoneTf.setEditable(true);
             idCardTf.setEditable(false);
@@ -73,16 +89,21 @@ public class CustomerController implements Initializable {
     }
 
     public void saveCustomer(ActionEvent actionEvent) throws SQLException {
-        Customer customer = new Customer();
-        customer.setId_customer(Integer.parseInt(idTf.getText()));
-        customer.setFull_name(nameTf.getText());
-        customer.setIdCard(idCardTf.getText());
-        customer.setAddress(addressTf.getText());
-        customer.setPhone(phoneTf.getText());
-        customer.setCreatedAt(LocalDate.now());
-        customer.setUpdatedAt(LocalDate.now());
+        if (nameTf.getText().isBlank() || idCardTf.getText().isBlank() ||
+                addressTf.getText().isBlank() || phoneTf.getText().isBlank()) {
+           showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+        }else{
+            Customer customer = new Customer();
+            customer.setId_customer(Integer.parseInt(idTf.getText()));
+            customer.setFull_name(nameTf.getText());
+            customer.setIdCard(idCardTf.getText());
+            customer.setAddress(addressTf.getText());
+            customer.setPhone(phoneTf.getText());
+            customer.setCreatedAt(LocalDate.now());
+            customer.setUpdatedAt(LocalDate.now());
 
-        implCustomer.updateCustomer(customer);
+            implCustomer.updateCustomer(customer);
+        }
 
         refresh();
     }
@@ -113,12 +134,24 @@ public class CustomerController implements Initializable {
         customerTable.setItems(CUSTOMER_LIST);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            refresh();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void searchCustomer(StringProperty txtFind, TableView<Customer> customerTable) {
+        FilteredList<Customer> filteredData = new FilteredList<>(CUSTOMER_LIST, p -> true);
+        txtFind.addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(customer -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (customer.getFull_name().toLowerCase().contains(lowerCaseFilter) ||
+                        customer.getIdCard().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return customer.getPhone().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Customer> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
+        customerTable.setItems(sortedData);
     }
 }

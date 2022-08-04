@@ -1,5 +1,6 @@
 package com.project.project2.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.project.project2.model.Car;
 import com.project.project2.service.MyListener;
 import com.project.project2.service.impl.ImplCar;
@@ -37,6 +38,7 @@ public class CreateContractController implements Initializable {
     public GridPane grid4;
     public GridPane grid7;
     public AnchorPane pane;
+    public JFXButton createContractBtn;
 
     private MyListener myListener;
 
@@ -53,7 +55,7 @@ public class CreateContractController implements Initializable {
     public void generateCar(int seats, GridPane grid) throws SQLException, IOException {
         carList.clear();
         carList = implCar.findCarBySeats(seats);
-        if(carList.size() > 0){
+        if (carList.size() > 0) {
             myListener = new MyListener() {
                 @Override
                 public void onClickListener(Car car) {
@@ -68,7 +70,7 @@ public class CreateContractController implements Initializable {
         }
         int column = 0;
         int row = 1;
-        for(Car c: carList){
+        for (Car c : carList) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/project/project2/CarDetail.fxml"));
             AnchorPane anchorPane = fxmlLoader.load();
@@ -76,7 +78,7 @@ public class CreateContractController implements Initializable {
             CarDetailController carDetailController = fxmlLoader.getController();
             carDetailController.setData(c, myListener);
 
-            if(column == 3){
+            if (column == 3) {
                 column = 0;
                 row++;
             }
