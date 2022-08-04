@@ -25,6 +25,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -130,6 +131,8 @@ public class CarController implements Initializable {
         car.setModel(carModelTa.getText().trim());
         car.setCar_status(radioButton.getText());
         car.setSeats(seatNbCbb.getValue());
+        car.setCreatedAt(LocalDate.now());
+        car.setUpdatedAt(LocalDate.now());
         car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
         implCar.insertCar(car, file);
@@ -151,6 +154,8 @@ public class CarController implements Initializable {
             car.setRental_cost(Double.parseDouble(carPriceTf.getText()));
             car.setCar_status(radioButton.getText());
             car.setLicense_plates(license_platesTf.getText().trim());
+            car.setCreatedAt(LocalDate.now());
+            car.setUpdatedAt(LocalDate.now());
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
             implCar.updateCar(car, file);
@@ -227,12 +232,12 @@ public class CarController implements Initializable {
     }
 
     public void refresh() throws SQLException {
-        license_platesTf.setText("");
-        carNameTf.setText("");
-        carManufactureTf.setText("");
-        carPriceTf.setText("");
+        license_platesTf.clear();
+        carNameTf.clear();
+        carManufactureTf.clear();
+        carPriceTf.clear();
         seatNbCbb.setValue(SEAT_LIST.get(0));
-        carModelTa.setText("");
+        carModelTa.clear();
         rBtn1.setSelected(false);
         rBtn2.setSelected(false);
         Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));

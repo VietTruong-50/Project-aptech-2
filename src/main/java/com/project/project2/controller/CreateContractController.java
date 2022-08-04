@@ -96,7 +96,6 @@ public class CreateContractController implements Initializable {
 
     public void getCarByFourSeats(Event event) throws SQLException, IOException {
         generateCar(4, grid4);
-
     }
 
     public void createContract(ActionEvent actionEvent) throws IOException {

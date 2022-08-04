@@ -4,6 +4,7 @@ import com.project.project2.model.Car;
 import com.project.project2.model.Contract;
 import com.project.project2.model.ContractDetail;
 import com.project.project2.model.Customer;
+import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
 import com.project.project2.service.impl.ImplCustomer;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 public class ContractDetailController implements Initializable {
 
     private List<Car> carList = new ArrayList<>();
+    private static double total = 0;
 
     public Label license_plates;
     public AnchorPane pane;
@@ -44,6 +46,7 @@ public class ContractDetailController implements Initializable {
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
     private final ImplContract implContract = new ImplContract();
     private final ImplCustomer implCustomer = new ImplCustomer();
+    private final ImplCar implCar = new ImplCar();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,7 +56,6 @@ public class ContractDetailController implements Initializable {
     public void setLabel(List<Car> list) {
         this.carList = list;
         StringBuilder lp = new StringBuilder();
-        int total = 0;
         for (Car c : list) {
             lp.append(c.getLicense_plates().trim().concat(", "));
             total += c.getRental_cost();
@@ -63,7 +65,7 @@ public class ContractDetailController implements Initializable {
     }
 
     public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
-        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/CreateContract.fxml")));
+        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
     }
 
@@ -76,14 +78,13 @@ public class ContractDetailController implements Initializable {
         customer.setPhone(phoneTf.getText().trim());
 
         implCustomer.insertCustomer(customer);
-        customer = implCustomer.findCustomerByIdCard(id_card.getText());
+        customer = implCustomer.findCustomerByIdCard(id_card.getText().trim());
 
-        System.out.println(customer);
         if (customer != null) {
             Contract contract = new Contract();
             contract.setId_customer(customer.getId_customer());
-            contract.setId_staff(Integer.parseInt(staff_id.getText()));
-            contract.setTotal_cost(Integer.parseInt(total_cost.getText()));
+            contract.setId_staff(Integer.parseInt(staff_id.getText().trim()));
+            contract.setTotal_cost((total * 115 / 100));
             contract.setStartDate(startDate.getValue());
             contract.setEndDate(endDate.getValue());
             contract.setCreatedAt(LocalDate.now());
@@ -98,8 +99,9 @@ public class ContractDetailController implements Initializable {
                     contractDetail.setId_contract(contract.getId_contract());
                     contractDetail.setId_car(c.getId_car());
                     contractDetail.setVAT(15);
-                    contractDetail.setDeposit(Float.parseFloat(depositTf.getText()));
-                    contractDetail.setReturnDate(null);
+                    contractDetail.setDeposit(Double.parseDouble(depositTf.getText().trim()));
+
+                    implCar.setCarStatus(c.getId_car());
                     implContractDetail.insertContractDetail(contractDetail);
                 }
             }

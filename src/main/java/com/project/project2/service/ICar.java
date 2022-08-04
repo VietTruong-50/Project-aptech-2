@@ -16,4 +16,5 @@ public interface ICar  {
     void updateCar(Car car, File file);
     List<Car> findCarBySeats(int seat) throws SQLException;
     void importFileExcel(File file);
+    void setCarStatus(int id);
 }

@@ -11,6 +11,8 @@ public class Contract {
     private double total_cost;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private String staff_name;
+    private String customer_name;
 
     public Contract(){
 
@@ -25,6 +27,17 @@ public class Contract {
         this.total_cost = total_cost;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Contract(int id_contract, String customer_name, String staff_name,  LocalDate startDate, LocalDate endDate, double total_cost, LocalDate createdAt, LocalDate updatedAt) {
+        this.id_contract = id_contract;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.total_cost = total_cost;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.staff_name = staff_name;
+        this.customer_name = customer_name;
     }
 
     public int getId_contract() {
@@ -71,7 +84,7 @@ public class Contract {
         return total_cost;
     }
 
-    public void setTotal_cost(int total_cost) {
+    public void setTotal_cost(double total_cost) {
         this.total_cost = total_cost;
     }
 
@@ -89,6 +102,22 @@ public class Contract {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getStaff_name() {
+        return staff_name;
+    }
+
+    public void setStaff_name(String staff_name) {
+        this.staff_name = staff_name;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
     }
 
     @Override

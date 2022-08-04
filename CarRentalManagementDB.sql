@@ -40,9 +40,9 @@ CREATE TABLE Customers(
 );
 
 INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) VALUES
-(N'Trương Quốc Việt', 102180153149, 0906143219, N'341 Phố Vọng, Hà Nội', '30/07/2022','30/07/2022'),
-(N'Nguyễn Thị Hạnh', 103201723415, 0901233166, N'30 Trần Duy Hưng,  Hà Nội','30/07/2022','30/07/2022'),
-(N'Nguyễn Vũ Long', 100298515054, 0903555333, N'11 Giải Phóng,  Hà Nội', '30/07/2022','30/07/2022')
+(N'Trương Quốc Việt', 102180153149, 0906143219, N'341 Phố Vọng, Hà Nội', '2022-07-30','2022-07-30'),
+(N'Nguyễn Thị Hạnh', 103201723415, 0901233166, N'30 Trần Duy Hưng,  Hà Nội','2022-07-30','2022-07-30'),
+(N'Nguyễn Vũ Long', 100298515054, 0903555333, N'11 Giải Phóng,  Hà Nội', '2022-07-30','2022-07-30')
 
 --CREATE Staffs
 CREATE TABLE Staffs(
@@ -54,6 +54,12 @@ CREATE TABLE Staffs(
 	updatedAt datetime,
 	primary key (id_staff)
 );
+
+INSERT INTO Staffs( staff_name, birth, phone, createdAt, updatedAt) VALUES
+( N'Vũ Đình Long',  '1997-09-15', 0903642221, '2022-07-31', '2022-07-31'),
+( N'Hoàng Ngọc Thuỳ',  '1996-07-23', 0905146587, '2022-07-31', '2022-07-31'),
+( N'Đặng Thuỳ Trâm', '1998-10-08', 0909991199, '2022-07-31', '2022-07-31')
+
 
 --ADD COLUMN luong TO Staffs
 --ALTER TABLE Staffs ADD salary AS (3000000+Staffs.number_of_contract*300000)

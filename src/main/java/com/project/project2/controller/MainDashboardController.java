@@ -74,11 +74,12 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showStaffManagement(ActionEvent actionEvent) {
+        changeStage("StaffController.fxml");
     }
 
     @FXML
     public void showChart(ActionEvent actionEvent) {
-
+        changeStage("ChartUI.fxml");
     }
 
     @FXML
