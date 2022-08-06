@@ -54,20 +54,35 @@ public class ContractController implements Initializable {
     public void showEditForm(ActionEvent actionEvent) {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
+
     }
 
     public void delContract(ActionEvent actionEvent) throws SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
+        System.out.println(contract);
         if (contract != null) {
             if (showConfirmation("contract").get() == ButtonType.OK) {
-                implContractDetail.deleteContractDetail(contract.getId_contract());
-                implContract.deleteContract(contract.getId_contract());
-                List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
-                for (int i : list) {
-                    implCar.setCarStatus(i, "ON");
+                if (setCarStatus(contract.getId_contract())) {
+                    if (implContractDetail.deleteContractDetail(contract.getId_contract())) {
+                        implContract.deleteContract(contract.getId_contract());
+                        refresh();
+                    }
                 }
             }
+        }
+    }
+
+    public boolean setCarStatus(int idContract) {
+        try {
+            List<Integer> list = implContractDetail.findIdCarByIdContract(idContract);
+            for (int i : list) {
+                implCar.setCarStatus(i, "ON");
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

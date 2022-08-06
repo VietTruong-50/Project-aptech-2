@@ -133,9 +133,6 @@ public class ImplCar implements ICar {
     @Override
     public void importFileExcel(File file) {
 //        try {
-//            FileChooser fc = new FileChooser();
-//            Stage stage = new Stage();
-//            file = fc.showOpenDialog(stage);
 //            sql = "INSERT INTO Car(car_name, manufacture, seats, rental_cost, model, car_status, cimage, license_plates) " +
 //                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";;
 //            pr = conn.prepareStatement(sql);
@@ -157,7 +154,6 @@ public class ImplCar implements ICar {
 //                    pr.setString(8, row.getCell(7).getStringCellValue());
 //                    pr.execute();
 //                }
-//                wb.close();
 //                pr.close();
 //                fis.close();
 //            }

@@ -85,7 +85,7 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <JFXButton fx:id="resetBtn" buttonType="RAISED" layoutX="26.0" layoutY="623.0" mnemonicParsing="false" onAction="#resetBtn" prefHeight="33.0" prefWidth="149.0" text="Reset">
+      <JFXButton fx:id="resetBtn" buttonType="RAISED" layoutX="110.0" layoutY="633.0" mnemonicParsing="false" onAction="#resetBtn" prefHeight="33.0" prefWidth="149.0" text="Reset">
          <font>
             <Font size="14.0" />
          </font></JFXButton>
@@ -107,14 +107,14 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <Label fx:id="nbCarLb" layoutX="754.0" layoutY="4.0" prefHeight="67.0" prefWidth="269.0" style="-fx-background-color: #6dd5ed; -fx-background-radius: 10px;" text="a">
+            <Label fx:id="nbCarLb" layoutX="754.0" layoutY="4.0" prefHeight="67.0" prefWidth="269.0" style="-fx-background-color: #6dd5ed; -fx-background-radius: 10px;" text="a" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
                <effect>
                   <Glow />
                </effect></Label>
-            <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="754.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="754.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@Img/MainLogo.png" />
                </image>
@@ -151,7 +151,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <JFXButton fx:id="importBtn" buttonType="RAISED" layoutX="199.0" layoutY="623.0" mnemonicParsing="false" onAction="#importFile" prefHeight="33.0" prefWidth="149.0" text="Import EXEL">
+      <JFXButton fx:id="importBtn" buttonType="RAISED" layoutX="199.0" layoutY="623.0" mnemonicParsing="false" onAction="#importFile" prefHeight="33.0" prefWidth="149.0" text="Import EXEL" visible="false">
          <font>
             <Font size="14.0" />
          </font>

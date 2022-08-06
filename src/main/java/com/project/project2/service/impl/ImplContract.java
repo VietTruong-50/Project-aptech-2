@@ -64,7 +64,7 @@ public class ImplContract implements IContract {
             pr = conn.prepareStatement(sql);
             pr.setInt(1, id);
             conn.commit();
-            pr.execute();
+            pr.executeUpdate();
         } catch (Exception e) {
             try {
                 conn.rollback();

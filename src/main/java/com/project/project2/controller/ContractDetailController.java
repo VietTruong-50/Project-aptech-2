@@ -69,7 +69,7 @@ public class ContractDetailController implements Initializable {
         pane.getChildren().setAll(dashboard);
     }
 
-    public void saveContract(ActionEvent actionEvent) throws SQLException {
+    public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {
 
         Customer customer = new Customer();
         customer.setFull_name(cus_name.getText().trim());
@@ -104,6 +104,8 @@ public class ContractDetailController implements Initializable {
                     implCar.setCarStatus(c.getId_car(), "OFF");
                     implContractDetail.insertContractDetail(contractDetail);
                 }
+                AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
+                pane.getChildren().setAll(dashboard);
             }
         }
     }
