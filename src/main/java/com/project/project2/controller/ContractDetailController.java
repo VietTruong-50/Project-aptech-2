@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.project.project2.alert.AlertMaker.showWarning;
+
 public class ContractDetailController implements Initializable {
 
     private List<Car> carList = new ArrayList<>();
@@ -71,41 +73,47 @@ public class ContractDetailController implements Initializable {
 
     public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Customer customer = new Customer();
-        customer.setFull_name(cus_name.getText().trim());
-        customer.setIdCard(id_card.getText().trim());
-        customer.setAddress(addressTf.getText().trim());
-        customer.setPhone(phoneTf.getText().trim());
+        if (Integer.parseInt(id_card.getText().trim()) != 12) {
+            showWarning(null, "ID must be 12 numbers");
+        } else if (Integer.parseInt(phoneTf.getText().trim()) != 10) {
+            showWarning(null, "Phone must be 10 numbers");
+        } else {
+            Customer customer = new Customer();
+            customer.setFull_name(cus_name.getText().trim());
+            customer.setIdCard(id_card.getText().trim());
+            customer.setAddress(addressTf.getText().trim());
+            customer.setPhone(phoneTf.getText().trim());
 
-        implCustomer.insertCustomer(customer);
-        customer = implCustomer.findCustomerByIdCard(id_card.getText().trim());
+            implCustomer.insertCustomer(customer);
+            customer = implCustomer.findCustomerByIdCard(id_card.getText().trim());
 
-        if (customer != null) {
-            Contract contract = new Contract();
-            contract.setId_customer(customer.getId_customer());
-            contract.setId_staff(Integer.parseInt(staff_id.getText().trim()));
-            contract.setTotal_cost((total * 115 / 100));
-            contract.setStartDate(startDate.getValue());
-            contract.setEndDate(endDate.getValue());
-            contract.setCreatedAt(LocalDate.now());
-            contract.setUpdatedAt(LocalDate.now());
+            if (customer != null) {
+                Contract contract = new Contract();
+                contract.setId_customer(customer.getId_customer());
+                contract.setId_staff(Integer.parseInt(staff_id.getText().trim()));
+                contract.setTotal_cost((total * 115 / 100));
+                contract.setStartDate(startDate.getValue());
+                contract.setEndDate(endDate.getValue());
+                contract.setCreatedAt(LocalDate.now());
+                contract.setUpdatedAt(LocalDate.now());
 
-            implContract.insertContract(contract);
-            contract = implContract.findContractByIdCustomer(customer.getId_customer());
+                implContract.insertContract(contract);
+                contract = implContract.findContractByIdCustomer(customer.getId_customer());
 
-            if (contract != null) {
-                for (Car c : carList) {
-                    ContractDetail contractDetail = new ContractDetail();
-                    contractDetail.setId_contract(contract.getId_contract());
-                    contractDetail.setId_car(c.getId_car());
-                    contractDetail.setVAT(15);
-                    contractDetail.setDeposit(Double.parseDouble(depositTf.getText().trim()));
+                if (contract != null) {
+                    for (Car c : carList) {
+                        ContractDetail contractDetail = new ContractDetail();
+                        contractDetail.setId_contract(contract.getId_contract());
+                        contractDetail.setId_car(c.getId_car());
+                        contractDetail.setVAT(15);
+                        contractDetail.setDeposit(Double.parseDouble(depositTf.getText().trim()));
 
-                    implCar.setCarStatus(c.getId_car(), "OFF");
-                    implContractDetail.insertContractDetail(contractDetail);
+                        implCar.setCarStatus(c.getId_car(), "OFF");
+                        implContractDetail.insertContractDetail(contractDetail);
+                    }
+                    AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
+                    pane.getChildren().setAll(dashboard);
                 }
-                AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
-                pane.getChildren().setAll(dashboard);
             }
         }
     }

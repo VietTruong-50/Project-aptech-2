@@ -139,6 +139,7 @@ public class CustomerController implements Initializable {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
         customerTable.setItems(CUSTOMER_LIST);
+        searchCustomer(searchTf.textProperty(), customerTable);
     }
 
     public void searchCustomer(StringProperty txtFind, TableView<Customer> customerTable) {
