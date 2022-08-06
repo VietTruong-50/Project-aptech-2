@@ -8,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,7 +25,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.project.project2.alert.AlertMaker.showWarning;
+import static com.project.project2.alert.AlertMaker.*;
 import static com.project.project2.service.ICustomer.CUSTOMER_LIST;
 
 public class CustomerController implements Initializable {
@@ -78,9 +79,15 @@ public class CustomerController implements Initializable {
         }
     }
 
-    public void delCustomer(ActionEvent actionEvent) {
+    public void delCustomer(ActionEvent actionEvent) throws SQLException {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
-        implCustomer.deleteCustomer(customer.getId_customer());
+        if (customer != null) {
+            if (showConfirmation("car").get() == ButtonType.OK) {
+                implCustomer.deleteCustomer(customer.getId_customer());
+                showSuccess("Success", "Delete customer success");
+                refresh();
+            }
+        }
     }
 
     public void setGoBackBtn(ActionEvent actionEvent) throws IOException {
@@ -91,8 +98,8 @@ public class CustomerController implements Initializable {
     public void saveCustomer(ActionEvent actionEvent) throws SQLException {
         if (nameTf.getText().isBlank() || idCardTf.getText().isBlank() ||
                 addressTf.getText().isBlank() || phoneTf.getText().isBlank()) {
-           showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
-        }else{
+            showWarning(null, "Please enter full information!");
+        } else {
             Customer customer = new Customer();
             customer.setId_customer(Integer.parseInt(idTf.getText()));
             customer.setFull_name(nameTf.getText());
@@ -132,6 +139,7 @@ public class CustomerController implements Initializable {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
         customerTable.setItems(CUSTOMER_LIST);
+        searchCustomer(searchTf.textProperty(), customerTable);
     }
 
     public void searchCustomer(StringProperty txtFind, TableView<Customer> customerTable) {

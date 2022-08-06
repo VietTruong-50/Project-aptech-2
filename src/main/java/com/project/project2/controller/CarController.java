@@ -29,8 +29,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.project.project2.alert.AlertMaker.showError;
-import static com.project.project2.alert.AlertMaker.showWarning;
+import static com.project.project2.alert.AlertMaker.*;
 import static com.project.project2.service.ICar.CAR_LIST;
 
 public class CarController implements Initializable {
@@ -153,11 +152,11 @@ public class CarController implements Initializable {
     public void updateCar(ActionEvent actionEvent) throws SQLException, FileNotFoundException {
         Car car = carTable.getSelectionModel().getSelectedItem();
         if (car == null) {
-            showError("Lỗi", "Chưa chọn xe cần sửa");
+            showError("Error", "Haven't selected the car to be edited");
         } else if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
                 radioButton.getText().isBlank() || file.exists()) {
-            showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+            showWarning(null, "Please enter full information!");
         } else {
             radioButton = (RadioButton) status.getSelectedToggle();
             car.setCar_name(carNameTf.getText().trim());
@@ -179,8 +178,13 @@ public class CarController implements Initializable {
     @FXML
     public void delCar(ActionEvent actionEvent) throws SQLException {
         Car car = carTable.getSelectionModel().getSelectedItem();
-        implCar.deleteCar(car);
-        refresh();
+        if (car != null) {
+            if (showConfirmation("car").get() == ButtonType.OK) {
+                implCar.deleteCar(car);
+                showSuccess("Success", "Delete car success!");
+                refresh();
+            }
+        }
     }
 
     @FXML

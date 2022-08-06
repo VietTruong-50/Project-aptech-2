@@ -20,6 +20,6 @@
          </font>
       </Label>
       <JFXButton fx:id="addBtn" layoutX="92.0" layoutY="162.0" onAction="#addToContract" prefHeight="34.0" prefWidth="114.0" stylesheets="@Css/viewStyle.css" text="ADD" />
-      <JFXButton fx:id="cancelBtn" layoutX="92.0" layoutY="162.0" onAction="#cancelAdd" prefHeight="34.0" prefWidth="114.0" stylesheets="@Css/viewStyle.css" text="CANCLE" />
+      <JFXButton fx:id="cancelBtn" layoutX="92.0" layoutY="162.0" onAction="#cancelAdd" prefHeight="34.0" prefWidth="114.0" style="-fx-background-color: #ff5656;" stylesheets="@Css/viewStyle.css" text="CANCLE" />
    </children>
 </AnchorPane>

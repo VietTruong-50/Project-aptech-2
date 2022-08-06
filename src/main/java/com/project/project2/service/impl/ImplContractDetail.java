@@ -41,21 +41,23 @@ public class ImplContractDetail implements IContractDetail {
     }
 
     @Override
-    public void deleteContractDetail(int id_contract) {
+    public boolean deleteContractDetail(int id_contract) {
         try {
             sql = "DELETE FROM ContractDetail WHERE id_contract = ?";
             conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
             pr.setInt(1, id_contract);
+            pr.executeUpdate();
             conn.commit();
-            pr.execute();
+            return true;
         } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
             e.printStackTrace();
+            return false;
         }
     }
 

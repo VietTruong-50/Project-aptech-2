@@ -71,23 +71,23 @@ public class ChartController implements Initializable {
         cateAxis.setAnimated(false);
         if (ddMMYYCost.getValue() == "by Day") {
             lineChart.getData().clear();
-            lineChart.setTitle("Doanh thu theo ngày");
+            lineChart.setTitle("Revenue by day");
             for (int i = 1; i <= 31; i++) {
-                series.getData().add(new XYChart.Data("Ngay " + i, getDailyCostByDdMmYy(i, "DAY")));
+                series.getData().add(new XYChart.Data("Day " + i, getDailyCostByDdMmYy(i, "DAY")));
             }
             lineChart.getData().add(series);
         } else if (ddMMYYCost.getValue() == "by Month") {
             lineChart.getData().clear();
-            lineChart.setTitle("Doanh thu theo tháng");
+            lineChart.setTitle("Revenue by month");
             for (int i = 1; i <= 12; i++) {
-                series.getData().add(new XYChart.Data("Thang " + i, getDailyCostByDdMmYy(i, "MONTH")));
+                series.getData().add(new XYChart.Data("Month " + i, getDailyCostByDdMmYy(i, "MONTH")));
             }
             lineChart.getData().add(series);
         } else if (ddMMYYCost.getValue() == "by Year") {
             lineChart.getData().clear();
-            lineChart.setTitle("Doanh thu theo năm");
+            lineChart.setTitle("Revenue by year");
             for (int i = year; i <= year + 2; i++) {
-                series.getData().add(new XYChart.Data("Nam " + i, getDailyCostByDdMmYy(i, "YEAR")));
+                series.getData().add(new XYChart.Data("Year " + i, getDailyCostByDdMmYy(i, "YEAR")));
             }
             lineChart.getData().add(series);
         }
