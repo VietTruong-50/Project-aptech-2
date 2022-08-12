@@ -32,7 +32,7 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
-    public Customer findCustomerByIdCard(String idCard) throws SQLException {
+    public Customer findByIdCard(String idCard) throws SQLException {
         Customer customer = null;
         sql = "SELECT * FROM Customers WHERE idCard = ?";
         pr = conn.prepareStatement(sql);
@@ -49,11 +49,26 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
+    public Customer findByIdCustomer(int id_customer) throws SQLException {
+        Customer customer = null;
+        sql = "SELECT * FROM Customers WHERE id_customer = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, id_customer);
+        rs = pr.executeQuery();
+        if(rs.next()) {
+            customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
+                    rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
+                    , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            return customer;
+        }
+        return null;
+    }
+
+    @Override
     public void insertCustomer(Customer customer) {
         try {
             sql = "INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) " +
                     "VALUES (?, ?, ?, ?, ? ,?)";
-            conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
             pr.setString(1, customer.getFull_name());
             pr.setString(2, customer.getIdCard());
@@ -76,9 +91,7 @@ public class ImplCustomer implements ICustomer {
     @Override
     public void updateCustomer(Customer customer) {
         try{
-            System.out.println(customer);
             sql = "UPDATE Customers SET customer_name = ?, idCard = ?, phone = ?, address = ?, createdAt = ?, updatedAt = ? WHERE id_customer = ?";
-            conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
             pr.setString(1, customer.getFull_name());
             pr.setString(2, customer.getIdCard());
@@ -103,11 +116,9 @@ public class ImplCustomer implements ICustomer {
     public void deleteCustomer(int id) {
         try {
             sql = "DELETE FROM Customers WHERE id_customer = ?";
-            conn.setAutoCommit(false);
             pr = conn.prepareStatement(sql);
             pr.setInt(1, id);
             pr.executeUpdate();
-            conn.commit();
         } catch (Exception e) {
             try {
                 conn.rollback();

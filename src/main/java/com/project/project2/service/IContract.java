@@ -11,6 +11,7 @@ public interface IContract {
     ObservableList<Contract> CONTRACTS = FXCollections.observableArrayList();
     List<Contract> findAll() throws SQLException;
     void insertContract(Contract contract);
+    void updateContract(Contract contract);
     void deleteContract(int id);
     Contract findContractByIdCustomer(int id_customer) throws SQLException;
 }

@@ -7,11 +7,13 @@ import com.project.project2.service.impl.ImplContractDetail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,20 +49,24 @@ public class ContractController implements Initializable {
     }
 
     public void showAddForm(ActionEvent actionEvent) throws IOException {
-        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/CreateContract.fxml")));
+        AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
         root.getChildren().setAll(dashboard);
     }
 
-    public void showEditForm(ActionEvent actionEvent) {
+    public void showEditForm(ActionEvent actionEvent) throws IOException, SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
-
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
+        AnchorPane dashboard = loader.load();
+        ContractDetailController contractDetailController = loader.getController();
+        contractDetailController.viewContractDetail(contract);
+        contractDetailController.contract = contract;
+        root.getChildren().setAll(dashboard);
     }
 
     public void delContract(ActionEvent actionEvent) throws SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
-
-        System.out.println(contract);
         if (contract != null) {
             if (showConfirmation("contract").get() == ButtonType.OK) {
                 if (setCarStatus(contract.getId_contract())) {
@@ -77,7 +83,7 @@ public class ContractController implements Initializable {
         try {
             List<Integer> list = implContractDetail.findIdCarByIdContract(idContract);
             for (int i : list) {
-                implCar.setCarStatus(i, "ON");
+                implCar.setCarStatus("ON", i);
             }
             return true;
         } catch (Exception e) {

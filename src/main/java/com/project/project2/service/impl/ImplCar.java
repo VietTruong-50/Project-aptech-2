@@ -18,10 +18,8 @@ public class ImplCar implements ICar {
     @Override
     public List<Car> findAll() throws SQLException {
         sql = "SELECT * FROM Car";
-        conn.setAutoCommit(false);
         pr = conn.prepareStatement(sql);
         rs = pr.executeQuery();
-        conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
                     rs.getDouble("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"),
@@ -69,11 +67,9 @@ public class ImplCar implements ICar {
     @Override
     public void deleteCar(Car car) throws SQLException {
         sql = "DELETE FROM Car WHERE id_car = ?";
-        conn.setAutoCommit(false);
         pr = conn.prepareStatement(sql);
         pr.setInt(1, car.getId_car());
         pr.executeUpdate();
-        conn.commit();
         try {
             conn.rollback();
         } catch (SQLException ex) {
@@ -113,19 +109,32 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public List<Car> findCarBySeats(int seat) throws SQLException {
-        sql = "SELECT * FROM Car WHERE seats = ? AND car_status = ?";
-        conn.setAutoCommit(false);
+    public List<Car> findCarByStatus(String status) throws SQLException {
+        sql = "SELECT * FROM Car WHERE car_status = ?";
         pr = conn.prepareStatement(sql);
-        pr.setInt(1, seat);
-        pr.setString(2, "ON");
+        pr.setString(1, status);
         rs = pr.executeQuery();
-        conn.commit();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
                     rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
                     rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
+        }
+        return CAR_LIST;
+    }
+
+    @Override
+    public List<Car> findCarById(int id) throws SQLException {
+        sql = "SELECT * FROM Car WHERE id_car = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, id);
+        rs = pr.executeQuery();
+        if (rs.next()) {
+            Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
+                    rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            CAR_LIST.add(car);
+            System.out.println(car);
         }
         return CAR_LIST;
     }
@@ -163,13 +172,12 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public void setCarStatus(int id, String status) {
+    public void setCarStatus(String status, int id) {
         try{
-            sql = "UPDATE Car SET car_status = ? WHERE id_car = ?";
+            String sql = "UPDATE Car SET car_status = ? WHERE id_car = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, status);
             pr.setInt(2, id);
-
             pr.execute();
         }catch (Exception e){
             try{

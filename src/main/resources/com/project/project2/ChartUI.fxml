@@ -13,10 +13,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #ffff;" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.ChartController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #ffff;" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.ChartController">
    <children>
-      <PieChart fx:id="pieChart" labelLineLength="8.0" layoutX="684.0" layoutY="129.0" prefHeight="285.0" prefWidth="353.0" title="Tiến độ của nhân viên" />
-      <LineChart fx:id="lineChart" horizontalZeroLineVisible="false" layoutX="35.0" layoutY="115.0" legendSide="TOP" legendVisible="false" prefHeight="369.0" prefWidth="656.0" titleSide="BOTTOM">
+      <PieChart fx:id="pieChart" labelLineLength="8.0" layoutX="684.0" layoutY="129.0" prefHeight="285.0" prefWidth="353.0" title="Tiến độ của nhân viên" visible="false" />
+      <LineChart fx:id="lineChart" horizontalZeroLineVisible="false" layoutX="35.0" layoutY="115.0" legendSide="TOP" legendVisible="false" prefHeight="427.0" prefWidth="966.0" titleSide="BOTTOM">
         <xAxis>
           <CategoryAxis fx:id="cateAxis" side="BOTTOM" tickLabelFill="RED" />
         </xAxis>
@@ -43,7 +43,7 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton layoutX="346.0" layoutY="522.0" onAction="#getStatistic" prefHeight="25.0" prefWidth="80.0" text="Thống kê" />
-      <ComboBox fx:id="ddMMYYCost" layoutX="77.0" layoutY="522.0" prefHeight="25.0" prefWidth="228.0" />
+      <JFXButton layoutX="880.0" layoutY="575.0" onAction="#getStatistic" prefHeight="33.0" prefWidth="109.0" text="Thống kê" />
+      <ComboBox fx:id="ddMMYYCost" layoutX="632.0" layoutY="575.0" prefHeight="33.0" prefWidth="228.0" />
    </children>
 </AnchorPane>

@@ -17,11 +17,11 @@
         <TableView fx:id="contractTable" layoutX="12.0" layoutY="216.0" prefHeight="457.0" prefWidth="1013.0">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="43.0" text="ID" />
-                <TableColumn fx:id="cusNameColumn" prefWidth="167.0" text="Tên khách hàng" />
-                <TableColumn fx:id="staffNameColumn" prefWidth="168.0" text="Nhân viên cho thuê" />
-                <TableColumn fx:id="ttCostColumn" prefWidth="135.0" text="Tổng chi phí" />
-                <TableColumn fx:id="startDateColumn" prefWidth="247.0" text="Ngày cho thuê" />
-                <TableColumn fx:id="endDateColumn" prefWidth="229.0" text="Ngày kết thúc " />
+                <TableColumn fx:id="cusNameColumn" prefWidth="167.0" text="Customer name" />
+                <TableColumn fx:id="staffNameColumn" prefWidth="168.0" text="Staff" />
+                <TableColumn fx:id="ttCostColumn" prefWidth="135.0" text="Total cost" />
+                <TableColumn fx:id="startDateColumn" prefWidth="247.0" text="Start date" />
+                <TableColumn fx:id="endDateColumn" prefWidth="229.0" text="End date" />
             </columns>
         </TableView>
         <JFXButton fx:id="addContractBtn" layoutX="726.0" layoutY="139.0" mnemonicParsing="false" onAction="#showAddForm" prefHeight="55.0" prefWidth="129.0" text="Tạo hợp đồng">

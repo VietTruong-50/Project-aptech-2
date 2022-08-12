@@ -2,98 +2,148 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" stylesheets="@Css/viewStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.ContractDetailController">
    <children>
-      <Label fx:id="license_plates" layoutX="391.0" layoutY="356.0" prefHeight="17.0" prefWidth="174.0" text="License plates" textFill="#e81f1f">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Pane prefHeight="73.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" />
-      <Label layoutX="256.0" layoutY="356.0" text="License plates:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="256.0" layoutY="111.0" text="Customer name:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="cus_name" layoutX="390.0" layoutY="107.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="257.0" layoutY="160.0" prefHeight="17.0" prefWidth="84.0" text="Staff id: ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="staff_id" layoutX="390.0" layoutY="156.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="258.0" layoutY="207.0" text="ID card:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="id_card" layoutX="390.0" layoutY="203.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="256.0" layoutY="255.0" prefHeight="20.0" prefWidth="48.0" text="Phone:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="phoneTf" layoutX="390.0" layoutY="252.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="257.0" layoutY="308.0" text="Address:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="addressTf" layoutX="391.0" layoutY="304.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="257.0" layoutY="400.0" text="Start date:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="startDate" layoutX="391.0" layoutY="396.0" prefHeight="25.0" prefWidth="225.0" />
-      <Label layoutX="257.0" layoutY="452.0" text="End date:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="endDate" layoutX="391.0" layoutY="448.0" prefHeight="25.0" prefWidth="225.0" />
-      <JFXButton layoutX="750.0" layoutY="101.0" onAction="#saveContract" prefHeight="40.0" prefWidth="117.0" text="Save">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton cancelButton="true" layoutX="750.0" layoutY="171.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="117.0" text="Cancel">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <Label layoutX="252.0" layoutY="578.0" prefHeight="17.0" prefWidth="74.0" text="Total cost:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="total_cost" layoutX="391.0" layoutY="578.0" prefHeight="17.0" prefWidth="174.0" text="Label">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="256.0" layoutY="501.0" text="VAT:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="391.0" layoutY="503.0" prefHeight="17.0" prefWidth="190.0" text="15%" />
-      <Label layoutX="254.0" layoutY="539.0" prefHeight="20.0" prefWidth="127.0" text="Deposit:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="depositTf" layoutX="391.0" layoutY="537.0" prefHeight="25.0" prefWidth="225.0" />
+      <ScrollPane fx:id="scrollPane" layoutX="-2.0" layoutY="74.0" prefHeight="600.0" prefWidth="1043.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="793.0" prefWidth="1028.0">
+               <children>
+                  <Label layoutX="45.0" layoutY="33.0" text="Customer name:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="cus_name" layoutX="176.0" layoutY="31.0" prefHeight="25.0" prefWidth="189.0" />
+                  <Label layoutX="411.0" layoutY="86.0" prefHeight="20.0" prefWidth="58.0" text="Staff id: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="staff_id" layoutX="475.0" layoutY="84.0" prefHeight="25.0" prefWidth="171.0" />
+                  <Label layoutX="411.0" layoutY="33.0" text="ID card:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="id_card" layoutX="473.0" layoutY="31.0" prefHeight="25.0" prefWidth="172.0" />
+                  <Label layoutX="676.0" layoutY="34.0" prefHeight="20.0" prefWidth="48.0" text="Phone:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phoneTf" layoutX="744.0" layoutY="32.0" prefHeight="25.0" prefWidth="234.0" />
+                  <Label layoutX="45.0" layoutY="85.0" prefHeight="20.0" prefWidth="80.0" text="Address:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="addressTf" layoutX="176.0" layoutY="83.0" prefHeight="25.0" prefWidth="190.0" />
+                  <Label layoutX="45.0" layoutY="135.0" text="Start date:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="startDate" layoutX="174.0" layoutY="133.0" prefHeight="25.0" prefWidth="193.0" />
+                  <Label layoutX="411.0" layoutY="136.0" text="End date:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="endDate" layoutX="475.0" layoutY="134.0" prefHeight="25.0" prefWidth="170.0" />
+                  <Label layoutX="686.0" layoutY="137.0" text="VAT:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="744.0" layoutY="137.0" prefHeight="17.0" prefWidth="190.0" text="15%" />
+                  <Label layoutX="676.0" layoutY="87.0" prefHeight="20.0" prefWidth="65.0" text="Deposit:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="depositTf" layoutX="744.0" layoutY="84.0" prefHeight="25.0" prefWidth="235.0" />
+                  <CheckBox fx:id="customerCheckbox" layoutX="41.0" layoutY="182.0" mnemonicParsing="false" onAction="#checkCustomer" text="Khách hàng cũ" />
+                  <TableView fx:id="customerTable" layoutX="41.0" layoutY="228.0" onMouseClicked="#handleClickCustomerTable" prefHeight="175.0" prefWidth="940.0">
+                     <columns>
+                        <TableColumn fx:id="idCustomerColumn" editable="false" prefWidth="92.0" text="Mã khách" />
+                        <TableColumn fx:id="nameCustomerColumn" editable="false" prefWidth="167.0" text="Họ và tên" />
+                        <TableColumn fx:id="phoneColumn" editable="false" minWidth="9.0" prefWidth="145.0" text="SĐT" />
+                        <TableColumn fx:id="idCardColumn" editable="false" prefWidth="217.0" text="Chứng minh thư" />
+                        <TableColumn fx:id="addressColumn" editable="false" minWidth="4.0" prefWidth="352.0" text="Địa chỉ" />
+                     </columns>
+                  </TableView>
+                  <Pane fx:id="pane2" layoutX="36.0" layoutY="424.0" prefHeight="269.0" prefWidth="955.0">
+                     <children>
+                        <TableView fx:id="carTable" layoutX="4.0" layoutY="30.0" onMouseClicked="#handleClickCarTable" prefHeight="190.0" prefWidth="941.0">
+                           <columns>
+                              <TableColumn fx:id="idColumn" editable="false" prefWidth="27.0" text="ID" />
+                              <TableColumn fx:id="nameColumn" editable="false" prefWidth="83.0" text=" Tên xe" />
+                              <TableColumn fx:id="manufacturerColumn" editable="false" prefWidth="145.0" text="Hãng xe" />
+                              <TableColumn fx:id="seatNbColumn" editable="false" prefWidth="146.0" text="Số ghế" />
+                              <TableColumn fx:id="priceColumn" editable="false" prefWidth="210.0" text="Giá thuê " />
+                              <TableColumn fx:id="modelColumn" editable="false" prefWidth="316.0" text="Model" />
+                           </columns>
+                        </TableView>
+                        <JFXButton fx:id="saveBtn" layoutX="659.0" layoutY="260.0" onAction="#saveContract" prefHeight="40.0" prefWidth="117.0" text="Save">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton cancelButton="true" layoutX="815.0" layoutY="260.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="117.0" text="Cancel">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <Label layoutX="4.0" layoutY="-10.0" text="Choose car: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="updateBtn" layoutX="659.0" layoutY="260.0" onAction="#updateContract" prefHeight="40.0" prefWidth="117.0" text="Update" visible="false">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+                  <Label fx:id="total_cost" layoutX="411.0" layoutY="181.0" prefHeight="17.0" prefWidth="174.0" text="Total cost:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalCost" layoutX="484.0" layoutY="183.0" prefHeight="17.0" prefWidth="159.0" text="0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Pane prefHeight="75.0" prefWidth="1037.0" style="-fx-background-color: #1976D2;" stylesheets="@Css/viewStyle.css">
+         <children>
+            <JFXButton fx:id="goBackBtn" contentDisplay="CENTER" layoutX="21.0" layoutY="16.0" onAction="#setGoBackBtn" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 50px;" stylesheets="@Css/viewStyle.css" text=" " textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Img/Back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
