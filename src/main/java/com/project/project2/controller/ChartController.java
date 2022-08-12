@@ -30,9 +30,8 @@ public class ChartController implements Initializable {
     @FXML
     public PieChart pieChart;
 
-
     @FXML
-    public ComboBox<?> ddMMYYCost;
+    public ComboBox<String> ddMMYYCost;
 
     @FXML
     public CategoryAxis cateAxis;
@@ -43,14 +42,14 @@ public class ChartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        ddMMYYCost.setValue(ddMMYY.get(0));
-//        ddMMYYCost.setItems(ddMMYY);
-//        try {
-//            initLineChart();
+        ddMMYYCost.setValue(ddMMYY.get(0));
+        ddMMYYCost.setItems(ddMMYY);
+        try {
+            initLineChart();
 //            initPieChart();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

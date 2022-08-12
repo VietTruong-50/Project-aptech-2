@@ -154,8 +154,7 @@ public class CarController implements Initializable {
         if (car == null) {
             showError("Error", "Haven't selected the car to be edited");
         } else if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
-                carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
-                radioButton.getText().isBlank() || file.exists()) {
+                carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() || file.exists()) {
             showWarning(null, "Please enter full information!");
         } else {
             radioButton = (RadioButton) status.getSelectedToggle();

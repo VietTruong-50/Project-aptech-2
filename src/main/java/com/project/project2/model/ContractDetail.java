@@ -6,21 +6,15 @@ public class ContractDetail {
     private int id_contract_detail;
     private int id_contract;
     private int id_car;
-    private LocalDate returnDate;
-    private int VAT;
-    private double deposit;
 
     public ContractDetail(){
 
     }
 
-    public ContractDetail(int id_contract_detail, int id_contract, int id_car, LocalDate returnDate, int VAT, double deposit) {
+    public ContractDetail(int id_contract_detail, int id_contract, int id_car) {
         this.id_contract_detail = id_contract_detail;
         this.id_contract = id_contract;
         this.id_car = id_car;
-        this.returnDate = returnDate;
-        this.VAT = VAT;
-        this.deposit = deposit;
     }
 
     public int getId_contract_detail() {
@@ -47,39 +41,12 @@ public class ContractDetail {
         this.id_car = id_car;
     }
 
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public int getVAT() {
-        return VAT;
-    }
-
-    public void setVAT(int VAT) {
-        this.VAT = VAT;
-    }
-
-    public double getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(double deposit) {
-        this.deposit = deposit;
-    }
-
     @Override
     public String toString() {
         return "ContractDetail{" +
                 "id_contract_detail=" + id_contract_detail +
                 ", id_contract=" + id_contract +
                 ", id_car=" + id_car +
-                ", returnDate=" + returnDate +
-                ", VAT=" + VAT +
-                ", deposit=" + deposit +
                 '}';
     }
 }

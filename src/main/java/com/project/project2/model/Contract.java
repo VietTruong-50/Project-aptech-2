@@ -9,6 +9,8 @@ public class Contract {
     private LocalDate startDate;
     private LocalDate endDate;
     private double total_cost;
+    private int VAT;
+    private double deposit;
     private LocalDate createdAt;
     private LocalDate updatedAt;
     private String staff_name;
@@ -18,22 +20,28 @@ public class Contract {
 
     }
 
-    public Contract(int id_contract, int id_customer, int id_staff, LocalDate startDate, LocalDate endDate, double total_cost, LocalDate createdAt, LocalDate updatedAt) {
+    public Contract(int id_contract, int id_customer, int id_staff, LocalDate startDate, LocalDate endDate, double total_cost, int VAT, double deposit, LocalDate createdAt, LocalDate updatedAt) {
         this.id_contract = id_contract;
         this.id_customer = id_customer;
         this.id_staff = id_staff;
         this.startDate = startDate;
         this.endDate = endDate;
         this.total_cost = total_cost;
+        this.VAT = VAT;
+        this.deposit = deposit;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public Contract(int id_contract, String customer_name, String staff_name,  LocalDate startDate, LocalDate endDate, double total_cost, LocalDate createdAt, LocalDate updatedAt) {
+    public Contract(int id_contract, int id_customer, int id_staff, String staff_name, String customer_name, LocalDate startDate, LocalDate endDate, double total_cost, int VAT, double deposit, LocalDate createdAt, LocalDate updatedAt) {
         this.id_contract = id_contract;
+        this.id_customer = id_customer;
+        this.id_staff = id_staff;
         this.startDate = startDate;
         this.endDate = endDate;
         this.total_cost = total_cost;
+        this.VAT = VAT;
+        this.deposit = deposit;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.staff_name = staff_name;
@@ -120,6 +128,22 @@ public class Contract {
         this.customer_name = customer_name;
     }
 
+    public int getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(int VAT) {
+        this.VAT = VAT;
+    }
+
+    public double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(double deposit) {
+        this.deposit = deposit;
+    }
+
     @Override
     public String toString() {
         return "Contract{" +
@@ -129,8 +153,12 @@ public class Contract {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", total_cost=" + total_cost +
+                ", VAT=" + VAT +
+                ", deposit=" + deposit +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", staff_name='" + staff_name + '\'' +
+                ", customer_name='" + customer_name + '\'' +
                 '}';
     }
 }
