@@ -70,6 +70,8 @@ CREATE TABLE Contract(
 	id_contract int identity(1,1) not null,
 	id_customer int not null,
 	id_staff int not null,
+	VAT int not null,
+	deposit float(20),
 	startDate datetime not null,
 	endDate datetime not null,
 	total_cost float null,
@@ -78,14 +80,13 @@ CREATE TABLE Contract(
 	primary key (id_contract)
 );
 
+
+
 --CREATE ContractDetail
 CREATE TABLE ContractDetail(
 	id_contract_detail int  identity(1,1) not null,
 	id_contract int not null,
 	id_car int not null,
-	VAT int not null,
-	deposit float(20),
-	returnDate datetime default null,
 	primary key (id_contract_detail)
 );
 
@@ -104,7 +105,7 @@ ADD CONSTRAINT FK_ContractDetail_Contract FOREIGN KEY (id_contract) REFERENCES C
 
 CREATE VIEW CONTRACT_V AS
 SELECT Contract.id_contract, Customers.id_customer, Staffs.id_staff , Customers.customer_name, 
-Staffs.staff_name, Contract.total_cost, Contract.startDate,
+Staffs.staff_name, Contract.total_cost, Contract.startDate, Contract.VAT, Contract.deposit,
 Contract.endDate, Contract.createdAt, Contract.updatedAt
 FROM Contract 
 JOIN Customers ON Customers.id_customer = Contract.id_customer
