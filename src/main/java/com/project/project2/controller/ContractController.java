@@ -1,9 +1,13 @@
 package com.project.project2.controller;
 
+import com.project.project2.model.Car;
 import com.project.project2.model.Contract;
 import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
+import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,6 +28,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.project.project2.alert.AlertMaker.showConfirmation;
+import static com.project.project2.service.ICar.CAR_LIST;
 import static com.project.project2.service.IContract.CONTRACTS;
 
 public class ContractController implements Initializable {
@@ -34,6 +40,7 @@ public class ContractController implements Initializable {
     public TableColumn<Object, Object> ttCostColumn;
     public TableColumn<Object, Object> startDateColumn;
     public TableColumn<Object, Object> endDateColumn;
+    public TextField searchTf;
 
     private final ImplContract implContract = new ImplContract();
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
@@ -56,13 +63,16 @@ public class ContractController implements Initializable {
     public void showEditForm(ActionEvent actionEvent) throws IOException, SQLException {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
-        AnchorPane dashboard = loader.load();
-        ContractDetailController contractDetailController = loader.getController();
-        contractDetailController.viewContractDetail(contract);
-        contractDetailController.contract = contract;
-        root.getChildren().setAll(dashboard);
+        if(contract != null){
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
+            AnchorPane dashboard = loader.load();
+            ContractDetailController contractDetailController = loader.getController();
+            contractDetailController.viewContractDetail(contract);
+            contractDetailController.contract = contract;
+            contractDetailController.isEditForm = true;
+            root.getChildren().setAll(dashboard);
+        }
     }
 
     public void delContract(ActionEvent actionEvent) throws SQLException {
@@ -119,8 +129,28 @@ public class ContractController implements Initializable {
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         contractTable.setItems(CONTRACTS);
-
+        searchContract(searchTf.textProperty(), contractTable);
     }
 
+    private void searchContract(StringProperty txtFind, TableView<Contract> contractTable) {
+        FilteredList<Contract> filteredData = new FilteredList<>(CONTRACTS, p -> true);
+        txtFind.addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(contract -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
 
+                if (contract.getCustomer_name().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (contract.getStaff_name().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return String.valueOf(contract.getTotal_cost()).contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Contract> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(contractTable.comparatorProperty());
+        contractTable.setItems(sortedData);
+    }
 }

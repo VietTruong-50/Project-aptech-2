@@ -32,6 +32,24 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
+    public List<Customer> findAllCustomerWithoutContract() throws SQLException {
+        sql = "SELECT Customers.id_customer, Customers.customer_name, Customers.address, Customers.phone, Customers.idCard, Customers.createdAt, Customers.updatedAt" +
+                " FROM Customers LEFT JOIN Contract ON Customers.id_customer = Contract.id_customer" +
+                " WHERE Contract.id_contract IS NULL";
+        conn.setAutoCommit(false);
+        pr = conn.prepareStatement(sql);
+        rs = pr.executeQuery();
+        conn.commit();
+        while (rs.next()) {
+            Customer customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
+                    rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
+                    , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            CUSTOMER_LIST.add(customer);
+        }
+        return CUSTOMER_LIST;
+    }
+
+    @Override
     public Customer findByIdCard(String idCard) throws SQLException {
         Customer customer = null;
         sql = "SELECT * FROM Customers WHERE idCard = ?";
@@ -39,7 +57,7 @@ public class ImplCustomer implements ICustomer {
         pr.setString(1, idCard);
         rs = pr.executeQuery();
         conn.commit();
-        if(rs.next()) {
+        if (rs.next()) {
             customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
                     rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
                     , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
@@ -55,7 +73,7 @@ public class ImplCustomer implements ICustomer {
         pr = conn.prepareStatement(sql);
         pr.setInt(1, id_customer);
         rs = pr.executeQuery();
-        if(rs.next()) {
+        if (rs.next()) {
             customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
                     rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
                     , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
@@ -90,7 +108,7 @@ public class ImplCustomer implements ICustomer {
 
     @Override
     public void updateCustomer(Customer customer) {
-        try{
+        try {
             sql = "UPDATE Customers SET customer_name = ?, idCard = ?, phone = ?, address = ?, createdAt = ?, updatedAt = ? WHERE id_customer = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, customer.getFull_name());
@@ -102,7 +120,7 @@ public class ImplCustomer implements ICustomer {
             pr.setInt(7, customer.getId_customer());
 
             pr.execute();
-        }catch (Exception e){
+        } catch (Exception e) {
 //            try{
 //                conn.rollback();
 //            }catch (SQLException ex){
@@ -113,12 +131,13 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
-    public void deleteCustomer(int id) {
+    public boolean deleteCustomer(int id) {
         try {
             sql = "DELETE FROM Customers WHERE id_customer = ?";
             pr = conn.prepareStatement(sql);
             pr.setInt(1, id);
             pr.executeUpdate();
+            return true;
         } catch (Exception e) {
             try {
                 conn.rollback();
@@ -127,5 +146,6 @@ public class ImplCustomer implements ICustomer {
             }
             e.printStackTrace();
         }
+        return false;
     }
 }

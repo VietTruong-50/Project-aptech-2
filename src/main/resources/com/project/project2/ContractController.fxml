@@ -39,7 +39,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-        <TextField fx:id="searchTf" layoutX="83.0" layoutY="149.0" prefHeight="35.0" prefWidth="245.0" style="-fx-background-radius: 20px;" />
+        <TextField fx:id="searchTf" promptText="Search by customer name, staff name, total cost,..." layoutX="83.0" layoutY="149.0" prefHeight="35.0" prefWidth="245.0" style="-fx-background-radius: 20px;" />
         <JFXButton fx:id="expPDFBtn" alignment="BASELINE_CENTER" layoutX="607.0" layoutY="139.0" mnemonicParsing="false" onAction="#exportPDF" prefHeight="55.0" prefWidth="111.0" text="Print">
             <font>
                 <Font size="14.0" />

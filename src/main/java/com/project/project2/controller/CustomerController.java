@@ -83,9 +83,12 @@ public class CustomerController implements Initializable {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
         if (customer != null) {
             if (showConfirmation("car").get() == ButtonType.OK) {
-                implCustomer.deleteCustomer(customer.getId_customer());
-                showSuccess("Success", "Delete customer success");
-                refresh();
+                if (implCustomer.deleteCustomer(customer.getId_customer())) {
+                    showSuccess("Success", "Delete customer success");
+                    refresh();
+                } else {
+                    showError("Error", "This customer is related to a contract");
+                }
             }
         }
     }

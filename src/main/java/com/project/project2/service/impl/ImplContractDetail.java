@@ -71,8 +71,8 @@ public class ImplContractDetail implements IContractDetail {
                 ex.printStackTrace();
             }
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     @Override
