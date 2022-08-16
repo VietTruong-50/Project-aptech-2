@@ -12,7 +12,7 @@ public interface ICar  {
     ObservableList<Car> CAR_LIST = FXCollections.observableArrayList();
     List<Car> findAll() throws SQLException;
     void insertCar(Car car, File file);
-    void deleteCar(Car car) throws SQLException;
+    boolean deleteCar(Car car) throws SQLException;
     void updateCar(Car car, File file);
     List<Car> findCarByStatus(String status) throws SQLException;
     List<Car> findCarById(int id) throws SQLException;

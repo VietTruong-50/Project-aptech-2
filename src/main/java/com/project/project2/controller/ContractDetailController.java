@@ -1,10 +1,7 @@
 package com.project.project2.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.project.project2.model.Car;
-import com.project.project2.model.Contract;
-import com.project.project2.model.ContractDetail;
-import com.project.project2.model.Customer;
+import com.project.project2.model.*;
 import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
@@ -37,6 +34,7 @@ public class ContractDetailController implements Initializable {
     private static double total = 0;
     private static Customer customer = null;
     public Contract contract;
+    public boolean isEditForm;
 
     public AnchorPane pane;
     public Label total_cost;
@@ -72,6 +70,8 @@ public class ContractDetailController implements Initializable {
     private final ImplContract implContract = new ImplContract();
     private final ImplCustomer implCustomer = new ImplCustomer();
     private final ImplCar implCar = new ImplCar();
+    public CheckBox staffCheckbox;
+    public TableView<Staff> staffTable;
 
 
     @Override
@@ -79,6 +79,7 @@ public class ContractDetailController implements Initializable {
         try {
             showCar();
             showCustomer();
+            showStaff();
             customerTable.setVisible(false);
             pane2.setLayoutY(230);
         } catch (SQLException e) {
@@ -93,7 +94,7 @@ public class ContractDetailController implements Initializable {
 
     public void showCustomer() throws SQLException {
         CUSTOMER_LIST.clear();
-        implCustomer.findAll();
+        implCustomer.findAllCustomerWithoutContract();
 
         idCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("id_customer"));
         nameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("full_name"));
@@ -108,9 +109,7 @@ public class ContractDetailController implements Initializable {
     public void showCar() throws SQLException {
         CAR_LIST.clear();
 
-        if(customer == null){
-            implCar.findCarByStatus("ON");
-        }
+        implCar.findCarByStatus("ON");
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_car"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
@@ -120,6 +119,10 @@ public class ContractDetailController implements Initializable {
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
 
         carTable.setItems(CAR_LIST);
+    }
+
+    public void showStaff() throws SQLException {
+
     }
 
     public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {
@@ -148,7 +151,7 @@ public class ContractDetailController implements Initializable {
         customer = implCustomer.findByIdCustomer(contract.getId_customer());
 
         List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
-        for(int i : list){
+        for (int i : list) {
             implCar.findCarById(i);
         }
         customerCheckbox.setVisible(false);
@@ -224,7 +227,7 @@ public class ContractDetailController implements Initializable {
     }
 
     public void handleClickCarTable(MouseEvent mouseEvent) {
-        if(customer == null){
+        if(!isEditForm) {
             Car car = carTable.getSelectionModel().getSelectedItem();
             this.carList.add(car);
             total += car.getRental_cost();
@@ -235,18 +238,45 @@ public class ContractDetailController implements Initializable {
 
     public void checkCustomer(ActionEvent actionEvent) {
         if (customerCheckbox.isSelected()) {
-            setVisible(false, true, 429);
+            setVisible(true,false, true, 429);
+            staffCheckbox.setDisable(true);
         } else {
-            setVisible(true, false, 230);
+            setVisible(true, true, false, 230);
+            staffCheckbox.setDisable(false);
         }
     }
 
-    public void setVisible(boolean editable, boolean visible, double layoutY) {
-        customerTable.setVisible(visible);
+    public void setVisible(boolean flag,boolean editable, boolean visible, double layoutY) {
+        if(flag){
+            cus_name.setEditable(editable);
+            id_card.setEditable(editable);
+            phoneTf.setEditable(editable);
+            addressTf.setEditable(editable);
+            customerTable.setVisible(visible);
+            staffTable.setVisible(false);
+        }else{
+            staffTable.setVisible(visible);
+            customerTable.setVisible(false);
+        }
         pane2.setLayoutY(layoutY);
-        cus_name.setEditable(editable);
-        id_card.setEditable(editable);
-        phoneTf.setEditable(editable);
-        addressTf.setEditable(editable);
+    }
+
+    public void chooseStaff(ActionEvent actionEvent) {
+        if (staffCheckbox.isSelected()) {
+            setVisible(false,false, true, 429);
+            customerCheckbox.setDisable(true);
+        } else {
+            setVisible(false,true, false, 230);
+            customerCheckbox.setDisable(false);
+        }
+    }
+
+
+    public void handleClickStaffTable(MouseEvent mouseEvent) {
+        Staff staff = staffTable.getSelectionModel().getSelectedItem();
+
+        if (staff != null) {
+            staff_id.setText(String.valueOf(staff.getId_staff()));
+        }
     }
 }

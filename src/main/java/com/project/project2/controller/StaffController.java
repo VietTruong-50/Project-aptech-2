@@ -31,6 +31,8 @@ public class StaffController {
     }
 
     public void addStaff(ActionEvent actionEvent) {
+
+
     }
 
     public void updateStaff(ActionEvent actionEvent) {

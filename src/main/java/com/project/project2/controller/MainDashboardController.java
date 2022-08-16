@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainDashboardController implements Initializable {
+    private static String user_name;
 
     public AnchorPane root, pane;
     public Label welcomeLabel;
@@ -97,7 +98,8 @@ public class MainDashboardController implements Initializable {
     }
 
     public void setUserName(String userName){
-        welcomeLabel.setText("Hello " + userName);
+        user_name = userName;
+        welcomeLabel.setText("Hello " + user_name);
     }
 
     public void changeStage(String path){
@@ -137,5 +139,6 @@ public class MainDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showHomePage();
+        setUserName(user_name);
     }
 }

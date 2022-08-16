@@ -1,6 +1,7 @@
 package com.project.project2.controller;
 
 import com.project.project2.connection.DBHandle;
+import com.project.project2.model.Staff;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,12 +19,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 
 public class ChartController implements Initializable {
+    private int total_contract = 0;
+
     @FXML
     public LineChart<?, ?> lineChart;
 
@@ -46,7 +52,7 @@ public class ChartController implements Initializable {
         ddMMYYCost.setItems(ddMMYY);
         try {
             initLineChart();
-//            initPieChart();
+            initPieChart();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,32 +73,40 @@ public class ChartController implements Initializable {
     public void initLineChart() throws SQLException {
         XYChart.Series series = new XYChart.Series();
         int year = Calendar.getInstance().get(Calendar.YEAR);
+        Date date = new Date();
+        LocalDate currentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int month = currentDate.getMonthValue();
         cateAxis.setAnimated(false);
-        if (ddMMYYCost.getValue() == "by Day") {
+        if (Objects.equals(ddMMYYCost.getValue(), "by Day")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by day");
             for (int i = 1; i <= 31; i++) {
-                series.getData().add(new XYChart.Data("Day " + i, getDailyCostByDdMmYy(i, "DAY")));
+                series.getData().add(new XYChart.Data("Day " + i, getDailyCostByDdMmYy(i, "DAY", month)));
             }
             lineChart.getData().add(series);
-        } else if (ddMMYYCost.getValue() == "by Month") {
+        } else if (Objects.equals(ddMMYYCost.getValue(), "by Month")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by month");
             for (int i = 1; i <= 12; i++) {
-                series.getData().add(new XYChart.Data("Month " + i, getDailyCostByDdMmYy(i, "MONTH")));
+                series.getData().add(new XYChart.Data("Month " + i, getDailyCostByDdMmYy(i, "MONTH", 0)));
             }
             lineChart.getData().add(series);
-        } else if (ddMMYYCost.getValue() == "by Year") {
+        } else if (Objects.equals(ddMMYYCost.getValue(), "by Year")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by year");
             for (int i = year; i <= year + 2; i++) {
-                series.getData().add(new XYChart.Data("Year " + i, getDailyCostByDdMmYy(i, "YEAR")));
+                series.getData().add(new XYChart.Data("Year " + i, getDailyCostByDdMmYy(i, "YEAR", 0)));
             }
             lineChart.getData().add(series);
         }
     }
 
     public void initPieChart() throws SQLException {
+        String query = "SELECT COUNT(*) AS total_contract FROM Contract";
+        ResultSet rs = DBHandle.executeQuery(query);
+        if (rs.next()) {
+            total_contract = rs.getInt("total_contract");
+        }
 //        ObservableList<PieChart.Data> piechart = FXCollections.observableArrayList();
 //
 //        for(Staff staff : STAFFS){
@@ -103,18 +117,24 @@ public class ChartController implements Initializable {
 
     public double getNbContractPercent(int id_staff) throws SQLException {
         ResultSet rs = null;
-        String query = "SELECT (SELECT COUNT(*) FROM Contract WHERE id_staff = " + id_staff + ")*100/(SELECT COUNT(*) FROM Contract)";
+        String query = "SELECT COUNT(*) AS nb_Contract FROM Contract  WHERE id_staff = " + id_staff + " GROUP BY id_staff";
         rs = DBHandle.executeQuery(query);
-        if (rs.next()) {
-            return rs.getDouble("percent_of_work");
+        if(rs.next()){
+            return rs.getDouble("nb_Contract") * 100 / total_contract;
         }
         return 0;
     }
 
-    public int getDailyCostByDdMmYy(int number, String Type) throws SQLException {
-        ResultSet rs = null;
+    public int getDailyCostByDdMmYy(int number, String Type, int month) throws SQLException {
+        ResultSet rs;
         String query = "SELECT SUM(total_cost) AS cost_by " +
                 "FROM Contract WHERE " + Type + "(startDate) = " + number + " GROUP BY " + Type + "(startDate)";
+
+        if(month != 0){
+            query = "SELECT SUM(total_cost) AS cost_by " +
+                    "FROM Contract WHERE " + Type + "(startDate) = " + number + " AND MONTH(startDate) = "
+                    + month +  " GROUP BY " + Type + "(startDate)";
+        }
         rs = DBHandle.executeQuery(query);
         if (rs.next()) {
             return rs.getInt("cost_by");

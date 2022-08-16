@@ -50,6 +50,7 @@ CREATE TABLE Staffs(
 	staff_name nvarchar(30) not null,
 	birth datetime not null,
 	phone char(10) not null,
+	number_of_contract int default 0,
 	createdAt datetime,
 	updatedAt datetime,
 	primary key (id_staff)
@@ -117,3 +118,13 @@ DROP VIEW CONTRACT_V
 SELECT (SELECT COUNT(*) FROM Contract WHERE id_staff = '1')*100/(SELECT COUNT(*) FROM Contract) AS percent_of_work
 
 SELECT SUM(total_cost) AS cost_by FROM Contract WHERE DAY(startDate) = 15 GROUP BY DAY(startDate)
+
+SELECT Customers.id_customer, Customers.customer_name, Customers.address, Customers.phone, Customers.idCard, Customers.createdAt, Customers.updatedAt
+FROM Customers 
+LEFT JOIN Contract ON Customers.id_customer = Contract.id_customer
+WHERE Contract.id_contract IS NULL
+
+SELECT COUNT(*) AS total_contract FROM Contract
+SELECT COUNT(*) AS nb_Contract FROM Contract WHERE id_staff = 1 GROUP BY id_staff
+
+SELECT SUM(total_cost) AS cost_by FROM Contract WHERE DAY(startDate) = 9 AND MONTH(startDate) = 3 GROUP BY DAY(startDate)

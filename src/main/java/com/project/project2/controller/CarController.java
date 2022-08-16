@@ -100,6 +100,17 @@ public class CarController implements Initializable {
     @FXML
     public AnchorPane carPane;
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            refresh();
+            seatNbCbb.setItems(SEAT_LIST);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     public void handleClickTableView(MouseEvent mouseEvent) throws SQLException, IOException {
         Car car = carTable.getSelectionModel().getSelectedItem();
@@ -127,7 +138,7 @@ public class CarController implements Initializable {
 
         if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
-                radioButton.getText().isBlank() || file.exists()) {
+                radioButton.getText().isBlank() || !file.exists()) {
             showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
             Car car = new Car();
@@ -179,9 +190,12 @@ public class CarController implements Initializable {
         Car car = carTable.getSelectionModel().getSelectedItem();
         if (car != null) {
             if (showConfirmation("car").get() == ButtonType.OK) {
-                implCar.deleteCar(car);
-                showSuccess("Success", "Delete car success!");
-                refresh();
+                if (implCar.deleteCar(car)) {
+                    showSuccess("Success", "Delete car success!");
+                    refresh();
+                }else{
+                    showError("Error", "This car is related to a contract");
+                }
             }
         }
     }
@@ -236,16 +250,6 @@ public class CarController implements Initializable {
         searchCar(searchCarTf.textProperty(), carTable);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            refresh();
-            seatNbCbb.setItems(SEAT_LIST);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void refresh() throws SQLException {
         license_platesTf.clear();
@@ -263,7 +267,7 @@ public class CarController implements Initializable {
         showCar();
     }
 
-    public void setCarImg(Car car) throws SQLException, IOException {
+    public void setCarImg(Car car) throws SQLException {
         Image img;
 
         String query = "SELECT cimage FROM Car WHERE id_car = " + car.getId_car();

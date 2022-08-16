@@ -22,8 +22,8 @@ public class ImplCar implements ICar {
         rs = pr.executeQuery();
         while (rs.next()) {
             Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
-                    rs.getDouble("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),  rs.getString("license_plates"),
-                    rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+                    rs.getDouble("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage")
+                    , rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
         }
         return CAR_LIST;
@@ -65,16 +65,21 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public void deleteCar(Car car) throws SQLException {
-        sql = "DELETE FROM Car WHERE id_car = ?";
-        pr = conn.prepareStatement(sql);
-        pr.setInt(1, car.getId_car());
-        pr.executeUpdate();
+    public boolean deleteCar(Car car) {
         try {
-            conn.rollback();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            sql = "DELETE FROM Car WHERE id_car = ?";
+            pr = conn.prepareStatement(sql);
+            pr.setInt(1, car.getId_car());
+            pr.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
+        return false;
     }
 
     @Override
@@ -173,16 +178,16 @@ public class ImplCar implements ICar {
 
     @Override
     public void setCarStatus(String status, int id) {
-        try{
+        try {
             String sql = "UPDATE Car SET car_status = ? WHERE id_car = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, status);
             pr.setInt(2, id);
             pr.execute();
-        }catch (Exception e){
-            try{
+        } catch (Exception e) {
+            try {
                 conn.rollback();
-            }catch (SQLException ex){
+            } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             e.printStackTrace();
