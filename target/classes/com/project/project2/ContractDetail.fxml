@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -32,7 +33,6 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="staff_id" layoutX="475.0" layoutY="84.0" prefHeight="25.0" prefWidth="171.0" />
                   <Label layoutX="411.0" layoutY="33.0" text="ID card:">
                      <font>
                         <Font size="14.0" />
@@ -68,7 +68,6 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="744.0" layoutY="137.0" prefHeight="17.0" prefWidth="190.0" text="15%" />
                   <Label layoutX="676.0" layoutY="87.0" prefHeight="20.0" prefWidth="65.0" text="Deposit:">
                      <font>
                         <Font size="14.0" />
@@ -124,17 +123,9 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="totalCost" layoutX="484.0" layoutY="183.0" onMouseClicked="#handleClickStaffTable" prefHeight="17.0" prefWidth="159.0" text="0" />
-                  <TableView fx:id="staffTable" layoutX="41.0" layoutY="228.0" prefHeight="175.0" prefWidth="940.0" visible="false">
-                     <columns>
-                        <TableColumn fx:id="idColumn1" editable="false" prefWidth="116.0" text="Mã nhân viên" />
-                        <TableColumn fx:id="nameColumn1" editable="false" prefWidth="158.0" text="Họ và tên" />
-                        <TableColumn fx:id="birthColumn" editable="false" prefWidth="153.0" text="Ngày tháng năm sinh" />
-                        <TableColumn fx:id="sdtColumn" editable="false" minWidth="0.0" prefWidth="73.0" text="SĐT" />
-                        <TableColumn fx:id="contractNbColumn" prefWidth="207.0" text="Số hợp đồng" />
-                     </columns>
-                  </TableView>
-                  <CheckBox fx:id="staffCheckbox" layoutX="176.0" layoutY="183.0" mnemonicParsing="false" onAction="#chooseStaff" text="Nhân viên" />
+                  <Label fx:id="totalCost" layoutX="484.0" layoutY="183.0" prefHeight="17.0" prefWidth="159.0" text="0" />
+                  <TextField fx:id="vatTf" layoutX="744.0" layoutY="135.0" onKeyReleased="#getTotalCost" prefHeight="25.0" prefWidth="120.0" />
+                  <ComboBox fx:id="staffCbbox" layoutX="472.0" layoutY="84.0" onAction="#getStaff" prefHeight="25.0" prefWidth="175.0" />
                </children>
             </AnchorPane>
         </content>

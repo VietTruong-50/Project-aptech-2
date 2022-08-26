@@ -19,7 +19,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1037.0" style="-fx-background-color: #bdc3c7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.project2.controller.StaffController">
    <children>
-      <TableView fx:id="staffTable" layoutX="403.0" layoutY="179.0" prefHeight="494.0" prefWidth="623.0">
+      <TableView fx:id="staffTable" layoutX="403.0" layoutY="179.0" onMouseClicked="#handleClickTableView" prefHeight="494.0" prefWidth="623.0">
         <columns>
           <TableColumn fx:id="idColumn" editable="false" prefWidth="116.0" text="Mã nhân viên" />
           <TableColumn fx:id="nameColumn" editable="false" prefWidth="158.0" text="Họ và tên" />
@@ -28,7 +28,7 @@
             <TableColumn fx:id="contractNbColumn" prefWidth="207.0" text="Số hợp đồng" />
         </columns>
       </TableView>
-      <TextField fx:id="searchStaffTf" layoutX="470.0" layoutY="116.0" prefHeight="35.0" prefWidth="273.0" promptText="Search by name, birth, phone" style="-fx-background-radius: 20px;" />
+      <TextField fx:id="searchTf" layoutX="470.0" layoutY="116.0" prefHeight="35.0" prefWidth="273.0" promptText="Search by name, birth, phone" style="-fx-background-radius: 20px;" />
       <Label layoutX="405.0" layoutY="117.0" text="Search" textFill="#393838">
          <font>
             <Font size="18.0" />

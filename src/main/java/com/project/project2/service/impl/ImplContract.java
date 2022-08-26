@@ -15,13 +15,16 @@ public class ImplContract implements IContract {
     private String sql;
 
     @Override
-    public List<Contract> findAll() throws SQLException {
+    public List<Contract> findAll(boolean isUnsigned) throws SQLException {
         sql = "SELECT * FROM CONTRACT_V";
+        if(isUnsigned){
+            sql = "SELECT * FROM CONTRACT_UNSIGNED_V";
+        }
         pr = conn.prepareStatement(sql);
         rs = pr.executeQuery();
         while (rs.next()) {
-            Contract contract = new Contract(rs.getInt("id_contract"), rs.getInt("id_customer"), rs.getInt("id_staff"), rs.getString("customer_name")
-                    , rs.getString("staff_name"), rs.getDate("startDate").toLocalDate(), rs.getDate("endDate").toLocalDate()
+            Contract contract = new Contract(rs.getInt("id_contract"), rs.getInt("id_customer"), rs.getInt("id_staff"), rs.getString("staff_name")
+                    , rs.getString("customer_name"), rs.getDate("startDate").toLocalDate(), rs.getDate("endDate").toLocalDate()
                     , rs.getDouble("total_cost"), rs.getInt("VAT"), rs.getDouble("deposit")
                     , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CONTRACTS.add(contract);

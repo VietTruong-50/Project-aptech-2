@@ -12,6 +12,11 @@ public class Staff extends Person{
 
     }
 
+    public Staff(String full_name, int id_staff){
+        super(full_name);
+        this.id_staff = id_staff;
+    }
+
     public Staff(int id_staff, LocalDate birth, LocalDate createdAt, LocalDate updatedAt) {
         this.id_staff = id_staff;
         this.birth = birth;
@@ -19,9 +24,16 @@ public class Staff extends Person{
         this.updatedAt = updatedAt;
     }
 
-    public Staff(String full_name, String phone, int id_staff, LocalDate birth, LocalDate createdAt, LocalDate updatedAt) {
+    public Staff(int id_staff, String full_name, LocalDate birth, String phone, LocalDate createdAt, LocalDate updatedAt) {
         super(full_name, phone);
         this.id_staff = id_staff;
+        this.birth = birth;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Staff(String full_name, LocalDate birth, String phone, LocalDate createdAt, LocalDate updatedAt) {
+        super(full_name, phone);
         this.birth = birth;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -57,5 +69,16 @@ public class Staff extends Person{
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() +
+                "id_staff=" + id_staff +
+                ", brith=" + birth +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                "}";
     }
 }

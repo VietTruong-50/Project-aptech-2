@@ -2,15 +2,13 @@ package com.project.project2.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.project.project2.model.*;
-import com.project.project2.service.impl.ImplCar;
-import com.project.project2.service.impl.ImplContract;
-import com.project.project2.service.impl.ImplContractDetail;
-import com.project.project2.service.impl.ImplCustomer;
+import com.project.project2.service.impl.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -27,11 +25,12 @@ import java.util.ResourceBundle;
 import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICar.CAR_LIST;
 import static com.project.project2.service.ICustomer.CUSTOMER_LIST;
+import static com.project.project2.service.IStaff.STAFF_LIST;
 
 public class ContractDetailController implements Initializable {
 
     private final List<Car> carList = new ArrayList<>();
-    private static double total = 0;
+    private double total = 0;
     private static Customer customer = null;
     public Contract contract;
     public boolean isEditForm;
@@ -39,11 +38,11 @@ public class ContractDetailController implements Initializable {
     public AnchorPane pane;
     public Label total_cost;
     public TextField cus_name;
-    public TextField staff_id;
     public TextField id_card;
     public TextField phoneTf;
     public TextField addressTf;
     public TextField depositTf;
+    public TextField vatTf;
     public DatePicker startDate;
     public DatePicker endDate;
     public TableView<Car> carTable;
@@ -65,13 +64,13 @@ public class ContractDetailController implements Initializable {
     public Label totalCost;
     public JFXButton saveBtn;
     public JFXButton updateBtn;
+    public ComboBox<Staff> staffCbbox;
 
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
     private final ImplContract implContract = new ImplContract();
     private final ImplCustomer implCustomer = new ImplCustomer();
     private final ImplCar implCar = new ImplCar();
-    public CheckBox staffCheckbox;
-    public TableView<Staff> staffTable;
+    private final ImplStaff implStaff = new ImplStaff();
 
 
     @Override
@@ -82,6 +81,7 @@ public class ContractDetailController implements Initializable {
             showStaff();
             customerTable.setVisible(false);
             pane2.setLayoutY(230);
+            total = 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,7 +94,7 @@ public class ContractDetailController implements Initializable {
 
     public void showCustomer() throws SQLException {
         CUSTOMER_LIST.clear();
-        implCustomer.findAllCustomerWithoutContract();
+        implCustomer.findAll();
 
         idCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("id_customer"));
         nameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("full_name"));
@@ -116,13 +116,14 @@ public class ContractDetailController implements Initializable {
         manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacture"));
         seatNbColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("rental_cost"));
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
 
         carTable.setItems(CAR_LIST);
     }
 
     public void showStaff() throws SQLException {
-
+        STAFF_LIST.clear();
+        implStaff.findAll();
+        staffCbbox.getItems().addAll(STAFF_LIST);
     }
 
     public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {
@@ -163,8 +164,8 @@ public class ContractDetailController implements Initializable {
         startDate.setValue(contract.getStartDate());
         endDate.setValue(contract.getEndDate());
         totalCost.setText(String.valueOf(contract.getTotal_cost()));
-        staff_id.setText(String.valueOf(contract.getId_staff()));
         depositTf.setText(String.valueOf(contract.getDeposit()));
+        vatTf.setText(String.valueOf(contract.getVAT()));
 
         cus_name.setEditable(false);
         id_card.setEditable(false);
@@ -178,13 +179,13 @@ public class ContractDetailController implements Initializable {
         if (customer != null) {
             Contract contract = new Contract();
             contract.setId_customer(customer.getId_customer());
-            contract.setId_staff(Integer.parseInt(staff_id.getText().trim()));
-            contract.setTotal_cost((total * 115 / 100));
+            contract.setId_staff(staffCbbox.getValue().getId_staff());
+            contract.setTotal_cost(Double.parseDouble(total_cost.getText()));
             contract.setStartDate(startDate.getValue());
             contract.setEndDate(endDate.getValue());
             contract.setCreatedAt(LocalDate.now());
             contract.setUpdatedAt(LocalDate.now());
-            contract.setVAT(15);
+            contract.setVAT(Integer.parseInt(vatTf.getText()));
             contract.setDeposit(Double.parseDouble(depositTf.getText().trim()));
 
             implContract.insertContract(contract);
@@ -206,10 +207,11 @@ public class ContractDetailController implements Initializable {
     }
 
     public void updateContract(ActionEvent actionEvent) throws IOException {
-        contract.setId_staff(Integer.parseInt(staff_id.getText()));
+        contract.setId_staff(staffCbbox.getValue().getId_staff());
         contract.setDeposit(Double.parseDouble(depositTf.getText()));
         contract.setStartDate(startDate.getValue());
         contract.setEndDate(endDate.getValue());
+        contract.setVAT(Integer.parseInt(vatTf.getText()));
         implContract.updateContract(contract);
         AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
@@ -227,56 +229,42 @@ public class ContractDetailController implements Initializable {
     }
 
     public void handleClickCarTable(MouseEvent mouseEvent) {
-        if(!isEditForm) {
+        if (!isEditForm) {
             Car car = carTable.getSelectionModel().getSelectedItem();
             this.carList.add(car);
             total += car.getRental_cost();
-            totalCost.setText((total * 115) / 100 + "VND");
+            totalCost.setText(total + " VND");
             carTable.getItems().remove(car);
         }
     }
 
     public void checkCustomer(ActionEvent actionEvent) {
         if (customerCheckbox.isSelected()) {
-            setVisible(true,false, true, 429);
-            staffCheckbox.setDisable(true);
+            setVisible(false, true, 429);
         } else {
-            setVisible(true, true, false, 230);
-            staffCheckbox.setDisable(false);
+            setVisible(true, false, 230);
         }
     }
 
-    public void setVisible(boolean flag,boolean editable, boolean visible, double layoutY) {
-        if(flag){
-            cus_name.setEditable(editable);
-            id_card.setEditable(editable);
-            phoneTf.setEditable(editable);
-            addressTf.setEditable(editable);
-            customerTable.setVisible(visible);
-            staffTable.setVisible(false);
-        }else{
-            staffTable.setVisible(visible);
-            customerTable.setVisible(false);
-        }
+    public void setVisible( boolean editable, boolean visible, double layoutY) {
+
+        cus_name.setEditable(editable);
+        id_card.setEditable(editable);
+        phoneTf.setEditable(editable);
+        addressTf.setEditable(editable);
+        customerTable.setVisible(visible);
+
         pane2.setLayoutY(layoutY);
     }
 
-    public void chooseStaff(ActionEvent actionEvent) {
-        if (staffCheckbox.isSelected()) {
-            setVisible(false,false, true, 429);
-            customerCheckbox.setDisable(true);
-        } else {
-            setVisible(false,true, false, 230);
-            customerCheckbox.setDisable(false);
-        }
+
+    public void getTotalCost(KeyEvent keyEvent) {
+        int vat = 1;
+        if (!vatTf.getText().isBlank()) vat = Integer.parseInt(vatTf.getText());
+        totalCost.setText((total * (100 + vat)) / 100 + " VND");
     }
 
+    public void getStaff(ActionEvent actionEvent) throws SQLException {
 
-    public void handleClickStaffTable(MouseEvent mouseEvent) {
-        Staff staff = staffTable.getSelectionModel().getSelectedItem();
-
-        if (staff != null) {
-            staff_id.setText(String.valueOf(staff.getId_staff()));
-        }
     }
 }

@@ -95,6 +95,7 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void showHomePage(ActionEvent actionEvent) {
+        changeStage("MainDashboard.fxml");
     }
 
     public void setUserName(String userName){

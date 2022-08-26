@@ -2,6 +2,7 @@ package com.project.project2.controller;
 
 import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Staff;
+import com.project.project2.service.impl.ImplStaff;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +27,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.project.project2.service.IStaff.STAFF_LIST;
+
 
 public class ChartController implements Initializable {
     private int total_contract = 0;
@@ -45,6 +48,8 @@ public class ChartController implements Initializable {
     public AnchorPane root;
 
     final ObservableList<String> ddMMYY = FXCollections.observableArrayList("by Day", "by Month", "by Year");
+
+    private final ImplStaff implStaff = new ImplStaff();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,17 +107,20 @@ public class ChartController implements Initializable {
     }
 
     public void initPieChart() throws SQLException {
+        STAFF_LIST.clear();
+        implStaff.findAll();
+
         String query = "SELECT COUNT(*) AS total_contract FROM Contract";
         ResultSet rs = DBHandle.executeQuery(query);
-        if (rs.next()) {
-            total_contract = rs.getInt("total_contract");
+        while (rs.next()) {
+            total_contract += rs.getInt("total_contract");
         }
-//        ObservableList<PieChart.Data> piechart = FXCollections.observableArrayList();
-//
-//        for(Staff staff : STAFFS){
-//            piechart.add(new PieChart.Data(staff.getFull_name(), getNbContractPercent(staff.getId_staff())));
-//        }
-//        pieChart.setData(piechart);
+        ObservableList<PieChart.Data> piechart = FXCollections.observableArrayList();
+
+        for(Staff staff : STAFF_LIST){
+            piechart.add(new PieChart.Data(staff.getFull_name(), getNbContractPercent(staff.getId_staff())));
+        }
+        pieChart.setData(piechart);
     }
 
     public double getNbContractPercent(int id_staff) throws SQLException {
