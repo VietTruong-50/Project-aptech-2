@@ -14,13 +14,13 @@ public class DBConnection {
 //            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/carrentalmanagent", "root", "");
             //Connect by MSSSQL
             SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setServerName("PC\\SQLEXPRESS");
-            ds.setUser("viet2001");
-            ds.setPassword("viet2001");
+            ds.setServerName("ROOKIEWHITE");
+            ds.setUser("sa");
+            ds.setPassword("123");
             ds.setPortNumber(1433);
             ds.setDatabaseName("CarRentalManagement");
             conn = ds.getConnection();
-
+            System.out.println("okay");
         } catch (Exception e) {
             e.printStackTrace();
         }
