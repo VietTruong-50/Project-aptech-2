@@ -20,7 +20,7 @@ CREATE TABLE Car(
 	rental_cost float not null,
 	model varchar(50),
 	car_status varchar(10) not null,
-	cimage nvarchar(500),
+	cimage nvarchar(250),
 	license_plates nchar(10),
 	createdAt datetime,
 	updatedAt datetime,
@@ -56,6 +56,8 @@ CREATE TABLE Staffs(
 	primary key (id_staff)
 );
 
+select * From Staffs
+
 INSERT INTO Staffs( staff_name, birth, phone, createdAt, updatedAt) VALUES
 ( N'Vũ Đình Long',  '1997-09-15', 0903642221, '2022-07-31', '2022-07-31'),
 ( N'Hoàng Ngọc Thuỳ',  '1996-07-23', 0905146587, '2022-07-31', '2022-07-31'),
@@ -72,7 +74,7 @@ CREATE TABLE Contract(
 	id_customer int not null,
 	id_staff int not null,
 	VAT int not null,
-	deposit float(20),
+	deposit float,
 	startDate datetime not null,
 	endDate datetime not null,
 	total_cost float null,
@@ -127,4 +129,56 @@ WHERE Contract.id_contract IS NULL
 SELECT COUNT(*) AS total_contract FROM Contract
 SELECT COUNT(*) AS nb_Contract FROM Contract WHERE id_staff = 1 GROUP BY id_staff
 
+SELECT * FROM Car JOIN ContractDetail ON Car.id_car= ContractDetail.id_car WHERE (SELECT *
+FROM Contract
+JOIN Customers ON Customers.id_customer = Contract.id_customer
+WHERE customer_name = 'Huyen' )
+
 SELECT SUM(total_cost) AS cost_by FROM Contract WHERE DAY(startDate) = 9 AND MONTH(startDate) = 3 GROUP BY DAY(startDate)
+
+
+CREATE VIEW CONTRACT_UNSIGNED_V AS
+SELECT Contract.id_contract, Customers.id_customer, Staffs.id_staff , dbo.fChuyenCoDauThanhKhongDau(Customers.customer_name) AS 'customer_name', 
+dbo.fChuyenCoDauThanhKhongDau(Staffs.staff_name) AS 'staff_name', Contract.total_cost, Contract.startDate, Contract.VAT, Contract.deposit,
+Contract.endDate, Contract.createdAt, Contract.updatedAt
+FROM Contract 
+JOIN Customers ON Customers.id_customer = Contract.id_customer
+JOIN Staffs ON Staffs.id_staff = Contract.id_staff
+
+CREATE FUNCTION [dbo].[fChuyenCoDauThanhKhongDau](@inputVar NVARCHAR(MAX) )
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN    
+    IF (@inputVar IS NULL OR @inputVar = '')  RETURN ''
+   
+    DECLARE @RT NVARCHAR(MAX)
+    DECLARE @SIGN_CHARS NCHAR(256)
+    DECLARE @UNSIGN_CHARS NCHAR (256)
+ 
+    SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệếìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵýĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' + NCHAR(272) + NCHAR(208)
+    SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuyyyyyAADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+ 
+    DECLARE @COUNTER int
+    DECLARE @COUNTER1 int
+   
+    SET @COUNTER = 1
+    WHILE (@COUNTER <= LEN(@inputVar))
+    BEGIN  
+        SET @COUNTER1 = 1
+        WHILE (@COUNTER1 <= LEN(@SIGN_CHARS) + 1)
+        BEGIN
+            IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@inputVar,@COUNTER ,1))
+            BEGIN          
+                IF @COUNTER = 1
+                    SET @inputVar = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@inputVar, @COUNTER+1,LEN(@inputVar)-1)      
+                ELSE
+                    SET @inputVar = SUBSTRING(@inputVar, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@inputVar, @COUNTER+1,LEN(@inputVar)- @COUNTER)
+                BREAK
+            END
+            SET @COUNTER1 = @COUNTER1 +1
+        END
+        SET @COUNTER = @COUNTER +1
+    END
+    -- SET @inputVar = replace(@inputVar,' ','-')
+    RETURN @inputVar
+END

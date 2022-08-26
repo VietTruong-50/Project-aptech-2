@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PDFjet">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/com/project/project2/lib/PDFjet.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

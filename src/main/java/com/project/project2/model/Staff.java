@@ -8,8 +8,9 @@ public class Staff extends Person{
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    public Staff(){
-
+    public Staff(String full_name, int id_staff){
+        super(full_name);
+        this.id_staff = id_staff;
     }
 
     public Staff(int id_staff, LocalDate birth, LocalDate createdAt, LocalDate updatedAt) {

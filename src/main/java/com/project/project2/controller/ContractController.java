@@ -6,23 +6,30 @@ import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
 import com.project.project2.service.impl.ImplContractDetail;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import com.pdfjet.*;
+import com.pdfjet.Cell;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -102,12 +109,9 @@ public class ContractController implements Initializable {
         }
     }
 
-    public void exportPDF(ActionEvent actionEvent) {
-    }
-
     public void refresh() throws SQLException {
         CONTRACTS.clear();
-        showContract();
+        showContract(false);
     }
 
     public void updateReturnDate(ActionEvent actionEvent) {
@@ -118,8 +122,14 @@ public class ContractController implements Initializable {
         root.getChildren().setAll(dashboard);
     }
 
-    public void showContract() throws SQLException {
-        implContract.findAll();
+    public void showContract(boolean isUnsigned) throws SQLException {
+
+
+        if(isUnsigned){
+            implContract.findAll(true);
+        }else{
+            implContract.findAll(false);
+        }
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_contract"));
         cusNameColumn.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
@@ -152,5 +162,130 @@ public class ContractController implements Initializable {
         SortedList<Contract> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(contractTable.comparatorProperty());
         contractTable.setItems(sortedData);
+    }
+
+    public void exportPDF(ActionEvent actionEvent) throws SQLException {
+        FileChooser fc = new FileChooser();
+        Stage primaryStage = new Stage();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF File", "*.pdf"));
+        fc.setTitle("SAVE TO PDF");
+        fc.setInitialFileName("DanhSachHopDong.pdf");
+//				create the pdf and page
+        File out = fc.showSaveDialog(primaryStage);
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(out);
+            PDF pdf = new PDF(fos);
+            Page page = new Page(pdf, A4.LANDSCAPE);
+//					font for the table heading
+            Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
+//					font for the pdf table data
+            Font f2 = new Font(pdf, CoreFont.HELVETICA);
+
+            Table table = new Table();
+            List<List<Cell>> tableData = new ArrayList<>();
+
+//					table row
+            List<Cell> tableRow = new ArrayList<>();
+
+//					create the headers and add them to the table row
+            Cell cell = new Cell(f1, "ID");
+            tableRow.add(cell);
+
+            cell = new Cell(f1, "Customer");
+            tableRow.add(cell);
+
+            cell = new Cell(f1);
+            TextBlock textBlock = new TextBlock(f1, "Staff");
+            cell.setTextBlock(textBlock);
+            tableRow.add(cell);
+
+            cell = new Cell(f1, "Total cost");
+            tableRow.add(cell);
+
+            cell = new Cell(f1);
+            textBlock = new TextBlock(f1, "VAT");
+            cell.setTextBlock(textBlock);
+            tableRow.add(cell);
+
+            cell = new Cell(f1);
+            textBlock = new TextBlock(f1, "Start date");
+            cell.setTextBlock(textBlock);
+            tableRow.add(cell);
+
+            cell = new Cell(f1);
+            textBlock = new TextBlock(f1, "End date");
+            cell.setTextBlock(textBlock);
+            tableRow.add(cell);
+
+            cell = new Cell(f1, "Deposit");
+            tableRow.add(cell);
+
+
+            tableData.add(tableRow);
+
+//					create a row for each and add row to table row
+            CONTRACTS.clear();
+            showContract(true);
+            ObservableList<Contract> items = contractTable.getItems();
+            for (Contract cont : items) {
+                Cell idHD = new Cell(f2, String.valueOf(cont.getId_contract()));
+                idHD.setPadding(4);
+                Cell customerName = new Cell(f2, cont.getCustomer_name());
+                customerName.setPadding(4);
+                Cell staffName = new Cell(f2, cont.getStaff_name());
+                staffName.setPadding(4);
+                Cell ttCost = new Cell(f2, String.valueOf(cont.getTotal_cost()));
+                ttCost.setPadding(4);
+                Cell vat = new Cell(f2, cont.getVAT() + "%");
+                vat.setPadding(4);
+                Cell rentDay = new Cell(f2, cont.getStartDate().toString());
+                rentDay.setPadding(4);
+                Cell endDay = new Cell(f2, cont.getEndDate().toString());
+                endDay.setPadding(4);
+                Cell deposit = new Cell(f2, String.valueOf(cont.getDeposit()));
+                deposit.setPadding(4);
+                Cell returnDay = null;
+//                if(cont.get() == null){
+//                    returnDay = new Cell(f2, null);
+//                }else{
+//                    returnDay = new Cell(f2, cont.getNgay_tx().toString());
+//                    returnDay.setPadding(4);
+//                }
+
+                tableRow = new ArrayList<Cell>();
+                tableRow.add(idHD); tableRow.add(customerName); tableRow.add(staffName);
+                tableRow.add(ttCost); tableRow.add(vat); tableRow.add(rentDay); tableRow.add(endDay);
+                tableRow.add(deposit);
+//						add row to table
+                tableData.add(tableRow);
+            }
+
+            table.setData(tableData);
+            table.setPosition(40f, 50f);
+            table.setColumnWidth(0, 30f);
+            table.setColumnWidth(1, 120f);
+            table.setColumnWidth(2, 115f);
+            table.setColumnWidth(3, 110f);
+            table.setColumnWidth(4, 80f);
+            table.setColumnWidth(5, 100f);
+            table.setColumnWidth(6, 100f);
+            table.setColumnWidth(7, 100f);
+//					create a new page and add more table data to the bottom of the current page
+            while (true) {
+                table.drawOn(page);
+                if (!table.hasMoreData()) {
+                    table.resetRenderedPagesCount();
+                    break;
+                }
+                page = new Page(pdf, A3.LANDSCAPE);
+            }
+            pdf.close();
+            fos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        refresh();
+        System.out.println("Saved to " + out.getAbsolutePath());
     }
 }

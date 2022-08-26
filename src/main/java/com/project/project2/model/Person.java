@@ -14,6 +14,10 @@ public class Person {
         this.phone = phone;
     }
 
+    public Person(String fullName) {
+        this.full_name = fullName;
+    }
+
     public String getFull_name() {
         return full_name;
     }
@@ -32,9 +36,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "full_name='" + full_name + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+        return full_name ;
     }
 }

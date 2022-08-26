@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IContract {
     ObservableList<Contract> CONTRACTS = FXCollections.observableArrayList();
-    List<Contract> findAll() throws SQLException;
+    List<Contract> findAll(boolean isUnsigned) throws SQLException;
     void insertContract(Contract contract);
     void updateContract(Contract contract);
     void deleteContract(int id);
