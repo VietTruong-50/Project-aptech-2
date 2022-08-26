@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICar.CAR_LIST;
 import static com.project.project2.service.ICustomer.CUSTOMER_LIST;
-import static com.project.project2.service.IStaff.STAFFS;
+import static com.project.project2.service.IStaff.STAFF_LIST;
 
 public class ContractDetailController implements Initializable {
 
@@ -121,9 +121,9 @@ public class ContractDetailController implements Initializable {
     }
 
     public void showStaff() throws SQLException {
-        STAFFS.clear();
+        STAFF_LIST.clear();
         implStaff.findAll();
-        staffCbbox.getItems().addAll(STAFFS);
+        staffCbbox.getItems().addAll(STAFF_LIST);
     }
 
     public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {

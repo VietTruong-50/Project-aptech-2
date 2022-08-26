@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.project.project2.service.IStaff.STAFFS;
+import static com.project.project2.service.IStaff.STAFF_LIST;
 
 
 public class ChartController implements Initializable {
@@ -107,7 +107,7 @@ public class ChartController implements Initializable {
     }
 
     public void initPieChart() throws SQLException {
-        STAFFS.clear();
+        STAFF_LIST.clear();
         implStaff.findAll();
 
         String query = "SELECT COUNT(*) AS total_contract FROM Contract";
@@ -117,7 +117,7 @@ public class ChartController implements Initializable {
         }
         ObservableList<PieChart.Data> piechart = FXCollections.observableArrayList();
 
-        for(Staff staff : STAFFS){
+        for(Staff staff : STAFF_LIST){
             piechart.add(new PieChart.Data(staff.getFull_name(), getNbContractPercent(staff.getId_staff())));
         }
         pieChart.setData(piechart);
