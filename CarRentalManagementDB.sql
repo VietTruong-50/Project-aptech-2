@@ -19,9 +19,9 @@ CREATE TABLE Car(
 	seats tinyint not null,
 	rental_cost float not null,
 	model varchar(50),
-	car_status varchar(10) not null,
+	car_status varchar(20) not null,
 	cimage nvarchar(250),
-	license_plates nchar(10),
+	license_plates nchar(30),
 	createdAt datetime,
 	updatedAt datetime,
 	primary key (id_car)
@@ -50,18 +50,17 @@ CREATE TABLE Staffs(
 	staff_name nvarchar(30) not null,
 	birth datetime not null,
 	phone char(10) not null,
+	role nvarchar(20) not null,
 	number_of_contract int default 0,
 	createdAt datetime,
 	updatedAt datetime,
 	primary key (id_staff)
 );
 
-select * From Staffs
-
-INSERT INTO Staffs( staff_name, birth, phone, createdAt, updatedAt) VALUES
-( N'Vũ Đình Long',  '1997-09-15', 0903642221, '2022-07-31', '2022-07-31'),
-( N'Hoàng Ngọc Thuỳ',  '1996-07-23', 0905146587, '2022-07-31', '2022-07-31'),
-( N'Đặng Thuỳ Trâm', '1998-10-08', 0909991199, '2022-07-31', '2022-07-31')
+INSERT INTO Staffs( staff_name, birth, phone, role, createdAt, updatedAt) VALUES
+( N'Vũ Đình Long',  '1997-09-15', 0903642221, N'Nhân viên', '2022-07-31', '2022-07-31'),
+( N'Hoàng Ngọc Thuỳ',  '1996-07-23', 0905146587, N'Lái xe', '2022-07-31', '2022-07-31'),
+( N'Đặng Thuỳ Trâm', '1998-10-08', 0909991199, N'Quản lý', '2022-07-31', '2022-07-31')
 
 
 --ADD COLUMN luong TO Staffs
@@ -83,8 +82,6 @@ CREATE TABLE Contract(
 	primary key (id_contract)
 );
 
-
-
 --CREATE ContractDetail
 CREATE TABLE ContractDetail(
 	id_contract_detail int  identity(1,1) not null,
@@ -92,7 +89,6 @@ CREATE TABLE ContractDetail(
 	id_car int not null,
 	primary key (id_contract_detail)
 );
-
 
 ALTER TABLE Contract 
 ADD CONSTRAINT FK_Customers_Contract FOREIGN KEY (id_customer) REFERENCES Customers(id_customer);
@@ -127,7 +123,7 @@ LEFT JOIN Contract ON Customers.id_customer = Contract.id_customer
 WHERE Contract.id_contract IS NULL
 
 SELECT COUNT(*) AS total_contract FROM Contract
-SELECT COUNT(*) AS nb_Contract FROM Contract WHERE id_staff = 1 GROUP BY id_staff
+SELECT COUNT(*) AS nb_Contract FROM Contract JOIN Staffs ON Contract.id_staff = Staffs.id_staff WHERE Staffs.id_staff = 1 AND Staffs.role = 'Nhân viên' GROUP BY Contract.id_staff
 
 SELECT * FROM Car JOIN ContractDetail ON Car.id_car= ContractDetail.id_car WHERE (SELECT *
 FROM Contract
@@ -144,6 +140,8 @@ Contract.endDate, Contract.createdAt, Contract.updatedAt
 FROM Contract 
 JOIN Customers ON Customers.id_customer = Contract.id_customer
 JOIN Staffs ON Staffs.id_staff = Contract.id_staff
+
+SELECT * FROM Car WHERE car_status = '' AND seats = 4
 
 CREATE FUNCTION [dbo].[fChuyenCoDauThanhKhongDau](@inputVar NVARCHAR(MAX) )
 RETURNS NVARCHAR(MAX)

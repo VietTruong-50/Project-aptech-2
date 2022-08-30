@@ -37,24 +37,6 @@ public class ImplContractDetail implements IContractDetail {
 
     }
 
-    @Override
-    public void updateContractDetail(ContractDetail contractDetail) {
-//        try {
-//            sql = "UPDATE ContractDetail SET deposit = ? WHERE id_contract = ?";
-//            pr = conn.prepareStatement(sql);
-//            pr.setDouble(1, contractDetail.getDeposit());
-//            pr.setInt(2, contractDetail.getId_contract());
-//
-//            pr.executeUpdate();
-//        } catch (Exception e) {
-//            try {
-//                conn.rollback();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//            e.printStackTrace();
-//        }
-    }
 
     @Override
     public boolean deleteContractDetail(int id_contract) {
@@ -65,11 +47,11 @@ public class ImplContractDetail implements IContractDetail {
             pr.executeUpdate();
             return true;
         } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
             e.printStackTrace();
         }
         return false;

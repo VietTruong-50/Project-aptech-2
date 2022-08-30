@@ -1,5 +1,6 @@
 package com.project.project2.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Car;
 import com.project.project2.service.impl.ImplCar;
@@ -21,7 +22,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,6 +38,8 @@ import static com.project.project2.service.ICar.CAR_LIST;
 public class CarController implements Initializable {
     private final ImplCar implCar = new ImplCar();
     private final ObservableList<Integer> SEAT_LIST = FXCollections.observableArrayList(4, 7, 11, 16);
+    private final ObservableList<String> Status = FXCollections.observableArrayList("Available", "Unavailable", "Was rented");
+
 
     private File file;
     private RadioButton radioButton;
@@ -100,30 +105,38 @@ public class CarController implements Initializable {
     @FXML
     public AnchorPane carPane;
 
+    public ComboBox<String> filterCarBySttCb;
+
+    public ComboBox<Integer> filterCarBySeatCb;
+
+    public JFXButton addBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             refresh();
             seatNbCbb.setItems(SEAT_LIST);
+            filterCarBySttCb.setItems(Status);
+            filterCarBySeatCb.setItems(SEAT_LIST);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void handleClickTableView(MouseEvent mouseEvent) throws SQLException, IOException {
+    public void handleClickTableView(MouseEvent mouseEvent) throws SQLException {
         Car car = carTable.getSelectionModel().getSelectedItem();
 
         if (car != null) {
+            addBtn.setDisable(true);
             carNameTf.setText(car.getCar_name());
             carManufactureTf.setText(car.getManufacture());
-            carPriceTf.setText("" + car.getRental_cost());
+            carPriceTf.setText(String.valueOf(car.getRental_cost()));
             seatNbCbb.setValue(car.getSeats());
             license_platesTf.setText(car.getLicense_plates());
             carModelTa.setText(car.getModel());
             carModelTa.setWrapText(true);
-            if (car.getCar_status().equals("ON")) {
+            if (car.getCar_status().equals("Available")) {
                 rBtn1.setSelected(true);
             } else {
                 rBtn2.setSelected(true);
@@ -140,6 +153,8 @@ public class CarController implements Initializable {
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
                 radioButton.getText().isBlank() || !file.exists()) {
             showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+        } else if (implCar.findCarByLicensePlates(license_platesTf.getText())) {
+            showWarning(null, "Biển số xe đã tồn tại!");
         } else {
             Car car = new Car();
             car.setLicense_plates(license_platesTf.getText().trim());
@@ -155,7 +170,6 @@ public class CarController implements Initializable {
 
             implCar.insertCar(car, file);
         }
-
         refresh();
     }
 
@@ -176,7 +190,7 @@ public class CarController implements Initializable {
             car.setRental_cost(Double.parseDouble(carPriceTf.getText()));
             car.setCar_status(radioButton.getText());
             car.setLicense_plates(license_platesTf.getText().trim());
-            car.setCreatedAt(LocalDate.now());
+            car.setCreatedAt(car.getCreatedAt());
             car.setUpdatedAt(LocalDate.now());
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
@@ -193,8 +207,8 @@ public class CarController implements Initializable {
                 if (implCar.deleteCar(car)) {
                     showSuccess("Success", "Delete car success!");
                     refresh();
-                }else{
-                    showError("Error", "This car is related to a contract");
+                } else {
+                    showError("Error", "This car was rented!");
                 }
             }
         }
@@ -236,7 +250,6 @@ public class CarController implements Initializable {
     }
 
     public void showCar() throws SQLException {
-        implCar.findAll();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_car"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
@@ -252,6 +265,8 @@ public class CarController implements Initializable {
 
 
     public void refresh() throws SQLException {
+        filterCarBySttCb.getSelectionModel().clearSelection();
+        filterCarBySeatCb.getSelectionModel().clearSelection();
         license_platesTf.clear();
         carNameTf.clear();
         carManufactureTf.clear();
@@ -260,10 +275,12 @@ public class CarController implements Initializable {
         carModelTa.clear();
         rBtn1.setSelected(false);
         rBtn2.setSelected(false);
+        addBtn.setDisable(false);
         Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/project/project2/Img/add.png")));
         carImage.setY(0);
         carImage.setImage(img);
         CAR_LIST.clear();
+        implCar.findAll();
         showCar();
     }
 
@@ -312,5 +329,25 @@ public class CarController implements Initializable {
         SortedList<Car> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(carTable.comparatorProperty());
         carTable.setItems(sortedData);
+    }
+
+    public void filterCarByStatus(ActionEvent actionEvent) throws SQLException {
+        CAR_LIST.clear();
+        if (filterCarBySeatCb.getSelectionModel().isEmpty()) {
+            implCar.findCarsByStatus(filterCarBySttCb.getValue());
+        } else {
+            implCar.findCarsByStatusAndSeat(filterCarBySttCb.getValue(), filterCarBySeatCb.getValue());
+        }
+        showCar();
+    }
+
+    public void filterCarBySeat(ActionEvent actionEvent) throws SQLException {
+        CAR_LIST.clear();
+        if (filterCarBySttCb.getSelectionModel().isEmpty()) {
+            implCar.findCarsBySeat(filterCarBySeatCb.getValue());
+        } else {
+            implCar.findCarsByStatusAndSeat(filterCarBySttCb.getValue(), filterCarBySeatCb.getValue());
+        }
+        showCar();
     }
 }

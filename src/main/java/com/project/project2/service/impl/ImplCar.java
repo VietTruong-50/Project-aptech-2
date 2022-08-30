@@ -55,11 +55,11 @@ public class ImplCar implements ICar {
 
             pr.executeUpdate();
         } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
             e.printStackTrace();
         }
     }
@@ -73,11 +73,12 @@ public class ImplCar implements ICar {
             pr.executeUpdate();
             return true;
         } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+            e.printStackTrace();
         }
         return false;
     }
@@ -114,7 +115,7 @@ public class ImplCar implements ICar {
     }
 
     @Override
-    public List<Car> findCarByStatus(String status) throws SQLException {
+    public void findCarsByStatus(String status) throws SQLException {
         sql = "SELECT * FROM Car WHERE car_status = ?";
         pr = conn.prepareStatement(sql);
         pr.setString(1, status);
@@ -125,11 +126,39 @@ public class ImplCar implements ICar {
                     rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
         }
-        return CAR_LIST;
     }
 
     @Override
-    public List<Car> findCarById(int id) throws SQLException {
+    public void findCarsBySeat(int seat) throws SQLException {
+        sql = "SELECT * FROM Car WHERE seats = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, seat);
+        rs = pr.executeQuery();
+        while (rs.next()) {
+            Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
+                    rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            CAR_LIST.add(car);
+        }
+    }
+
+    @Override
+    public void findCarsByStatusAndSeat(String status, int seat) throws SQLException {
+        sql = "SELECT * FROM Car WHERE car_status = ? AND seats = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setString(1, status);
+        pr.setInt(2, seat);
+        rs = pr.executeQuery();
+        while (rs.next()) {
+            Car car = new Car(rs.getInt("id_car"), rs.getString("car_name"), rs.getString("manufacture"), rs.getInt("seats"),
+                    rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
+                    rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            CAR_LIST.add(car);
+        }
+    }
+
+    @Override
+    public void findCarsById(int id) throws SQLException {
         sql = "SELECT * FROM Car WHERE id_car = ?";
         pr = conn.prepareStatement(sql);
         pr.setInt(1, id);
@@ -139,9 +168,16 @@ public class ImplCar implements ICar {
                     rs.getInt("rental_cost"), rs.getString("model"), rs.getString("car_status"), rs.getString("cimage"),
                     rs.getString("license_plates"), rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
             CAR_LIST.add(car);
-            System.out.println(car);
         }
-        return CAR_LIST;
+    }
+
+    @Override
+    public boolean findCarByLicensePlates(String lcPlate) throws SQLException {
+        sql = "SELECT * FROM Car WHERE license_plates = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setString(1, lcPlate);
+        rs = pr.executeQuery();
+        return rs.next();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.project.project2.controller;
 
-import com.project.project2.model.Car;
+import com.pdfjet.*;
 import com.project.project2.model.Contract;
 import com.project.project2.service.impl.ImplCar;
 import com.project.project2.service.impl.ImplContract;
@@ -10,11 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import com.pdfjet.*;
-import com.pdfjet.Cell;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,7 +32,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.project.project2.alert.AlertMaker.showConfirmation;
-import static com.project.project2.service.ICar.CAR_LIST;
 import static com.project.project2.service.IContract.CONTRACTS;
 
 public class ContractController implements Initializable {
@@ -100,7 +96,7 @@ public class ContractController implements Initializable {
         try {
             List<Integer> list = implContractDetail.findIdCarByIdContract(idContract);
             for (int i : list) {
-                implCar.setCarStatus("ON", i);
+                implCar.setCarStatus("Available", i);
             }
             return true;
         } catch (Exception e) {
@@ -123,7 +119,6 @@ public class ContractController implements Initializable {
     }
 
     public void showContract(boolean isUnsigned) throws SQLException {
-
 
         if(isUnsigned){
             implContract.findAll(true);
@@ -282,10 +277,10 @@ public class ContractController implements Initializable {
             }
             pdf.close();
             fos.flush();
+            System.out.println("Saved to " + out.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
         refresh();
-        System.out.println("Saved to " + out.getAbsolutePath());
     }
 }

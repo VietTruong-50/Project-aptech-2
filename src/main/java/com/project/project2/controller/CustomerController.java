@@ -65,7 +65,7 @@ public class CustomerController implements Initializable {
             phoneTf.setEditable(true);
             idCardTf.setEditable(false);
             addressTf.setEditable(true);
-            idTf.setText("" + customer.getId_customer());
+            idTf.setText(String.valueOf(customer.getId_customer()));
             nameTf.setText(customer.getFull_name());
             phoneTf.setText(customer.getPhone());
             idCardTf.setText(customer.getIdCard());
@@ -109,7 +109,6 @@ public class CustomerController implements Initializable {
             customer.setIdCard(idCardTf.getText());
             customer.setAddress(addressTf.getText());
             customer.setPhone(phoneTf.getText());
-            customer.setCreatedAt(LocalDate.now());
             customer.setUpdatedAt(LocalDate.now());
 
             implCustomer.updateCustomer(customer);

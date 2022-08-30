@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICar.CAR_LIST;
@@ -36,7 +37,6 @@ public class ContractDetailController implements Initializable {
     public boolean isEditForm;
 
     public AnchorPane pane;
-    public Label total_cost;
     public TextField cus_name;
     public TextField id_card;
     public TextField phoneTf;
@@ -109,7 +109,7 @@ public class ContractDetailController implements Initializable {
     public void showCar() throws SQLException {
         CAR_LIST.clear();
 
-        implCar.findCarByStatus("ON");
+        implCar.findCarsByStatus("Available");
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_car"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
@@ -122,7 +122,7 @@ public class ContractDetailController implements Initializable {
 
     public void showStaff() throws SQLException {
         STAFF_LIST.clear();
-        implStaff.findAll();
+        implStaff.findStaffByRole("Nhân viên");
         staffCbbox.getItems().addAll(STAFF_LIST);
     }
 
@@ -149,11 +149,13 @@ public class ContractDetailController implements Initializable {
     }
 
     public void viewContractDetail(Contract contract) throws SQLException {
-        customer = implCustomer.findByIdCustomer(contract.getId_customer());
+        customer = CUSTOMER_LIST.stream().filter(x -> x.getId_customer() == contract.getId_customer()).findAny().orElse(null);
+        Staff staff = STAFF_LIST.stream().filter(st -> st.getId_staff() == contract.getId_staff()).findAny().orElse(null);
 
         List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
+//        List<Integer> list = CAR_LIST.stream().map(Car::getId_car).collect(Collectors.toList());
         for (int i : list) {
-            implCar.findCarById(i);
+            implCar.findCarsById(i);
         }
         customerCheckbox.setVisible(false);
 
@@ -161,11 +163,15 @@ public class ContractDetailController implements Initializable {
         id_card.setText(customer.getIdCard());
         phoneTf.setText("0" + customer.getPhone());
         addressTf.setText(customer.getAddress());
+        staffCbbox.setValue(staff);
         startDate.setValue(contract.getStartDate());
         endDate.setValue(contract.getEndDate());
-        totalCost.setText(String.valueOf(contract.getTotal_cost()));
+        System.out.println(contract.getTotal_cost() );
+        total = contract.getTotal_cost()*100/(100+contract.getVAT());
+        totalCost.setText((int) contract.getTotal_cost() + " VND");
         depositTf.setText(String.valueOf(contract.getDeposit()));
         vatTf.setText(String.valueOf(contract.getVAT()));
+
 
         cus_name.setEditable(false);
         id_card.setEditable(false);
@@ -180,7 +186,7 @@ public class ContractDetailController implements Initializable {
             Contract contract = new Contract();
             contract.setId_customer(customer.getId_customer());
             contract.setId_staff(staffCbbox.getValue().getId_staff());
-            contract.setTotal_cost(Double.parseDouble(total_cost.getText()));
+            contract.setTotal_cost(Double.parseDouble(totalCost.getText().replace(" VND", "")));
             contract.setStartDate(startDate.getValue());
             contract.setEndDate(endDate.getValue());
             contract.setCreatedAt(LocalDate.now());
@@ -197,7 +203,7 @@ public class ContractDetailController implements Initializable {
                     contractDetail.setId_contract(contract.getId_contract());
                     contractDetail.setId_car(c.getId_car());
 
-                    implCar.setCarStatus("OFF", c.getId_car());
+                    implCar.setCarStatus("Was rented", c.getId_car());
                     implContractDetail.insertContractDetail(contractDetail);
                 }
                 AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
@@ -212,6 +218,8 @@ public class ContractDetailController implements Initializable {
         contract.setStartDate(startDate.getValue());
         contract.setEndDate(endDate.getValue());
         contract.setVAT(Integer.parseInt(vatTf.getText()));
+        contract.setTotal_cost(Double.parseDouble(totalCost.getText().replace(" VND", "")));
+        contract.setUpdatedAt(LocalDate.now());
         implContract.updateContract(contract);
         AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
@@ -223,7 +231,7 @@ public class ContractDetailController implements Initializable {
         if (customer != null) {
             cus_name.setText(customer.getFull_name());
             id_card.setText(customer.getIdCard());
-            phoneTf.setText("0" + customer.getPhone());
+            phoneTf.setText(customer.getPhone());
             addressTf.setText(customer.getAddress());
         }
     }
@@ -231,10 +239,12 @@ public class ContractDetailController implements Initializable {
     public void handleClickCarTable(MouseEvent mouseEvent) {
         if (!isEditForm) {
             Car car = carTable.getSelectionModel().getSelectedItem();
-            this.carList.add(car);
-            total += car.getRental_cost();
-            totalCost.setText(total + " VND");
-            carTable.getItems().remove(car);
+            if(car != null){
+                this.carList.add(car);
+                total += car.getRental_cost();
+                totalCost.setText((int)total + " VND");
+                carTable.getItems().remove(car);
+            }
         }
     }
 
@@ -257,14 +267,9 @@ public class ContractDetailController implements Initializable {
         pane2.setLayoutY(layoutY);
     }
 
-
     public void getTotalCost(KeyEvent keyEvent) {
         int vat = 1;
         if (!vatTf.getText().isBlank()) vat = Integer.parseInt(vatTf.getText());
-        totalCost.setText((total * (100 + vat)) / 100 + " VND");
-    }
-
-    public void getStaff(ActionEvent actionEvent) throws SQLException {
-
+        totalCost.setText((int)(total * (100 + vat)) / 100 + " VND");
     }
 }
