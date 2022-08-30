@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Customer extends Person{
     private int id_customer;
-    private String idCard;
+
     private String address;
     private LocalDate createdAt;
     private LocalDate updatedAt;
@@ -15,10 +15,9 @@ public class Customer extends Person{
     }
 
     public Customer(int id_customer, String full_name, String idCard, String phone, String address, LocalDate createdAt, LocalDate updatedAt) {
-        super(full_name, phone);
+        super(full_name, phone, idCard);
         this.id_customer = id_customer;
         this.address = address;
-        this.idCard = idCard;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -29,14 +28,6 @@ public class Customer extends Person{
 
     public void setId_customer(int id_customer) {
         this.id_customer = id_customer;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
     }
 
     public String getAddress() {
@@ -67,7 +58,6 @@ public class Customer extends Person{
     public String toString() {
         return super.toString() +
                 "id_customer=" + id_customer +
-                ", idCard='" + idCard + '\'' +
                 ", address='" + address + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

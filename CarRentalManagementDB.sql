@@ -40,9 +40,9 @@ CREATE TABLE Customers(
 );
 
 INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) VALUES
-(N'Trương Quốc Việt', 102180153149, 0906143219, N'341 Phố Vọng, Hà Nội', '2022-07-30','2022-07-30'),
-(N'Nguyễn Thị Hạnh', 103201723415, 0901233166, N'30 Trần Duy Hưng,  Hà Nội','2022-07-30','2022-07-30'),
-(N'Nguyễn Vũ Long', 100298515054, 0903555333, N'11 Giải Phóng,  Hà Nội', '2022-07-30','2022-07-30')
+(N'Trương Quốc Việt', 102180153149, '0906143219', N'341 Phố Vọng, Hà Nội', '2022-07-30','2022-07-30'),
+(N'Nguyễn Thị Hạnh', 103201723415, '0901233166', N'30 Trần Duy Hưng,  Hà Nội','2022-07-30','2022-07-30'),
+(N'Nguyễn Vũ Long', 100298515054, '0903555333', N'11 Giải Phóng,  Hà Nội', '2022-07-30','2022-07-30')
 
 --CREATE Staffs
 CREATE TABLE Staffs(
@@ -50,17 +50,19 @@ CREATE TABLE Staffs(
 	staff_name nvarchar(30) not null,
 	birth datetime not null,
 	phone char(10) not null,
-	role nvarchar(20) not null,
+	idCard char(12) not null,
 	number_of_contract int default 0,
 	createdAt datetime,
 	updatedAt datetime,
 	primary key (id_staff)
 );
 
-INSERT INTO Staffs( staff_name, birth, phone, role, createdAt, updatedAt) VALUES
-( N'Vũ Đình Long',  '1997-09-15', 0903642221, N'Nhân viên', '2022-07-31', '2022-07-31'),
-( N'Hoàng Ngọc Thuỳ',  '1996-07-23', 0905146587, N'Lái xe', '2022-07-31', '2022-07-31'),
-( N'Đặng Thuỳ Trâm', '1998-10-08', 0909991199, N'Quản lý', '2022-07-31', '2022-07-31')
+drop table Staffs
+
+INSERT INTO Staffs( staff_name, birth, phone, idCard, createdAt, updatedAt) VALUES
+( N'Vũ Đình Long',  '1997-09-15', '0903642221', '102180153149', '2022-07-31', '2022-07-31'),
+( N'Hoàng Ngọc Thuỳ',  '1996-07-23', '0905146587', '102180153149', '2022-07-31', '2022-07-31'),
+( N'Đặng Thuỳ Trâm', '1998-10-08', '0909991199', '102180153149', '2022-07-31', '2022-07-31')
 
 
 --ADD COLUMN luong TO Staffs
