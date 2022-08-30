@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -21,11 +22,11 @@
    <children>
       <TableView fx:id="staffTable" layoutX="403.0" layoutY="179.0" onMouseClicked="#handleClickTableView" prefHeight="494.0" prefWidth="623.0">
         <columns>
-          <TableColumn fx:id="idColumn" editable="false" prefWidth="116.0" text="Mã nhân viên" />
-          <TableColumn fx:id="nameColumn" editable="false" prefWidth="158.0" text="Họ và tên" />
-            <TableColumn fx:id="birthColumn" editable="false" prefWidth="153.0" text="Ngày tháng năm sinh" />
-            <TableColumn fx:id="sdtColumn" editable="false" minWidth="0.0" prefWidth="73.0" text="SĐT" />
-            <TableColumn fx:id="contractNbColumn" prefWidth="207.0" text="Số hợp đồng" />
+          <TableColumn fx:id="idColumn" editable="false" prefWidth="96.0" text="Mã nhân viên" />
+          <TableColumn fx:id="nameColumn" editable="false" prefWidth="105.0" text="Họ và tên" />
+            <TableColumn fx:id="birthColumn" editable="false" prefWidth="154.0" text="Ngày tháng năm sinh" />
+            <TableColumn fx:id="sdtColumn" editable="false" minWidth="0.0" prefWidth="135.0" text="SĐT" />
+            <TableColumn fx:id="roleColumn" editable="false" minWidth="0.0" prefWidth="251.0" text="Chức vụ" />
         </columns>
       </TableView>
       <TextField fx:id="searchTf" layoutX="470.0" layoutY="116.0" prefHeight="35.0" prefWidth="273.0" promptText="Search by name, birth, phone" style="-fx-background-radius: 20px;" />
@@ -58,40 +59,35 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton fx:id="addBtn" layoutX="40.0" layoutY="470.0" mnemonicParsing="false" onAction="#addStaff" prefHeight="48.0" prefWidth="141.0" text="Thêm ">
+      <JFXButton fx:id="addBtn" layoutX="68.0" layoutY="487.0" mnemonicParsing="false" onAction="#addStaff" prefHeight="33.0" prefWidth="118.0" text="Thêm ">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="editBtn" layoutX="230.0" layoutY="470.0" mnemonicParsing="false" onAction="#updateStaff" prefHeight="48.0" prefWidth="141.0" text="Sửa">
+      <JFXButton fx:id="editBtn" layoutX="221.0" layoutY="487.0" mnemonicParsing="false" onAction="#updateStaff" prefHeight="33.0" prefWidth="118.0" text="Sửa">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="delBtn" layoutX="907.0" layoutY="117.0" mnemonicParsing="false" onAction="#delStaff" prefHeight="33.0" prefWidth="118.0" text="Xóa ">
+      <JFXButton fx:id="delBtn" layoutX="221.0" layoutY="546.0" mnemonicParsing="false" onAction="#delStaff" prefHeight="33.0" prefWidth="118.0" text="Xóa ">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="importBtn" layoutX="40.0" layoutY="537.0" mnemonicParsing="false" onAction="#importFile" prefHeight="48.0" prefWidth="141.0" text="Import EXEL">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXButton>
-      <TextField fx:id="nameStaffTf" layoutX="203.0" layoutY="253.0" prefHeight="26.0" prefWidth="168.0" />
-      <TextField fx:id="phoneStaffTf" layoutX="203.0" layoutY="353.0" prefHeight="26.0" prefWidth="168.0" />
+      <TextField fx:id="nameStaffTf" layoutX="202.0" layoutY="220.0" prefHeight="26.0" prefWidth="168.0" />
+      <TextField fx:id="phoneStaffTf" layoutX="203.0" layoutY="314.0" prefHeight="26.0" prefWidth="168.0" />
       <TextField fx:id="contractNbTf" editable="false" layoutX="203.0" layoutY="401.0" prefHeight="26.0" prefWidth="168.0" />
-      <Label layoutX="40.0" layoutY="259.0" prefHeight="20.0" prefWidth="148.0" text="Họ và tên">
+      <Label layoutX="39.0" layoutY="226.0" prefHeight="20.0" prefWidth="148.0" text="Họ và tên">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="40.0" layoutY="359.0" prefHeight="20.0" prefWidth="148.0" text="SĐT">
+      <Label layoutX="40.0" layoutY="320.0" prefHeight="20.0" prefWidth="148.0" text="Số điện thoại">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="40.0" layoutY="307.0" prefHeight="20.0" prefWidth="148.0" text="Ngày tháng năm sinh">
+      <Label layoutX="39.0" layoutY="274.0" prefHeight="20.0" prefWidth="148.0" text="Ngày tháng năm sinh">
          <font>
             <Font size="14.0" />
          </font>
@@ -101,7 +97,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="birthStaffDp" layoutX="203.0" layoutY="302.0" prefHeight="25.0" prefWidth="168.0" />
+      <DatePicker fx:id="birthStaffDp" layoutX="202.0" layoutY="269.0" prefHeight="25.0" prefWidth="168.0" />
       <Circle fx:id="pointLight" disable="true" layoutX="385.0" layoutY="414.0" radius="5.0" stroke="BLACK" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -120,6 +116,13 @@
             </RadialGradient>
          </fill>
       </Circle>
+      <Label layoutX="38.0" layoutY="362.0" prefHeight="20.0" prefWidth="148.0" text="Chức vụ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="roleStaffCb" layoutX="202.0" layoutY="360.0" prefHeight="25.0" prefWidth="168.0" />
+      <ComboBox fx:id="filterStaffByRoleCb" layoutX="855.0" layoutY="121.0" onAction="#filterStaffByRole" prefHeight="25.0" prefWidth="168.0" promptText="Chức vụ" />
    </children>
    <stylesheets>
       <URL value="@Css/viewStyle.css" />

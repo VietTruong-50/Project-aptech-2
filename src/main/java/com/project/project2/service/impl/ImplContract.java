@@ -64,15 +64,16 @@ public class ImplContract implements IContract {
     @Override
     public void updateContract(Contract contract) {
         try {
-            System.out.println(contract);
-            sql = "UPDATE Contract SET id_staff = ?, startDate = ?, endDate = ?, VAT = ?, deposit = ? WHERE id_contract = ?";
+            sql = "UPDATE Contract SET id_staff = ?, startDate = ?, endDate = ?, VAT = ?, total_cost = ?, deposit = ?, updatedAt = ? WHERE id_contract = ?";
             pr = conn.prepareStatement(sql);
             pr.setInt(1, contract.getId_staff());
             pr.setDate(2, Date.valueOf(contract.getStartDate()));
             pr.setDate(3, Date.valueOf(contract.getEndDate()));
             pr.setInt(4, contract.getVAT());
-            pr.setDouble(5, contract.getDeposit());
-            pr.setInt(6, contract.getId_contract());
+            pr.setDouble(5, contract.getTotal_cost());
+            pr.setDouble(6, contract.getDeposit());
+            pr.setDate(7, Date.valueOf(contract.getUpdatedAt()));
+            pr.setInt(8, contract.getId_contract());
 
             pr.execute();
         } catch (Exception e) {
@@ -93,11 +94,11 @@ public class ImplContract implements IContract {
             pr.setInt(1, id);
             pr.executeUpdate();
         } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
             e.printStackTrace();
         }
     }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Staff extends Person{
     private int id_staff;
     private LocalDate birth;
+    private String role;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
@@ -17,17 +18,11 @@ public class Staff extends Person{
         this.id_staff = id_staff;
     }
 
-    public Staff(int id_staff, LocalDate birth, LocalDate createdAt, LocalDate updatedAt) {
-        this.id_staff = id_staff;
-        this.birth = birth;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Staff(int id_staff, String full_name, LocalDate birth, String phone, LocalDate createdAt, LocalDate updatedAt) {
+    public Staff(int id_staff, String full_name, LocalDate birth, String phone, String role, LocalDate createdAt, LocalDate updatedAt) {
         super(full_name, phone);
         this.id_staff = id_staff;
         this.birth = birth;
+        this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -71,14 +66,17 @@ public class Staff extends Person{
         this.updatedAt = updatedAt;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString()
     {
-        return super.toString() +
-                "id_staff=" + id_staff +
-                ", brith=" + birth +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                "}";
+        return super.toString();
     }
 }

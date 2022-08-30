@@ -14,8 +14,11 @@ public interface ICar  {
     void insertCar(Car car, File file);
     boolean deleteCar(Car car) throws SQLException;
     void updateCar(Car car, File file);
-    List<Car> findCarByStatus(String status) throws SQLException;
-    List<Car> findCarById(int id) throws SQLException;
+    void findCarsByStatus(String status) throws SQLException;
+    void findCarsBySeat(int seat) throws SQLException;
+    void findCarsByStatusAndSeat(String status, int seat) throws SQLException;
+    void findCarsById(int id) throws SQLException;
+    boolean findCarByLicensePlates(String lcPlate) throws SQLException;
     void importFileExcel(File file);
     void setCarStatus(String status, int id);
 }

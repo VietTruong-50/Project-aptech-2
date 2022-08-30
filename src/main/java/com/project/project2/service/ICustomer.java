@@ -13,7 +13,6 @@ public interface ICustomer {
     List<Customer> findAll() throws SQLException;
     List<Customer> findAllCustomerWithoutContract() throws SQLException;
     Customer findByIdCard(String idCard) throws SQLException;
-    Customer findByIdCustomer(int id_customer) throws SQLException;
     void insertCustomer(Customer customer);
     void updateCustomer(Customer customer);
     boolean deleteCustomer(int id);

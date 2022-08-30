@@ -67,22 +67,6 @@ public class ImplCustomer implements ICustomer {
     }
 
     @Override
-    public Customer findByIdCustomer(int id_customer) throws SQLException {
-        Customer customer = null;
-        sql = "SELECT * FROM Customers WHERE id_customer = ?";
-        pr = conn.prepareStatement(sql);
-        pr.setInt(1, id_customer);
-        rs = pr.executeQuery();
-        if (rs.next()) {
-            customer = new Customer(rs.getInt("id_customer"), rs.getString("customer_name"),
-                    rs.getString("idCard"), rs.getString("phone"), rs.getString("address")
-                    , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
-            return customer;
-        }
-        return null;
-    }
-
-    @Override
     public void insertCustomer(Customer customer) {
         try {
             sql = "INSERT INTO Customers( customer_name, idCard, phone, address, createdAt, updatedAt) " +
@@ -109,15 +93,14 @@ public class ImplCustomer implements ICustomer {
     @Override
     public void updateCustomer(Customer customer) {
         try {
-            sql = "UPDATE Customers SET customer_name = ?, idCard = ?, phone = ?, address = ?, createdAt = ?, updatedAt = ? WHERE id_customer = ?";
+            sql = "UPDATE Customers SET customer_name = ?, idCard = ?, phone = ?, address = ?, updatedAt = ? WHERE id_customer = ?";
             pr = conn.prepareStatement(sql);
             pr.setString(1, customer.getFull_name());
             pr.setString(2, customer.getIdCard());
             pr.setString(3, customer.getPhone());
             pr.setString(4, customer.getAddress());
-            pr.setDate(5, Date.valueOf(customer.getCreatedAt()));
-            pr.setDate(6, Date.valueOf(customer.getUpdatedAt()));
-            pr.setInt(7, customer.getId_customer());
+            pr.setDate(5, Date.valueOf(customer.getUpdatedAt()));
+            pr.setInt(6, customer.getId_customer());
 
             pr.execute();
         } catch (Exception e) {
