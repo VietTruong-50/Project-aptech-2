@@ -4,14 +4,16 @@ package com.project.project2.model;
 public class Person {
     private String full_name;
     private String phone;
+    private String idCard;
 
     public Person() {
 
     }
 
-    public Person(String full_name, String phone) {
+    public Person(String full_name, String phone, String idCard) {
         this.full_name = full_name;
         this.phone = phone;
+        this.idCard = idCard;
     }
 
     public Person(String fullName) {
@@ -32,6 +34,14 @@ public class Person {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     @Override

@@ -26,7 +26,7 @@
           <TableColumn fx:id="nameColumn" editable="false" prefWidth="105.0" text="Họ và tên" />
             <TableColumn fx:id="birthColumn" editable="false" prefWidth="154.0" text="Ngày tháng năm sinh" />
             <TableColumn fx:id="sdtColumn" editable="false" minWidth="0.0" prefWidth="135.0" text="SĐT" />
-            <TableColumn fx:id="roleColumn" editable="false" minWidth="0.0" prefWidth="251.0" text="Chức vụ" />
+            <TableColumn fx:id="idCardColumn" editable="false" minWidth="0.0" prefWidth="251.0" text="Chứng minh thư" />
         </columns>
       </TableView>
       <TextField fx:id="searchTf" layoutX="470.0" layoutY="116.0" prefHeight="35.0" prefWidth="273.0" promptText="Search by name, birth, phone" style="-fx-background-radius: 20px;" />
@@ -121,8 +121,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="roleStaffCb" layoutX="202.0" layoutY="360.0" prefHeight="25.0" prefWidth="168.0" />
-      <ComboBox fx:id="filterStaffByRoleCb" layoutX="855.0" layoutY="121.0" onAction="#filterStaffByRole" prefHeight="25.0" prefWidth="168.0" promptText="Chức vụ" />
+      <TextField fx:id="roleStaffTf" layoutX="202.0" layoutY="360.0" prefHeight="25.0" prefWidth="168.0" />
+<!--      <ComboBox fx:id="filterStaffByRoleCb" layoutX="855.0" layoutY="121.0" onAction="#filterStaffByRole" prefHeight="25.0" prefWidth="168.0" promptText="Chức vụ" />-->
    </children>
    <stylesheets>
       <URL value="@Css/viewStyle.css" />

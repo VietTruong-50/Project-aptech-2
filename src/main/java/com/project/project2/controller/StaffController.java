@@ -31,13 +31,11 @@ import static com.project.project2.service.IStaff.STAFF_LIST;
 
 public class StaffController implements Initializable {
 
-    ObservableList<String> ROLE_LIST = FXCollections.observableArrayList("Nhân viên", "Quản lý");
     private final ImplStaff implStaff = new ImplStaff();
     public AnchorPane root;
     public TextField nameStaffTf;
     public TextField phoneStaffTf;
     public TextField contractNbTf;
-    public ComboBox<String> roleStaffCb;
     public DatePicker birthStaffDp;
     public TextField searchTf;
     public Circle pointLight;
@@ -46,15 +44,13 @@ public class StaffController implements Initializable {
     public TableColumn<Objects, Objects> nameColumn;
     public TableColumn<Objects, Objects> birthColumn;
     public TableColumn<Objects, Objects> sdtColumn;
-    public TableColumn<Objects, Objects> roleColumn;
-    public ComboBox<String> filterStaffByRoleCb;
+    public TableColumn<Objects, Objects> idCardColumn;
+    public TextField roleStaffTf;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             refreshTable();
-            roleStaffCb.setItems(ROLE_LIST);
-            filterStaffByRoleCb.setItems(ROLE_LIST);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,7 +62,7 @@ public class StaffController implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("full_name"));
         sdtColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         birthColumn.setCellValueFactory(new PropertyValueFactory<>("birth"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        idCardColumn.setCellValueFactory(new PropertyValueFactory<>("idCard"));
         staffTable.setItems(STAFF_LIST);
         searchStaff(searchTf.textProperty(), staffTable);
     }
@@ -116,7 +112,7 @@ public class StaffController implements Initializable {
             staff.setFull_name(nameStaffTf.getText().trim());
             staff.setBirth(birthStaffDp.getValue());
             staff.setPhone(phoneStaffTf.getText().trim());
-            staff.setRole(roleStaffCb.getValue());
+            staff.setIdCard(roleStaffTf.getText());
             staff.setCreatedAt(LocalDate.now());
             staff.setUpdatedAt(LocalDate.now());
             implStaff.insertStaff(staff);
@@ -136,7 +132,7 @@ public class StaffController implements Initializable {
             staff.setFull_name(nameStaffTf.getText().trim());
             staff.setBirth(birthStaffDp.getValue());
             staff.setPhone(phoneStaffTf.getText().trim());
-            staff.setRole(roleStaffCb.getValue());
+            staff.setIdCard(roleStaffTf.getText());
             staff.setCreatedAt(staff.getCreatedAt());
             staff.setUpdatedAt(LocalDate.now());
             implStaff.updateStaff(staff);
@@ -167,7 +163,7 @@ public class StaffController implements Initializable {
             nameStaffTf.setText(staff.getFull_name());
             phoneStaffTf.setText(staff.getPhone());
             birthStaffDp.setValue(staff.getBirth());
-            roleStaffCb.setValue(staff.getRole());
+            roleStaffTf.setText(staff.getIdCard());
             setContractNb(staff.getId_staff());
         }
     }
@@ -175,7 +171,7 @@ public class StaffController implements Initializable {
     public void setContractNb(int id) throws SQLException {
         ResultSet rs ;
         String query = "SELECT COUNT(*) AS nb_Contract FROM Contract JOIN Staffs ON " +
-                "Contract.id_staff = Staffs.id_staff WHERE Staffs.id_staff = "+ id +" AND Staffs.role = 'Nhân viên' GROUP BY Contract.id_staff";
+                "Contract.id_staff = Staffs.id_staff WHERE Staffs.id_staff = "+ id +" GROUP BY Contract.id_staff";
         rs = DBHandle.executeQuery(query);
 
         if(rs.next()){
@@ -183,11 +179,5 @@ public class StaffController implements Initializable {
         }else{
             contractNbTf.setText("0");
         }
-    }
-
-    public void filterStaffByRole(ActionEvent actionEvent) throws SQLException {
-        STAFF_LIST.clear();
-        implStaff.findStaffByRole(filterStaffByRoleCb.getValue());
-        showStaff();
     }
 }
