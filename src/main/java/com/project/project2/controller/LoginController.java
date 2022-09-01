@@ -54,7 +54,7 @@ public class LoginController {
             Stage DashboardStage = new Stage();
             DashboardStage.setScene(new Scene(root));
             DashboardStage.setResizable(false);
-            DashboardStage.setTitle("Trương Quốc Việt & viet ");
+            DashboardStage.setTitle("Trương Quốc Việt & Lê Minh Thịnh ");
             DashboardStage.show();
         }
     }

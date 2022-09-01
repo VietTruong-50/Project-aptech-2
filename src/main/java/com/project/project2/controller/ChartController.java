@@ -86,7 +86,7 @@ public class ChartController implements Initializable {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by day");
             for (int i = 1; i <= 31; i++) {
-                series.getData().add(new XYChart.Data("Day " + i, getDailyCostByDdMmYy(i, "DAY", month)));
+                series.getData().add(new XYChart.Data("Day " + i, 1 + getDailyCostByDdMmYy(i, "DAY", month)));
             }
             lineChart.getData().add(series);
         } else if (Objects.equals(ddMMYYCost.getValue(), "by Month")) {
@@ -135,6 +135,7 @@ public class ChartController implements Initializable {
 
     public int getDailyCostByDdMmYy(int number, String Type, int month) throws SQLException {
         ResultSet rs;
+        int result = 0;
         String query = "SELECT SUM(total_cost) AS cost_by " +
                 "FROM Contract WHERE " + Type + "(startDate) = " + number + " GROUP BY " + Type + "(startDate)";
 
@@ -143,10 +144,11 @@ public class ChartController implements Initializable {
                     "FROM Contract WHERE " + Type + "(startDate) = " + number + " AND MONTH(startDate) = "
                     + month +  " GROUP BY " + Type + "(startDate)";
         }
+
         rs = DBHandle.executeQuery(query);
         if (rs.next()) {
-            return rs.getInt("cost_by");
+            result = rs.getInt("cost_by");
         }
-        return 0;
+        return result;
     }
 }
