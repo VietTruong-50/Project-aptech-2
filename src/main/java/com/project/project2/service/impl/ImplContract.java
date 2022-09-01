@@ -104,11 +104,32 @@ public class ImplContract implements IContract {
     }
 
     @Override
-    public Contract findContractByIdCustomer(int id_customer) throws SQLException {
+    public Contract findContractByIdCustomer(int id_customer, int id_staff) throws SQLException {
         Contract contract = null;
-        sql = "SELECT * FROM Contract WHERE id_customer = ?";
+        sql = "SELECT * FROM Contract WHERE id_customer = ? AND id_staff = ?";
         pr = conn.prepareStatement(sql);
         pr.setInt(1, id_customer);
+        pr.setInt(2, id_staff);
+        rs = pr.executeQuery();
+        if (rs.next()) {
+            contract = new Contract(rs.getInt("id_contract"), rs.getInt("id_customer"), rs.getInt("id_staff")
+                    , rs.getDate("startDate").toLocalDate(), rs.getDate("endDate").toLocalDate()
+                    , rs.getDouble("total_cost"), rs.getInt("VAT"), rs.getDouble("deposit")
+                    , rs.getDate("createdAt").toLocalDate(), rs.getDate("updatedAt").toLocalDate());
+            return contract;
+        }
+        return null;
+    }
+
+    @Override
+    public Contract findContractByIdCar(int id_car) throws SQLException {
+        Contract contract = null;
+        sql = "SELECT * FROM Contract" +
+                " JOIN ContractDetail ON Contract.id_contract = ContractDetail.id_contract " +
+                " JOIN Car ON Car.id_car = ContractDetail.id_car " +
+                " WHERE Car.id_car = ?";
+        pr = conn.prepareStatement(sql);
+        pr.setInt(1, id_car);
         rs = pr.executeQuery();
         if (rs.next()) {
             contract = new Contract(rs.getInt("id_contract"), rs.getInt("id_customer"), rs.getInt("id_staff")

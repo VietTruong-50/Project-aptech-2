@@ -13,5 +13,6 @@ public interface IContract {
     void insertContract(Contract contract);
     void updateContract(Contract contract);
     void deleteContract(int id);
-    Contract findContractByIdCustomer(int id_customer) throws SQLException;
+    Contract findContractByIdCustomer(int id_customer, int id_staff) throws SQLException;
+    Contract findContractByIdCar(int id_car) throws SQLException;
 }

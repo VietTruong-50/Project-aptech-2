@@ -48,14 +48,36 @@ public class ContractController implements Initializable {
     private final ImplContract implContract = new ImplContract();
     private final ImplContractDetail implContractDetail = new ImplContractDetail();
     private final ImplCar implCar = new ImplCar();
-
+    private final FXMLLoader loader = new FXMLLoader();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             refresh();
+            viewContract();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void viewContract(){
+        contractTable.setOnMouseClicked((event) -> {
+            if( event.getClickCount() == 2 ) {
+                Contract contract = contractTable.getSelectionModel().getSelectedItem();
+
+                loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
+                AnchorPane dashboard = null;
+                try {
+                    dashboard = loader.load();
+                    ContractDetailController contractDetailController = loader.getController();
+                    contractDetailController.viewContractDetail(contract, true);
+                    contractDetailController.contract = contract;
+                    ContractDetailController.isEditForm = false;
+                    root.getChildren().setAll(dashboard);
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void showAddForm(ActionEvent actionEvent) throws IOException {
@@ -67,13 +89,13 @@ public class ContractController implements Initializable {
         Contract contract = contractTable.getSelectionModel().getSelectedItem();
 
         if(contract != null){
-            FXMLLoader loader = new FXMLLoader();
+
             loader.setLocation(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractDetail.fxml")));
             AnchorPane dashboard = loader.load();
             ContractDetailController contractDetailController = loader.getController();
-            contractDetailController.viewContractDetail(contract);
+            contractDetailController.viewContractDetail(contract, false);
             contractDetailController.contract = contract;
-            contractDetailController.isEditForm = true;
+            ContractDetailController.isEditForm = true;
             root.getChildren().setAll(dashboard);
         }
     }

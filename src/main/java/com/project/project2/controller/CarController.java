@@ -3,7 +3,9 @@ package com.project.project2.controller;
 import com.jfoenix.controls.JFXButton;
 import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Car;
+import com.project.project2.model.Contract;
 import com.project.project2.service.impl.ImplCar;
+import com.project.project2.service.impl.ImplContract;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,9 +39,9 @@ import static com.project.project2.service.ICar.CAR_LIST;
 
 public class CarController implements Initializable {
     private final ImplCar implCar = new ImplCar();
+    private final ImplContract implContract = new ImplContract();
     private final ObservableList<Integer> SEAT_LIST = FXCollections.observableArrayList(4, 7, 11, 16);
     private final ObservableList<String> Status = FXCollections.observableArrayList("Available", "Unavailable", "Was rented");
-
 
     private File file;
     private RadioButton radioButton;
@@ -49,7 +51,6 @@ public class CarController implements Initializable {
 
     @FXML
     public ToggleGroup status;
-
     @FXML
     public TableColumn<Object, Object> idColumn;
 
@@ -74,7 +75,6 @@ public class CarController implements Initializable {
     @FXML
     public TextField searchCarTf;
 
-
     @FXML
     public TextField carNameTf;
 
@@ -95,9 +95,8 @@ public class CarController implements Initializable {
 
     @FXML
     public RadioButton rBtn1;
-
-    @FXML
     public RadioButton rBtn2;
+    public RadioButton rBtn3;
 
     @FXML
     public ImageView carImage;
@@ -118,6 +117,7 @@ public class CarController implements Initializable {
             seatNbCbb.setItems(SEAT_LIST);
             filterCarBySttCb.setItems(Status);
             filterCarBySeatCb.setItems(SEAT_LIST);
+            rBtn3.setDisable(true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,14 +131,23 @@ public class CarController implements Initializable {
             addBtn.setDisable(true);
             carNameTf.setText(car.getCar_name());
             carManufactureTf.setText(car.getManufacture());
-            carPriceTf.setText(String.valueOf(car.getRental_cost()));
+            carPriceTf.setText(String.valueOf((int) car.getRental_cost()));
             seatNbCbb.setValue(car.getSeats());
             license_platesTf.setText(car.getLicense_plates());
             carModelTa.setText(car.getModel());
             carModelTa.setWrapText(true);
-            if (car.getCar_status().equals("Available")) {
+            if(car.getCar_status().equals("Was rented")){
+                rBtn3.setSelected(true);
+                rBtn1.setDisable(true);
+                rBtn2.setDisable(true);
+                rBtn3.setDisable(true);
+            } else if (car.getCar_status().equals("Available")) {
                 rBtn1.setSelected(true);
+                rBtn1.setDisable(false);
+                rBtn2.setDisable(false);
             } else {
+                rBtn1.setDisable(false);
+                rBtn2.setDisable(false);
                 rBtn2.setSelected(true);
             }
             setCarImg(car);
@@ -152,9 +161,9 @@ public class CarController implements Initializable {
         if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
                 radioButton.getText().isBlank() || !file.exists()) {
-            showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+            showWarning(null, "Please enter full information!");
         } else if (implCar.findCarByLicensePlates(license_platesTf.getText())) {
-            showWarning(null, "Biển số xe đã tồn tại!");
+            showWarning(null, "This license plates is already exist!");
         } else {
             Car car = new Car();
             car.setLicense_plates(license_platesTf.getText().trim());
@@ -182,6 +191,7 @@ public class CarController implements Initializable {
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() || file.exists()) {
             showWarning(null, "Please enter full information!");
         } else {
+            double dcl = (Double.parseDouble(carPriceTf.getText()) - car.getRental_cost());
             radioButton = (RadioButton) status.getSelectedToggle();
             car.setCar_name(carNameTf.getText().trim());
             car.setManufacture(carManufactureTf.getText().trim());
@@ -193,6 +203,10 @@ public class CarController implements Initializable {
             car.setCreatedAt(car.getCreatedAt());
             car.setUpdatedAt(LocalDate.now());
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
+
+            Contract contract = implContract.findContractByIdCar(car.getId_car());
+            contract.setTotal_cost(contract.getTotal_cost() + dcl );
+            implContract.updateContract(contract);
 
             implCar.updateCar(car, file);
             refresh();

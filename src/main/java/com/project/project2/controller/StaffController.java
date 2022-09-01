@@ -148,7 +148,7 @@ public class StaffController implements Initializable {
                     showSuccess("Success", "Delete staff successfully!");
                     refreshTable();
                 }else{
-                    showError("Error", "This staff is not exist");
+                    showError("Error", "This staff is related to a contract");
                 }
             }
         }
