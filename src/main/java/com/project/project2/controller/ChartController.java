@@ -99,7 +99,7 @@ public class ChartController implements Initializable {
         } else if (Objects.equals(ddMMYYCost.getValue(), "by Year")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by year");
-            for (int i = year; i <= year + 2; i++) {
+            for (int i = year; i <= year + 3; i++) {
                 series.getData().add(new XYChart.Data("Year " + i, getDailyCostByDdMmYy(i, "YEAR", 0)));
             }
             lineChart.getData().add(series);

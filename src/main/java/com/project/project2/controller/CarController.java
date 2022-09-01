@@ -152,9 +152,9 @@ public class CarController implements Initializable {
         if (carNameTf.getText().isBlank() || carManufactureTf.getText().isBlank() ||
                 carPriceTf.getText().isBlank() || carModelTa.getText().isBlank() ||
                 radioButton.getText().isBlank() || !file.exists()) {
-            showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+            showWarning(null, "Please enter full information!");
         } else if (implCar.findCarByLicensePlates(license_platesTf.getText())) {
-            showWarning(null, "Biển số xe đã tồn tại!");
+            showWarning(null, "This license plates is already exist!");
         } else {
             Car car = new Car();
             car.setLicense_plates(license_platesTf.getText().trim());

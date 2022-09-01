@@ -104,11 +104,12 @@ public class ImplContract implements IContract {
     }
 
     @Override
-    public Contract findContractByIdCustomer(int id_customer) throws SQLException {
+    public Contract findContractByIdCustomer(int id_customer, int id_staff) throws SQLException {
         Contract contract = null;
-        sql = "SELECT * FROM Contract WHERE id_customer = ?";
+        sql = "SELECT * FROM Contract WHERE id_customer = ? AND id_staff = ?";
         pr = conn.prepareStatement(sql);
         pr.setInt(1, id_customer);
+        pr.setInt(2, id_staff);
         rs = pr.executeQuery();
         if (rs.next()) {
             contract = new Contract(rs.getInt("id_contract"), rs.getInt("id_customer"), rs.getInt("id_staff")

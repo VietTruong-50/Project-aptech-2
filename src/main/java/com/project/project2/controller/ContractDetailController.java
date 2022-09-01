@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static com.project.project2.alert.AlertMaker.showWarning;
 import static com.project.project2.service.ICar.CAR_LIST;
@@ -34,7 +33,8 @@ public class ContractDetailController implements Initializable {
     private double total = 0;
     private static Customer customer = null;
     public Contract contract;
-    public boolean isEditForm;
+    static public boolean isEditForm;
+    static public boolean isAddForm ;
 
     public AnchorPane pane;
     public TextField cus_name;
@@ -76,12 +76,15 @@ public class ContractDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            CAR_LIST.clear();
+            implCar.findCarsByStatus("Available");
             showCar();
             showCustomer();
             showStaff();
             customerTable.setVisible(false);
             pane2.setLayoutY(230);
             total = 0;
+            isAddForm = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,27 +110,35 @@ public class ContractDetailController implements Initializable {
 
 
     public void showCar() throws SQLException {
-        CAR_LIST.clear();
-
-        implCar.findCarsByStatus("Available");
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_car"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("car_name"));
         manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacture"));
         seatNbColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("rental_cost"));
+        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
 
         carTable.setItems(CAR_LIST);
     }
 
     public void showStaff() throws SQLException {
         STAFF_LIST.clear();
-        implStaff.findStaffByRole("Nhân viên");
+        implStaff.findAll();
         staffCbbox.getItems().addAll(STAFF_LIST);
     }
 
     public void saveContract(ActionEvent actionEvent) throws SQLException, IOException {
-        if (!customerCheckbox.isSelected()) {
+        if(cus_name.getText().isBlank()
+                || id_card.getText().isBlank()
+                || id_card.getText().isBlank()
+                || phoneTf.getText().isBlank()
+                || vatTf.getText().isBlank()
+                || depositTf.getText().isBlank()
+                || startDate.getValue() == null
+                || endDate.getValue() == null
+        ){
+            showWarning(null, "Please enter full information!");
+        } else if (!customerCheckbox.isSelected()) {
             if (id_card.getText().length() != 12) {
                 showWarning(null, "ID must be 12 numbers");
             } else if (phoneTf.getText().length() != 10) {
@@ -148,37 +159,55 @@ public class ContractDetailController implements Initializable {
         }
     }
 
-    public void viewContractDetail(Contract contract) throws SQLException {
-        customer = CUSTOMER_LIST.stream().filter(x -> x.getId_customer() == contract.getId_customer()).findAny().orElse(null);
-        Staff staff = STAFF_LIST.stream().filter(st -> st.getId_staff() == contract.getId_staff()).findAny().orElse(null);
+    public void viewContractDetail(Contract contract, boolean isViewForm) throws SQLException {
+        customer = CUSTOMER_LIST
+                .stream()
+                .filter(x -> x.getId_customer() == contract.getId_customer())
+                .findAny()
+                .orElse(null);
 
+        Staff staff = STAFF_LIST
+                .stream()
+                .filter(st -> st.getId_staff() == contract.getId_staff())
+                .findAny()
+                .orElse(null);
+
+        CAR_LIST.clear();
         List<Integer> list = implContractDetail.findIdCarByIdContract(contract.getId_contract());
 //        List<Integer> list = CAR_LIST.stream().map(Car::getId_car).collect(Collectors.toList());
         for (int i : list) {
             implCar.findCarsById(i);
         }
-        customerCheckbox.setVisible(false);
+        showCar();
 
+        customerCheckbox.setVisible(false);
         cus_name.setText(customer.getFull_name());
         id_card.setText(customer.getIdCard());
-        phoneTf.setText("0" + customer.getPhone());
+        phoneTf.setText(customer.getPhone());
         addressTf.setText(customer.getAddress());
         staffCbbox.setValue(staff);
         startDate.setValue(contract.getStartDate());
         endDate.setValue(contract.getEndDate());
-        System.out.println(contract.getTotal_cost() );
-        total = contract.getTotal_cost()*100/(100+contract.getVAT());
+        total = contract.getTotal_cost() * 100 / (100 + contract.getVAT());
         totalCost.setText((int) contract.getTotal_cost() + " VND");
         depositTf.setText(String.valueOf(contract.getDeposit()));
         vatTf.setText(String.valueOf(contract.getVAT()));
-
-
         cus_name.setEditable(false);
         id_card.setEditable(false);
         phoneTf.setEditable(false);
         addressTf.setEditable(false);
-        updateBtn.setVisible(true);
         saveBtn.setVisible(false);
+        updateBtn.setVisible(true);
+        isAddForm = false;
+
+        if (isViewForm) {
+            updateBtn.setVisible(false);
+            staffCbbox.setEditable(false);
+            startDate.setEditable(false);
+            endDate.setEditable(false);
+            vatTf.setEditable(false);
+            depositTf.setEditable(false);
+        }
     }
 
     public void insertContract() throws IOException, SQLException {
@@ -195,7 +224,7 @@ public class ContractDetailController implements Initializable {
             contract.setDeposit(Double.parseDouble(depositTf.getText().trim()));
 
             implContract.insertContract(contract);
-            contract = implContract.findContractByIdCustomer(customer.getId_customer());
+            contract = implContract.findContractByIdCustomer(customer.getId_customer(), staffCbbox.getValue().getId_staff());
 
             if (contract != null) {
                 for (Car c : carList) {
@@ -237,12 +266,12 @@ public class ContractDetailController implements Initializable {
     }
 
     public void handleClickCarTable(MouseEvent mouseEvent) {
-        if (!isEditForm) {
+        if (isAddForm) {
             Car car = carTable.getSelectionModel().getSelectedItem();
-            if(car != null){
+            if (car != null) {
                 this.carList.add(car);
                 total += car.getRental_cost();
-                totalCost.setText((int)total + " VND");
+                totalCost.setText((int) total + " VND");
                 carTable.getItems().remove(car);
             }
         }
@@ -256,7 +285,7 @@ public class ContractDetailController implements Initializable {
         }
     }
 
-    public void setVisible( boolean editable, boolean visible, double layoutY) {
+    public void setVisible(boolean editable, boolean visible, double layoutY) {
 
         cus_name.setEditable(editable);
         id_card.setEditable(editable);
@@ -270,6 +299,6 @@ public class ContractDetailController implements Initializable {
     public void getTotalCost(KeyEvent keyEvent) {
         int vat = 1;
         if (!vatTf.getText().isBlank()) vat = Integer.parseInt(vatTf.getText());
-        totalCost.setText((int)(total * (100 + vat)) / 100 + " VND");
+        totalCost.setText((int) (total * (100 + vat)) / 100 + " VND");
     }
 }
