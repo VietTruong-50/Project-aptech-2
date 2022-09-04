@@ -102,6 +102,10 @@ public class CustomerController implements Initializable {
         if (nameTf.getText().isBlank() || idCardTf.getText().isBlank() ||
                 addressTf.getText().isBlank() || phoneTf.getText().isBlank()) {
             showWarning(null, "Please enter full information!");
+        } else if (idCardTf.getText().length() != 12) {
+            showWarning(null, "ID must be 12 numbers");
+        } else if (phoneTf.getText().length() != 10) {
+            showWarning(null, "Phone must be 10 numbers");
         } else {
             Customer customer = new Customer();
             customer.setId_customer(Integer.parseInt(idTf.getText()));
