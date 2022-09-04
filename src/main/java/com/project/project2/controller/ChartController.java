@@ -47,7 +47,7 @@ public class ChartController implements Initializable {
 
     public AnchorPane root;
 
-    final ObservableList<String> ddMMYY = FXCollections.observableArrayList("by Day", "by Month", "by Year");
+    final ObservableList<String> ddMMYY = FXCollections.observableArrayList("By day", "By month", "By year");
 
     private final ImplStaff implStaff = new ImplStaff();
 
@@ -82,21 +82,21 @@ public class ChartController implements Initializable {
         LocalDate currentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int month = currentDate.getMonthValue();
         cateAxis.setAnimated(false);
-        if (Objects.equals(ddMMYYCost.getValue(), "by Day")) {
+        if (Objects.equals(ddMMYYCost.getValue(), "By day")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by day");
             for (int i = 1; i <= 31; i++) {
                 series.getData().add(new XYChart.Data("Day " + i, 1 + getDailyCostByDdMmYy(i, "DAY", month)));
             }
             lineChart.getData().add(series);
-        } else if (Objects.equals(ddMMYYCost.getValue(), "by Month")) {
+        } else if (Objects.equals(ddMMYYCost.getValue(), "By month")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by month");
             for (int i = 1; i <= 12; i++) {
                 series.getData().add(new XYChart.Data("Month " + i, getDailyCostByDdMmYy(i, "MONTH", 0)));
             }
             lineChart.getData().add(series);
-        } else if (Objects.equals(ddMMYYCost.getValue(), "by Year")) {
+        } else if (Objects.equals(ddMMYYCost.getValue(), "By year")) {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by year");
             for (int i = year; i <= year + 3; i++) {

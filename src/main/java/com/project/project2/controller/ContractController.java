@@ -32,6 +32,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.project.project2.alert.AlertMaker.showConfirmation;
+import static com.project.project2.alert.AlertMaker.showSuccess;
 import static com.project.project2.service.IContract.CONTRACTS;
 
 public class ContractController implements Initializable {
@@ -297,6 +298,7 @@ public class ContractController implements Initializable {
                 }
                 page = new Page(pdf, A3.LANDSCAPE);
             }
+            showSuccess("Success", "PDF file saved successfully");
             pdf.close();
             fos.flush();
             System.out.println("Saved to " + out.getAbsolutePath());

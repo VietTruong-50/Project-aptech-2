@@ -45,7 +45,7 @@ public class StaffController implements Initializable {
     public TableColumn<Objects, Objects> birthColumn;
     public TableColumn<Objects, Objects> sdtColumn;
     public TableColumn<Objects, Objects> idCardColumn;
-    public TextField roleStaffTf;
+    public TextField idCardTf;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,12 +107,14 @@ public class StaffController implements Initializable {
         if (nameStaffTf.getText().isBlank() || birthStaffDp.getValue() == null ||
                 phoneStaffTf.getText().isBlank()) {
             showWarning(null, "Vui lòng nhập đầy đủ thông tin!");
+        } else if (idCardTf.getText().length() != 12) {
+            showWarning(null, "ID must be 12 numbers");
         } else {
             Staff staff = new Staff();
             staff.setFull_name(nameStaffTf.getText().trim());
             staff.setBirth(birthStaffDp.getValue());
             staff.setPhone(phoneStaffTf.getText().trim());
-            staff.setIdCard(roleStaffTf.getText());
+            staff.setIdCard(idCardTf.getText());
             staff.setCreatedAt(LocalDate.now());
             staff.setUpdatedAt(LocalDate.now());
             implStaff.insertStaff(staff);
@@ -132,7 +134,7 @@ public class StaffController implements Initializable {
             staff.setFull_name(nameStaffTf.getText().trim());
             staff.setBirth(birthStaffDp.getValue());
             staff.setPhone(phoneStaffTf.getText().trim());
-            staff.setIdCard(roleStaffTf.getText());
+            staff.setIdCard(idCardTf.getText());
             staff.setCreatedAt(staff.getCreatedAt());
             staff.setUpdatedAt(LocalDate.now());
             implStaff.updateStaff(staff);
@@ -163,7 +165,7 @@ public class StaffController implements Initializable {
             nameStaffTf.setText(staff.getFull_name());
             phoneStaffTf.setText(staff.getPhone());
             birthStaffDp.setValue(staff.getBirth());
-            roleStaffTf.setText(staff.getIdCard());
+            idCardTf.setText(staff.getIdCard());
             setContractNb(staff.getId_staff());
         }
     }

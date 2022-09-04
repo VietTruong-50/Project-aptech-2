@@ -249,6 +249,7 @@ public class ContractDetailController implements Initializable {
         contract.setVAT(Integer.parseInt(vatTf.getText()));
         contract.setTotal_cost(Double.parseDouble(totalCost.getText().replace(" VND", "")));
         contract.setUpdatedAt(LocalDate.now());
+
         implContract.updateContract(contract);
         AnchorPane dashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/project/project2/ContractController.fxml")));
         pane.getChildren().setAll(dashboard);
