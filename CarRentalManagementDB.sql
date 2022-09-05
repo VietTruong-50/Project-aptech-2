@@ -57,8 +57,6 @@ CREATE TABLE Staffs(
 	primary key (id_staff)
 );
 
-drop table Staffs
-
 INSERT INTO Staffs( staff_name, birth, phone, idCard, createdAt, updatedAt) VALUES
 ( N'Vũ Đình Long',  '1997-09-15', '0903642221', '102180153149', '2022-07-31', '2022-07-31'),
 ( N'Hoàng Ngọc Thuỳ',  '1996-07-23', '0905146587', '102180153149', '2022-07-31', '2022-07-31'),

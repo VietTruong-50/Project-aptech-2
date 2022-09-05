@@ -1,5 +1,6 @@
 package com.project.project2.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.project.project2.connection.DBHandle;
 import com.project.project2.model.Staff;
 import com.project.project2.service.impl.ImplStaff;
@@ -46,6 +47,7 @@ public class StaffController implements Initializable {
     public TableColumn<Objects, Objects> sdtColumn;
     public TableColumn<Objects, Objects> idCardColumn;
     public TextField idCardTf;
+    public JFXButton addBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,6 +96,7 @@ public class StaffController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
+        addBtn.setDisable(false);
         STAFF_LIST.clear();
         nameStaffTf.clear();
         birthStaffDp.setValue(null);
@@ -119,9 +122,9 @@ public class StaffController implements Initializable {
             staff.setCreatedAt(LocalDate.now());
             staff.setUpdatedAt(LocalDate.now());
             implStaff.insertStaff(staff);
-        }
 
-        refreshTable();
+            refreshTable();
+        }
     }
 
     public void updateStaff(ActionEvent actionEvent) throws SQLException {
@@ -168,6 +171,8 @@ public class StaffController implements Initializable {
             birthStaffDp.setValue(staff.getBirth());
             idCardTf.setText(staff.getIdCard());
             setContractNb(staff.getId_staff());
+
+            addBtn.setDisable(true);
         }
     }
 
