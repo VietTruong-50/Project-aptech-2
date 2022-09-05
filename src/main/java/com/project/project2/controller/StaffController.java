@@ -98,6 +98,7 @@ public class StaffController implements Initializable {
         nameStaffTf.clear();
         birthStaffDp.setValue(null);
         phoneStaffTf.clear();
+        idCardTf.clear();
         contractNbTf.clear();
         implStaff.findAll();
         showStaff();

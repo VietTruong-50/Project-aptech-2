@@ -86,7 +86,7 @@ public class ChartController implements Initializable {
             lineChart.getData().clear();
             lineChart.setTitle("Revenue by day");
             for (int i = 1; i <= 31; i++) {
-                series.getData().add(new XYChart.Data("Day " + i, 1 + getDailyCostByDdMmYy(i, "DAY", month)));
+                series.getData().add(new XYChart.Data("Day " + i, getDailyCostByDdMmYy(i, "DAY", month)));
             }
             lineChart.getData().add(series);
         } else if (Objects.equals(ddMMYYCost.getValue(), "By month")) {
