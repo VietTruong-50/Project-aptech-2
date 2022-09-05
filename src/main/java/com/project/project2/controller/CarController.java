@@ -178,8 +178,9 @@ public class CarController implements Initializable {
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
             implCar.insertCar(car, file);
+
+            refresh();
         }
-        refresh();
     }
 
     @FXML
@@ -205,8 +206,11 @@ public class CarController implements Initializable {
             car.setCimageSrc(file.toString().substring(file.toString().lastIndexOf('\\') + 1));
 
             Contract contract = implContract.findContractByIdCar(car.getId_car());
-            contract.setTotal_cost(contract.getTotal_cost() + dcl );
-            implContract.updateContract(contract);
+
+            if(contract != null){
+                contract.setTotal_cost(contract.getTotal_cost() + dcl );
+                implContract.updateContract(contract);
+            }
 
             implCar.updateCar(car, file);
             refresh();
